@@ -337,6 +337,9 @@ input[type=range]{width:100%;height:32px;accent-color:var(--teal);margin:0}
 .legend i.d{border-top-style:dashed}
 .legend i.dot{width:10px;height:10px;border-radius:50%;border:none;background:currentColor}
 
+.vmodal a.vopen{display:block;text-align:center;background:#c4302b;color:#fff;font-weight:900;font-size:18px;border-radius:12px;padding:18px 12px;text-decoration:none;margin:4px 0}
+.modori-note{margin-top:8px;background:var(--teal-soft);border:1.5px solid var(--teal);border-radius:12px;padding:8px 12px;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+
 </style>
 </head><body>
 <div class="wrap" id="app"></div>
@@ -894,7 +897,8 @@ const W = (() => {
    FILLS は □ がいくつかある問題：parts の中の B(ans, chk) が □。
    CH の ov は選択肢の値（sympy の式）。MU の cond は「0 になれば正解」の式（t に選択肢の値を入れる）。
    section の tag：ふり返り（前に習ったこと）／見る／手を動かす／考える／解く。
-   動画との対応は video.js（中身を作ったあとで入れた）。 */
+   動画との対応は video.js（中身を作ったあとで入れた）。
+   back：その回の前に確かめておきたい回（回の上に「↩ ◯◯があやしいときは」を出す）。 */
 const NAZO = (html) => ({t:"info", k:"なぞ", cls:"nazo", html});
 const WORD = (html, k="ことば") => ({t:"info", k, cls:"word", html});
 const INFO = (k, html) => ({t:"info", k, html});
@@ -950,7 +954,7 @@ const LESSONS = [
  ]},
 
 /* ================= グラフ ================= */
-{id:"L1", no:1, zone:1, title:"放物線 $y=ax^2$", kp:"",
+{id:"L1", no:1, zone:1, title:"放物線 $y=ax^2$", kp:"", back:{to:"L0", what:"中学の関数（座標・代入・1次関数）"},
  goal:"$y=ax^2$ のグラフ（放物線）の形を、a の符号と大きさで言える。$f(x)$ の書き方が使える。",
  secs:[
   S("ふり返り","中学3年の $y=ax^2$",[
@@ -1049,7 +1053,7 @@ const LESSONS = [
  ]},
 
 /* ================= いちばん高い・低い ================= */
-{id:"L4", no:4, zone:2, title:"いちばん高い・低い（最大・最小）", kp:"",
+{id:"L4", no:4, zone:2, title:"いちばん高い・低い（最大・最小）", kp:"", back:{to:"L3", what:"平方完成"},
  goal:"頂点と、x の範囲（定義域）の両端をくらべて、最大値・最小値を求められる。",
  secs:[
   S("ふり返り","範囲の読み方",[
@@ -1336,9 +1340,9 @@ const VIDEO = (() => {
   function play(title, id, note){
     const m=el("div","vmodal"); m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true");
     m.innerHTML=`<div class="vbox"><div class="vh"><b>🎬 ${title}</b><button type="button">とじる ✕</button></div>
-      <div class="vframe">${id?`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&playsinline=1" title="${title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
-        :`<div class="vprep">この動画は準備中です。<br><small>できあがったら、ここで見られるようになります。</small></div>`}</div>
-      ${id?`<div class="vnote"><a href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}" target="_blank" rel="noopener">▶ YouTube で開く</a>（うまく再生されないとき）</div>`:""}
+      ${(id && typeof VIDEO_EMBED!=="undefined" && !VIDEO_EMBED) ? `<a class="vopen" href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}" target="_blank" rel="noopener">▶ YouTube で見る</a><div class="vnote">YouTube が新しいタブで開く。見おわったら、このタブにもどろう。</div>` : `<div class="vframe">${id?`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&playsinline=1" title="${title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
+        :`<div class="vprep">この動画は準備中です。<br><small>できあがったら、ここで見られるようになります。</small></div>`}</div>`}
+      ${(id && !(typeof VIDEO_EMBED!=="undefined" && !VIDEO_EMBED))?`<div class="vnote"><a href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}" target="_blank" rel="noopener">▶ YouTube で開く</a>（うまく再生されないとき）</div>`:""}
       <div class="vnote">${note||"とじると、もとの問題にもどる。"}</div></div>`;
     const close=()=>{ m.remove(); document.removeEventListener("keydown",esc); };
     const esc=e=>{ if(e.key==="Escape") close(); };
@@ -1364,12 +1368,12 @@ const VIDEO = (() => {
   /* もくじから開く「2次関数の動画」一覧（アプリの回との対応つき） */
   function page(){
     hideKP(); MEMO.leave(); cur=null;
-    const used={}; Object.entries(MAP).forEach(([lid,m])=>{ const no=LESSONS.find(l=>l.id===lid).no; new Set([...(m.top||[]),...(m.sec||[])]).forEach(n=>{ (used[n]=used[n]||new Set()).add(no); }); });
+    const used={}; Object.entries(MAP).forEach(([lid,m])=>{ const L=LESSONS.find(l=>l.id===lid); if(!L) return; const no=L.no; new Set([...(m.top||[]),...(m.sec||[])]).forEach(n=>{ (used[n]=used[n]||new Set()).add(no); }); });
     app.innerHTML=`<div class="bar"><button class="back" id="bk">← もくじ</button><span class="ttl">🎬 2次関数の動画</span><span class="sc">全${CH.length}章</span></div>
       <p class="note" style="margin-top:0">${SERIES}。1つの章は 10 分くらいまで。アプリの回とは数が合っていない（それぞれ、わかりやすい長さで作ってある）。${PLAYLIST?`<br><a href="${PLAYLIST}" target="_blank" rel="noopener">▶ YouTube の再生リストで見る</a>`:""}</p><div class="vlist" id="vl"></div>`;
     document.getElementById("bk").addEventListener("click",home);
     const box=document.getElementById("vl");
-    CH.forEach(c=>{ const b=el("button",null,`<b>第${c.no}章</b><span>${c.t}${c.len?`<small class="lscope">　${c.len}</small>`:""}</span><span class="vu">${used[c.no]?"アプリの "+[...used[c.no]].sort((x,y)=>x-y).map(n=>"第"+n+"回").join("・")+" とつながる":"動画だけ（アプリにはない）"}</span>`); b.type="button"; b.addEventListener("click",()=>open(c.no)); box.appendChild(b); });
+    CH.forEach(c=>{ const b=el("button",null,`<b>第${c.no}章</b><span>${c.t}${c.len?`<small class="lscope">　${c.len}</small>`:""}</span><span class="vu">${used[c.no]?((typeof MIHON!=="undefined"&&MIHON)?"全体版のアプリの ":"アプリの ")+[...used[c.no]].sort((x,y)=>x-y).map(n=>"第"+n+"回").join("・")+" とつながる":"動画だけ（アプリにはない）"}</span>`); b.type="button"; b.addEventListener("click",()=>open(c.no)); box.appendChild(b); });
     window.scrollTo(0,0);
   }
   const backToL0 = lesId => !!(MAP[lesId]&&MAP[lesId].l0);
@@ -1755,6 +1759,9 @@ const DEMO_SEND = true;     /* 見本：「記録を送る」ボタンは見せ�
 const QMODE = "b";          /* 質問の設定 "a"：なし ／ "b"：質問メモ（スクーリングで聞くこと）／ "c"：先生が返事（SUBMIT_URL が要る） */
 const PDF_URL = "";         /* 基礎講座のスライドPDF（しおり付き）。空のあいだは「準備中」 */
 const CREDIT = "制作：至學舎";
+const MIHON = null;         /* 見本版：メニューに出す回の id の配列（例 ["L1","L4"]）。null なら全9回（build.py --mihon で入る） */
+const MODORI = null;        /* 見本版：メニューには出さないが、もどって開ける回 {"L1":"L0","L4":"L3"}（build.py --modori=L1:L0,L4:L3） */
+const VIDEO_EMBED = true;   /* 動画を小窓に埋めこむか。埋めこみを止めているページ（claude.ai のアーティファクトなど）に置くときは false（build.py --no-embed） */
 const APP_VER = "1";
 
 /* ---------- 保存（この端末の中だけ） ---------- */
@@ -1777,6 +1784,11 @@ const TAGC = {"ふり返り":"--tg5","見る":"--tg1","手を動かす":"--tg2",
 /* よくある「なんで？」（知っておこう）を各回の最後に足す */
 LESSONS.forEach(les=>{ const w=(typeof WHYS!=="undefined"&&WHYS[les.id])||[]; if(w.length) les.secs.push({tag:"知っておこう", title:"よくある「なんで？」", items:w.map(x=>Object.assign({t:"why"},x))}); });
 
+const SHOWN = MIHON ? LESSONS.filter(l=>MIHON.includes(l.id)) : LESSONS;
+const REACH = MIHON ? LESSONS.filter(l=>MIHON.includes(l.id) || Object.values(MODORI||{}).includes(l.id)) : LESSONS;
+const inMihon = id => REACH.some(l=>l.id===id);              /* 開ける回か */
+const isModori = id => !!MIHON && !MIHON.includes(id) && inMihon(id);   /* 見本の「もどり先」の回か */
+const modoriFrom = id => { const e=Object.entries(MODORI||{}).find(([k,v])=>v===id); return e?LESSONS.find(l=>l.id===e[0]):null; };
 /* 判定の単位を数える */
 LESSONS.forEach(les=>{ let k=0; les.secs.forEach((sec,si)=>sec.items.forEach(it=>{
   it.id=les.id+"-"+(k++); it.si=si; it.furi = sec.tag==="ふり返り";
@@ -1811,10 +1823,10 @@ const app=document.getElementById("app");
 function home(){
   cur=null; hideKP(); MEMO.leave();
   document.documentElement.style.removeProperty("--zc"); document.documentElement.style.removeProperty("--zct");
-  let allDone=0, allTotal=0; LESSONS.forEach(l=>{ const s=stats(l); allDone+=s.done; allTotal+=s.total; });
+  let allDone=0, allTotal=0; SHOWN.forEach(l=>{ const s=stats(l); allDone+=s.done; allTotal+=s.total; });
   const kc = QMODE==="b" ? KIKU.count() : 0;
   app.innerHTML=`
-  <div class="hero"><div class="eb">数学Ⅰ　自分で進めるワーク</div><h1>なっとく2次関数<small>数Ⅰ　2次関数　全9回（第0回〜第8回）</small></h1>
+  <div class="hero"><div class="eb">数学Ⅰ　自分で進めるワーク</div><h1>なっとく2次関数<small>${MIHON?`見本（${SHOWN.map(l=>"第"+l.no+"回").join("・")}）<br>全体は全9回（第0回〜第8回）`:"数Ⅰ　2次関数　全9回（第0回〜第8回）"}</small></h1>
   <p>動かして、ためして、「なるほど」をつかむ。答えるとすぐに ○ か × かがわかる。1回30分くらい。</p></div>
   ${QMODE==="b"?KIKU.banner():""}
   <div class="entry">${VIDEO.ENTRY.map((e,i)=>`<button type="button" data-entry="${i}">🎬 ${e.t}<small>${e.s}</small></button>`).join("")}</div>
@@ -1822,7 +1834,7 @@ function home(){
     <li>進め方は2通り（アプリ → わからなければ動画／動画 → アプリで確認）。<b>迷ったら、まずアプリから。</b></li>
     <li><b>まちがえたら動画を見ればいい。</b>各回の「🎬 わからなければ動画」から開ける。</li>
     <li>PDF では色付きタグが目印：公式は<span class="ptag g">ことば</span>（緑）、解き方は<span class="ptag o">例題</span>（橙）。</li>
-    <li>中学の内容があやしいときは、<b>第0回</b>から。</li></ul></div>
+    ${MIHON?`<li>あやしいときは、もどれる：<b>第1回 → 第0回</b>（中学の関数）、<b>第4回 → 第3回</b>（平方完成）。各回のいちばん上の「↩ あやしいときは」から。</li>`:`<li>中学の内容があやしいときは、<b>第0回</b>から。</li>`}</ul></div>
   <div class="links">
     ${PDF_URL?`<a href="${PDF_URL}" target="_blank" rel="noopener">📄 スライドPDF</a>`:`<a href="#" id="pdf" class="off">📄 スライドPDF（準備中）</a>`}
     <a href="#" id="vlist">🎬 2次関数の動画（全${VIDEO.CH.length}章）</a>
@@ -1833,7 +1845,7 @@ function home(){
     <div><label for="nk">ニックネーム（記録を送るときに使う）</label><input id="nk" maxlength="20" value="${esc(ST.nick)}" placeholder="例：にじかんた"></div>
     <small class="whynote">本名でなくてよい。途中の記録はこのスマホの中に残る（同じブラウザで開けば続きから）。ぜんぶで ${allDone} / ${allTotal} 問</small>
   </div>
-  ${ZONES.map((z,zi)=>{ const ls=LESSONS.filter(l=>l.zone===zi); let d=0,t=0; ls.forEach(l=>{const s=stats(l); d+=s.done; t+=s.total;});
+  ${ZONES.map((z,zi)=>{ const ls=SHOWN.filter(l=>l.zone===zi); if(!ls.length) return ""; let d=0,t=0; ls.forEach(l=>{const s=stats(l); d+=s.done; t+=s.total;});
     return `<section class="zone"><div class="zh"><span class="zn" style="--zt:var(${z.t})">${z.name}</span><span class="zs">${z.sub}</span><span class="zst">${d} / ${t}</span></div>
     <div class="lessons">${ls.map(les=>{ const s=stats(les), p=Math.round(100*s.done/s.total), sr=stars(s);
       return `<button class="lcard" data-l="${les.id}"><span class="no" style="background:var(${z.c})"><span><small>第</small>${les.no}<small>回</small></span></span>
@@ -1866,6 +1878,7 @@ function updateScore(){
 
 /* ---------- 1回分 ---------- */
 function open(id){
+  if(!inMihon(id)) return;
   cur=LESSONS.find(l=>l.id===id); streak=0; { const s0=stats(cur); wasDone=s0.done===s0.total; }
   const z=ZONES[cur.zone];
   document.documentElement.style.setProperty("--zc",`var(${z.c})`); document.documentElement.style.setProperty("--zct",`var(${z.t})`);
@@ -1874,13 +1887,17 @@ function open(id){
   ${SUBMIT_URL?`<button type="button" class="sendnote" id="sn"><span class="tx">📮 最後まで解いたら、いちばん下の<b>「記録を送る」</b>を押してね</span><span class="ar">↓</span></button>`:""}<div id="secs"></div>`;
   warned=false;
   const vr=VIDEO.row(cur.id); if(vr) document.getElementById("vr").appendChild(vr);
+  /* 前に確かめておきたい回へ（あやしいときだけ） */
+  if(cur.back && inMihon(cur.back.to)){ const to=LESSONS.find(l=>l.id===cur.back.to); const d=el("div","vrow"); d.appendChild(el("span","vl","↩ あやしいときは：")); const b=el("button","vbtn back",`${cur.back.what} → 第${to.no}回`); b.type="button"; b.addEventListener("click",()=>{ if(remindSend()) return; open(to.id); }); d.appendChild(b); document.getElementById("vr").appendChild(d); }
+  /* 見本の「もどり先」の回：もとの回へ帰る道 */
+  if(isModori(cur.id)){ const fr=modoriFrom(cur.id); if(fr){ const d=el("div","modori-note"); d.innerHTML=`見本の「もどり先」の回。おわったら<b>第${fr.no}回</b>にもどろう。`; const b=el("button","vbtn",`→ 第${fr.no}回にもどる`); b.type="button"; b.addEventListener("click",()=>{ if(remindSend()) return; open(fr.id); }); d.appendChild(b); document.getElementById("vr").appendChild(d); } }
   document.getElementById("bk").addEventListener("click", ()=>{ if(remindSend()) return; home(); });
   const sn=document.getElementById("sn"); if(sn) sn.addEventListener("click", goSend);
   const box=document.getElementById("secs");
   cur.secs.forEach(sec=>{
     const d=el("section","sec");
     d.innerHTML=`<div class="sh"><span class="tag" style="--tg:var(${TAGC[sec.tag]||"--tg5"})">${sec.tag}</span><h2>${R(sec.title)}</h2></div>`;
-    if(sec.tag==="ふり返り" && cur.no>0) d.appendChild(el("p","lscope", VIDEO.backToL0(cur.id) ? "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る「第0回へもどる」や動画で確かめよう。" : "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る動画（はじめに、この内容のふり返りがある章）で確かめよう。"));
+    if(sec.tag==="ふり返り" && cur.no>0) d.appendChild(el("p","lscope", (VIDEO.backToL0(cur.id) && inMihon("L0")) ? "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る「第0回へもどる」や動画で確かめよう。" : "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る動画（はじめに、この内容のふり返りがある章）で確かめよう。"));
     sec.items.forEach(it=>{ const n=renderItem(it); if(n) d.appendChild(n); });
     box.appendChild(d);
   });
@@ -1905,7 +1922,7 @@ function helpRow(card, it){
   const r=el("div","helprow");
   const n=VIDEO.forSec(cur.id, it.si);
   if(n){ const v=el("button","vbtn",`🎬 動画 第${n}章で確かめる`); v.type="button"; v.addEventListener("click",()=>VIDEO.open(n)); r.appendChild(v); }
-  if(it.furi && cur.no>0 && VIDEO.backToL0(cur.id)){ const g=el("button","vbtn back","↩ 第0回へもどる"); g.type="button"; g.addEventListener("click",()=>{ if(remindSend()) return; open("L0"); }); r.appendChild(g); }
+  if(it.furi && cur.no>0 && VIDEO.backToL0(cur.id) && inMihon("L0")){ const g=el("button","vbtn back","↩ 第0回へもどる"); g.type="button"; g.addEventListener("click",()=>{ if(remindSend()) return; open("L0"); }); r.appendChild(g); }
   let km=null;
   if(QMODE==="b"){ const [kb, m]=KIKU.button(card,{src:it.id, no:cur.no, title:cur.title, kind:"問題", q:it.q}); r.appendChild(kb); km=m; }
   card.appendChild(r); if(km) card.appendChild(km);
@@ -2122,8 +2139,8 @@ function renderReflect(){
     sd.append(b, note);
   } else sd.appendChild(el("small",null,"記録はこのスマホの中に残っている。"));
   d.appendChild(sd);
-  const nx=LESSONS[LESSONS.indexOf(cur)+1];
-  if(nx){ const b=el("button","go sub",`つぎへ：第${nx.no}回 ${R(nx.title)}`); b.type="button"; b.style.marginTop="16px"; b.addEventListener("click",()=>{ if(remindSend()) return; open(nx.id); }); d.appendChild(b); }
+  const nx = isModori(cur.id) ? modoriFrom(cur.id) : SHOWN[SHOWN.indexOf(cur)+1];
+  if(nx){ const b=el("button","go sub",`${isModori(cur.id)?"もどる":"つぎへ"}：第${nx.no}回 ${R(nx.title)}`); b.type="button"; b.style.marginTop="16px"; b.addEventListener("click",()=>{ if(remindSend()) return; open(nx.id); }); d.appendChild(b); }
   setTimeout(renderSendSum,0);
   return d;
 }
