@@ -1,0 +1,2142 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>なっとく 数Ⅰ 2次関数</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6e78'/%3E%3Cpath d='M14 12 Q32 76 50 12' fill='none' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='44' r='6' fill='%23f96400' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#0f6e78">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="なっとく2次関数">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=STIX+Two+Text:ital,wght@0,400;1,400&display=swap">
+<style>
+/* Layout: one narrow column (max 560px). Lesson = stack of sections; each item is a card with its own feedback line. */
+/* なっとく 数Ⅰ 2次関数。色は「基礎講座_色の見え方_確認」（2026-11-11）の新しい配色。
+   図の色の役わり（動画と同じ）：頂点＝橙 --vx、軸＝青 --axc（破線＋「軸」）、最大・最小・値域＝緑 --mm、
+   x² の係数 a＝紫 --ca、定義域・端＝黄土 --dm、x 軸との共有点・解・D＝桃 --sol、グラフ＝黒、移動前＝灰色の破線 --old。
+   色だけで区別しない：図にはラベルの文字、正解・不正解は ○× と文字。 */
+:root{
+  --bg:#f4f5f1; --surface:#ffffff; --ink:#1b2422; --muted:#5f6d69; --line:#d8dfdb;
+  --teal:#0f6e78; --teal-soft:#e2f1f2; --orange:#c0571b; --orange-soft:#fbeee6;
+  --ok:#1f7a45; --ok-soft:#e3f3e9; --ng:#b91c1c; --ng-soft:#fdecec; --grid:#e1e6e3; --axis:#7d8a86;
+  --vx:#f96400; --axc:#2563eb; --mm:#20a66f; --ca:#5b188b; --dm:#835d08; --sol:#a50555; --old:#9aa5a1;
+  --vxt:#b84a00; --mmt:#137a50; --solt:#a50555; --cat:#5b188b; --dmt:#835d08; --axt:#2563eb;
+  --z0:#01818b; --z1:#b84a00; --z2:#157f52; --z3:#a50555;
+  --z0t:#01818b; --z1t:#b84a00; --z2t:#157f52; --z3t:#a50555;
+  --tg0:#01818b; --tg1:#2563eb; --tg2:#b84a00; --tg3:#dc2626; --tg4:#5b188b; --tg5:#5d6668;
+  --word:#20a66f; --wordt:#137a50; --word-soft:#e6f5ee;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif;
+  --f-math:"STIX Two Text","Times New Roman","DejaVu Serif",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#19211f; --ink:#e6eeeb; --muted:#9aaba6; --line:#2c3935;
+  --teal:#4fb7c2; --teal-soft:#16353a; --orange:#f08a4b; --orange-soft:#3a2418;
+  --ok:#5fcf8a; --ok-soft:#173326; --ng:#f87171; --ng-soft:#3a1c1c; --grid:#26312e; --axis:#7f908b;
+  --vx:#e95d1a; --axc:#94bcfa; --mm:#2e9c6f; --ca:#a96ff4; --dm:#e3c872; --sol:#e18bad; --old:#6f7a7c;
+  --vxt:#ef8a4f; --mmt:#5fcf8a; --solt:#e18bad; --cat:#b98af6; --dmt:#e3c872; --axt:#94bcfa;
+  --z0t:#4fb7c2; --z1t:#ef8a4f; --z2t:#5fc48a; --z3t:#e18bad;
+  --word:#2e9c6f; --wordt:#5fcf8a; --word-soft:#173326; color-scheme:dark}}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding:12px 16px 120px}
+h1,h2,h3{text-wrap:balance;margin:0}
+button{font:inherit;color:inherit}
+b{font-weight:700}
+
+/* ---- math ---- */
+.mx{font-family:var(--f-math);font-size:1.1em;white-space:nowrap}
+.mx i{font-style:italic}
+.mx .fn,.mx .tx{font-style:normal}
+.mx .fn{margin-left:.15em}
+.mx>.fn:first-child{margin-left:0}
+.mx .tx{font-family:var(--f-body);font-size:.9em}
+.mx sup,.mx sub{font-size:.68em;line-height:0}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.12;margin:0 .1em;font-size:.9em}
+.fr>span{display:block;padding:0 .12em}
+.fr>span:first-child{border-bottom:.07em solid currentColor}
+.rt{white-space:nowrap;display:inline-flex;align-items:flex-start}
+.rt .rs{margin-right:-.02em}
+.rt .ra{border-top:.07em solid currentColor;padding:0 .08em;margin-top:.12em;line-height:1.2}
+.rt .ri{font-size:.58em;margin-right:-.35em;margin-top:.05em}
+.ss,.il{display:inline-flex;flex-direction:column;vertical-align:middle;font-size:.62em;line-height:1.15;margin-left:.05em}
+.ig{font-size:1.25em;vertical-align:-.12em}
+.il{margin-left:-.05em}
+.lim{display:inline-flex;flex-direction:column;align-items:center;vertical-align:-.45em;line-height:1.05;margin-right:.15em}
+.lim .lu{font-size:.62em}
+.bk{font-size:1.15em}
+.mx .sp{margin-right:.08em}
+
+/* ---- top bar ---- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:12px}
+.bar .back{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;cursor:pointer;white-space:nowrap}
+.bar .ttl{font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .sc{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted);white-space:nowrap}
+.streak{font-size:13px;font-weight:700;color:var(--orange);white-space:nowrap}
+
+/* ---- home ---- */
+.hero{padding:18px 0 4px}
+.hero .eb{font-size:13px;letter-spacing:.12em;color:var(--teal);font-weight:700}
+.hero h1{font-size:38px;font-weight:900;line-height:1.1;margin-top:4px}
+.hero h1 small{display:block;font-size:15px;font-weight:700;color:var(--muted);margin-top:6px;letter-spacing:.04em}
+.hero p{color:var(--muted);margin:10px 0 0}
+.who{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0;display:grid;gap:10px}
+.who label{font-size:13px;color:var(--muted);display:block;margin-bottom:2px}
+.who input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.whynote{font-size:12px;color:var(--muted)}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 8px}
+.links a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--teal);font-weight:700;border:1.5px solid var(--teal);border-radius:999px;padding:6px 14px;font-size:14px}
+.zone{margin-top:24px}
+.zh{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.zh .zn{font-size:22px;font-weight:900}
+.zh .zs{font-size:13px;color:var(--muted)}
+.zh .zst{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lessons{display:grid;gap:10px}
+.lcard{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;width:100%}
+.lcard .no{grid-row:span 2;width:50px;height:50px;border-radius:14px;color:#fff;display:grid;place-items:center;font-weight:900;font-size:20px;line-height:1}
+.lcard .no small{display:block;font-size:10px;font-weight:700;letter-spacing:.06em}
+.lcard .t{font-weight:700;font-size:16px;line-height:1.35}
+.lcard .meta{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);grid-column:2}
+.lcard .stars{grid-row:span 2;grid-column:3;font-size:15px;letter-spacing:-.05em;color:var(--line)}
+.lcard .stars .on{color:#e0a020}
+.track{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.track span{display:block;height:100%}
+.pill.warn{background:var(--orange-soft);color:var(--orange)}
+.pill{font-size:12px;border-radius:99px;padding:1px 8px;background:var(--ok-soft);color:var(--ok);font-weight:700;white-space:nowrap}
+.note{font-size:13px;color:var(--muted);margin-top:22px}
+
+/* ---- lesson ---- */
+.goal{border:1.5px solid var(--zc);background:color-mix(in srgb,var(--zc) 8%,var(--surface));border-radius:12px;padding:10px 12px;font-size:15px}
+.goal b{color:var(--zct)}
+.sec{margin-top:26px}
+.sh{display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--zc,var(--teal));padding-bottom:4px;margin-bottom:10px}
+.tag{color:#fff;font-weight:700;font-size:13px;border-radius:99px;padding:1px 10px;white-space:nowrap}
+.sh h2{font-size:17px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.card.info{border-color:var(--teal)}
+.card.info .k{font-weight:700;color:var(--teal);font-size:13px;display:block}
+.card.nazo{border:2px dashed var(--orange);background:var(--orange-soft)}
+.card.nazo .k{color:var(--orange)}
+.card.boss{border:2px solid var(--tg4);background:color-mix(in srgb,var(--tg4) 7%,var(--surface))}
+.card.boss .k{color:var(--cat)}
+.card.word{border-color:var(--word);border-width:2px;background:var(--word-soft)}
+.card.word .k{color:var(--wordt)}
+.q{font-weight:700;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{min-height:44px;min-width:56px;padding:6px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);cursor:pointer;font-size:17px}
+.opt.sel{border-color:var(--teal);background:var(--teal-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--ng);background:var(--ng-soft)}
+.opt.wrong::after{content:" ×";font-weight:900;color:var(--ng)}
+.opt.right::after{content:" ○";font-weight:900;color:var(--ok)}
+.opt:disabled{cursor:default}
+.go{margin-top:10px;min-height:44px;padding:8px 20px;border:none;border-radius:12px;background:var(--teal);color:#fff;font-weight:700;cursor:pointer}
+.go.sub{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.go:disabled{opacity:.4;cursor:default}
+.fb{min-height:1.2em;margin-top:8px;font-size:15px}
+.fb.ok{color:var(--ok);font-weight:700}
+.fb.ng{color:var(--ng);font-weight:700}
+.fb .hint{display:block;font-weight:400;color:var(--muted)}
+.why{margin-top:8px;font-size:14px;color:var(--ink);background:var(--ok-soft);border-radius:10px;padding:8px 10px}
+.why::before{content:"なるほど　";font-weight:700;color:var(--ok)}
+.reveal{margin-top:6px;font-size:14px;background:none;border:none;color:var(--teal);text-decoration:underline;cursor:pointer;padding:4px 0}
+.cls{display:grid;gap:8px}
+.cls .r{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}
+.cls .r:last-child{border-bottom:none}
+.cls .opts{flex-wrap:nowrap}
+textarea{width:100%;min-height:76px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);resize:vertical}
+
+/* ---- fill-in with keypad ---- */
+.fillrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.abox{min-width:7em;min-height:46px;padding:6px 12px;border:2px solid var(--line);border-radius:12px;background:var(--bg);font-family:var(--f-math);font-size:20px;display:inline-flex;align-items:center;cursor:text;flex:0 1 auto}
+.abox.act{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+.abox.done{border-color:var(--ok);background:var(--ok-soft);cursor:default}
+.abox .ph{color:var(--muted);font-family:var(--f-body);font-size:14px}
+.abox .cur{display:inline-block;width:2px;height:1.1em;background:var(--teal);margin-left:1px;vertical-align:middle}
+@media (prefers-reduced-motion:no-preference){.abox .cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}}
+.abox sup{font-size:.62em}
+.kp{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.12);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.kp .in{max-width:560px;margin:0 auto}
+.kp .prev{display:flex;align-items:center;gap:8px;padding:0 4px 6px;font-size:13px;color:var(--muted)}
+.kp .prev .abox{min-height:38px;font-size:18px;flex:1}
+.kp .keys{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.kp button{min-height:46px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:19px;cursor:pointer;font-family:var(--f-math)}
+.kp button.fx{font-family:var(--f-body);font-size:15px;font-weight:700}
+.kp button.ent{background:var(--teal);color:#fff;border-color:var(--teal);grid-column:span 2}
+.kp button.cls2{color:var(--muted)}
+.kp button.op{background:var(--teal-soft)}
+.kp .kpgap{visibility:hidden}
+.kp .kph{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);padding:0 2px 6px}
+.kp .kpclose{min-height:32px;border:none;background:none;font-family:var(--f-body);font-size:13px;color:var(--teal);font-weight:700;padding:0 6px}
+
+/* ---- figures / widgets ---- */
+.fig{text-align:center;margin:6px 0}
+.fig svg{max-width:100%;height:auto}
+.wg{background:var(--surface);border:1.5px solid var(--zc,var(--teal));border-radius:14px;padding:10px 12px;margin:10px 0}
+.wg .wt{font-size:13px;font-weight:700;color:var(--zct,var(--teal));margin-bottom:4px}
+.wg svg{width:100%;height:auto;display:block;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ro{font-size:15px;margin-top:6px;font-variant-numeric:tabular-nums;line-height:1.6}
+.ro .big{font-size:20px;font-weight:900}
+.ro table{border-collapse:collapse;margin:4px auto;font-size:14px}
+.ro td,.ro th{border:1px solid var(--line);padding:2px 8px;text-align:right}
+.ro th{background:var(--bg);font-weight:700}
+.sl{display:grid;grid-template-columns:auto 1fr 4.6em;align-items:center;gap:10px;margin-top:6px}
+.sl label{font-size:14px;font-weight:700;white-space:nowrap}
+.sl output{font-variant-numeric:tabular-nums;text-align:right;font-weight:700}
+input[type=range]{width:100%;height:32px;accent-color:var(--teal);margin:0}
+.wbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.wbtns button{min-height:44px;padding:6px 14px;border-radius:12px;border:1.5px solid var(--teal);background:var(--teal-soft);color:var(--teal);font-weight:700;cursor:pointer}
+.wbtns button.on{background:var(--teal);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{min-width:3.4em;padding:6px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);cursor:pointer;font-variant-numeric:tabular-nums;font-size:15px}
+.chip.on{border-color:var(--teal);background:var(--teal-soft);font-weight:700}
+.chip small{display:block;font-size:11px;color:var(--muted)}
+
+/* ---- reflection & send ---- */
+.rate{display:flex;gap:10px}
+.rate .opt{font-size:22px;min-width:64px}
+.send{background:var(--surface);border:2px solid var(--teal);border-radius:16px;padding:14px;margin-top:22px}
+.send .sum{font-size:15px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.send a.go{display:inline-block;text-decoration:none;text-align:center}
+.send small{display:block;color:var(--muted);margin-top:8px}
+.clear{display:none;text-align:center;margin:18px 0 0}
+.clear.on{display:block}
+.clear .stamp{display:inline-block;border:4px solid var(--orange);color:var(--orange);font-weight:900;font-size:28px;letter-spacing:.2em;padding:4px 18px;border-radius:12px;transform:rotate(-6deg)}
+@media (prefers-reduced-motion:no-preference){.clear.on .stamp{animation:st .5s cubic-bezier(.2,1.6,.4,1)}@keyframes st{from{transform:rotate(-6deg) scale(2);opacity:0}}}
+.toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:30;background:var(--ink);color:var(--bg);font-weight:700;border-radius:14px;padding:8px 16px;font-size:14px;line-height:1.5;text-align:center;width:max-content;max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:.92}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+.sendnote{display:flex;align-items:center;gap:6px;width:100%;text-align:left;margin-top:8px;padding:8px 12px;border-radius:12px;border:1.5px dashed var(--teal);background:var(--surface);color:var(--ink);font-size:14px;cursor:pointer}
+.sendnote b{color:var(--teal)}
+.sendnote .tx{flex:1;min-width:0}
+.sendnote .ar{color:var(--teal);font-weight:700}
+.send.need{border-color:var(--orange);box-shadow:0 0 0 4px var(--orange-soft)}
+.clear p{margin:8px 0 0;font-weight:700;color:var(--orange)}
+
+/* ---- 手書きメモ ---- */
+.memofab{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:15;border:none;border-radius:999px;padding:12px 18px;background:var(--orange);color:#fff;font-weight:700;font-size:15px;box-shadow:0 4px 14px rgba(0,0,0,.22);cursor:pointer}
+.memofab.hid{display:none}
+.memo{position:fixed;left:0;right:0;bottom:0;height:46vh;z-index:25;background:var(--surface);border-top:2px solid var(--orange);box-shadow:0 -8px 24px rgba(0,0,0,.16);display:none;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
+.memo.on{display:flex}
+.memo.big{height:72vh}
+.memo .mbar{display:grid;grid-template-columns:1.15fr 1.15fr 1.2fr 1.15fr .6fr 1fr;gap:4px;padding:6px 8px;flex:0 0 auto;max-width:560px;width:100%;margin:0 auto}
+.memo .mbar button{min-width:0;min-height:42px;padding:2px 2px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);font-size:13px;cursor:pointer;white-space:nowrap;overflow:hidden}
+.memo .mbar button.on{border-color:var(--orange);background:var(--orange-soft);font-weight:700}
+.memo .mbar .mclose{color:var(--teal);font-weight:700;border-color:var(--teal)}
+.memo .mcv{flex:1 1 auto;min-height:0;margin:0 8px 8px;border-radius:10px;border:1px solid var(--line);overflow:hidden;
+  background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px}
+.memo canvas{display:block;touch-action:none;cursor:crosshair}
+
+/* ---- なんで？ ---- */
+.askcard{border:2px solid var(--tg4)}
+.askcard>.q{color:var(--cat)}
+.asknote{display:block;color:var(--muted);font-size:12px;margin:-4px 0 8px}
+.qtypes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--ink);text-align:left}
+.qtypes .chip{border-color:var(--tg4);color:var(--cat);background:var(--surface)}
+.qalist{display:grid;gap:12px;margin-top:12px}
+.qa{display:grid;gap:6px}
+.qq{justify-self:end;max-width:92%;background:var(--teal-soft);border-radius:14px 14px 4px 14px;padding:8px 12px;font-size:15px}
+.qq span{margin-right:4px}
+.qr{max-width:96%;background:var(--bg);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:15px}
+.qr p{margin:0;white-space:pre-wrap}
+.qk{font-weight:700;color:var(--cat);font-size:13px;margin-bottom:2px}
+.qc{margin-top:6px;padding:6px 10px;border-radius:10px;background:var(--orange-soft);font-size:14px}
+.qc b{color:var(--orange);margin-right:4px}
+.qt{max-width:96%;background:var(--ok-soft);border-radius:14px;padding:8px 12px;font-size:15px;white-space:pre-wrap}
+.qt b{display:block;color:var(--ok);font-size:13px}
+.qn{display:flex;flex-wrap:wrap;gap:6px}
+.qn small{width:100%;color:var(--muted);font-size:12px}
+.qhead{font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 4px}
+@media (prefers-reduced-motion:no-preference){.dots::after{content:"…";animation:dt 1s steps(3) infinite}@keyframes dt{0%{content:"."}33%{content:".."}66%{content:"..."}}}
+
+.gbtn{justify-self:start;display:inline-block;text-decoration:none;font-size:14px;font-weight:700;color:var(--teal);border:1.5px solid var(--teal);border-radius:999px;padding:6px 14px;background:var(--surface)}
+.qnote{display:grid;gap:4px}
+.qnote small{color:var(--muted);font-size:12px}
+.qnote textarea{min-height:56px}
+.qnote .go{margin-top:0;justify-self:start;min-height:38px;padding:4px 16px}
+.qf{background:var(--teal-soft)}
+.qf b{color:var(--teal)}
+
+/* ---- よくある「なんで？」 ---- */
+.whycard{border:1.5px dashed var(--tg4)}
+.whycard .wq{font-weight:700;color:var(--ink)}
+.whycard .go{margin-top:8px}
+.whycard .wa p{margin:8px 0 0}
+
+/* ---- 返事の通知・記録の引っ越し ---- */
+.pushcard{border:1.5px solid var(--teal)}
+.pushcard .pnote{margin:4px 0;font-size:14px;color:var(--muted)}
+.pushcard .okc{color:var(--ok)}
+.psteps{margin:4px 0 6px;padding-left:1.4em;font-size:14px}
+.psteps li{margin:3px 0}
+.move{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+.move summary{cursor:pointer;font-size:14px;color:var(--teal);font-weight:700}
+.mvrow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.mvrow .go{margin-top:0}
+.mvrow input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:9em;letter-spacing:.15em;text-transform:uppercase}
+.mvcode{font-family:var(--f-math);font-size:26px;font-weight:700;letter-spacing:.2em;color:var(--teal)}
+
+
+/* ===== なっとく 2次関数で足したもの ===== */
+.zh .zn{color:var(--zt)}
+.howto{background:var(--surface);border:1.5px solid var(--teal);border-radius:14px;padding:10px 14px;margin:12px 0}
+.howto .ht{font-weight:900;color:var(--teal)}
+.howto ul{margin:4px 0 0;padding-left:1.2em;font-size:14px}
+.howto li{margin:3px 0}
+.ptag{display:inline-block;color:#fff;font-weight:700;font-size:12px;border-radius:6px;padding:0 6px;margin:0 2px}
+.ptag.g{background:#137a50}.ptag.o{background:#b84a00}
+.entry{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 4px}
+.entry button{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 6px;font-size:13px;font-weight:700;cursor:pointer;line-height:1.35;min-height:58px}
+.entry button small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.links a.off{border-style:dashed;color:var(--muted);border-color:var(--line)}
+.vrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:14px}
+.vrow .vl{color:var(--muted);font-weight:700;font-size:13px}
+.vbtn{border:1.5px solid var(--teal);background:var(--surface);color:var(--teal);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;cursor:pointer;text-align:left}
+.helprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.helprow .vbtn{font-size:13px}
+.vbtn.back{border-color:var(--tg0);color:var(--z0t)}
+.vbtn.kiku{border-color:var(--tg4);color:var(--cat)}
+.vbtn.done{border-style:dashed;cursor:default}
+.kmemo{margin-top:6px}
+.kmemo textarea{min-height:48px}
+.vmodal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.vmodal .vbox{background:var(--surface);border-radius:16px;width:min(560px,100%);padding:12px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.vmodal .vh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.vmodal .vh b{flex:1;font-size:15px}
+.vmodal .vh button{border:none;background:var(--teal);color:#fff;border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer}
+.vmodal .vframe{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
+.vmodal iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vmodal .vprep{position:absolute;inset:0;display:grid;place-items:center;color:#fff;text-align:center;padding:16px;font-size:15px;line-height:1.7}
+.vmodal .vnote{font-size:12px;color:var(--muted);margin-top:6px}
+.vlist{display:grid;gap:8px;margin-top:8px}
+.vlist button{display:grid;grid-template-columns:4.2em 1fr;gap:8px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;cursor:pointer;font-size:15px}
+.vlist button b{color:var(--teal)}
+.vlist .vu{font-size:12px;color:var(--muted);grid-column:2}
+.kiku-banner{background:var(--orange-soft);border:1.5px solid var(--orange);border-radius:12px;padding:8px 12px;margin:10px 0;font-weight:700;font-size:14px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.kcard .kq{font-size:17px;font-weight:700;line-height:1.6}
+.kcard .km{font-size:13px;color:var(--muted)}
+.kcard.done{opacity:.55}
+.kcard .krow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.kcard .krow button{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:4px 12px;cursor:pointer;font-size:14px}
+.kdate{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px}
+.kdate input{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.fbox{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-family:var(--f-math);font-size:19px}
+.fbox .abox{min-width:3.6em;font-size:19px;min-height:42px;padding:4px 8px}
+.abox.ngbox{border-color:var(--ng);background:var(--ng-soft)}
+.credit{text-align:center;font-size:13px;color:var(--muted);margin:30px 0 0}
+.lscope{font-size:12px;color:var(--muted)}
+.sh .tag{background:var(--tg)}
+/* 図の中のラベル */
+.wg svg text{font-family:var(--f-body)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin-top:4px}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{display:inline-block;width:18px;height:0;border-top:3px solid currentColor}
+.legend i.d{border-top-style:dashed}
+.legend i.dot{width:10px;height:10px;border-radius:50%;border:none;background:currentColor}
+
+</style>
+</head><body>
+<div class="wrap" id="app"></div>
+<script>
+/* ===== ミニ数式記法 → HTML =====
+   本文中の $ ... $ の中だけを数式として変換する。コマンドは「@」で始める（JS の \ エスケープを避けるため）。
+   @frac{a}{b}  分数        @sqrt{x} @sqrt[3]{x}  根号
+   x^{..} x^2   上つき       x_{..} x_2  下つき（両方つくと縦に重ねる）
+   @log @sin @cos @tan @lim_{h@to 0}  関数名      @int_a^b  積分記号
+   @pi @theta @alpha @beta @to @le @ge @times @cdot @infty  記号
+   @[ @]  大かっこ（[F(x)]_a^b 用）   @text{...} ふつうの文字
+   英字はイタリック、数字・記号はそのまま。 */
+const TEX = (() => {
+  const SYM = {pi:"π", theta:"θ", alpha:"α", beta:"β", to:"→", le:"≦", ge:"≧", times:"×", div:"÷",
+               cdot:"·", infty:"∞", pm:"±", ne:"≠", fallingdotseq:"≒", approx:"≒", deg:"°"};
+  const FN = {log:1, sin:1, cos:1, tan:1};
+  function parse(s){
+    let i = 0;
+    function group(){ // {...} or single token
+      while(s[i]===" ") i++;
+      if(s[i]==="{"){ i++; const out=seq("}"); i++; return out; }
+      if(s[i]==="@"){ return atom(); }
+      const c=s[i++]; return tok(c);
+    }
+    function tok(c){
+      if(c===undefined) return "";
+      if(/[a-zA-Z]/.test(c)) return `<i>${c}</i>`;
+      if(c==="-") return "−";
+      if(c==="<") return "&lt;";
+      if(c===">") return "&gt;";
+      if(c==="&") return "&amp;";
+      if(c===" ") return "";
+      return c;
+    }
+    function scripts(base){
+      let sup=null, sub=null;
+      for(;;){
+        if(s[i]==="^" && sup===null){ i++; sup=group(); continue; }
+        if(s[i]==="_" && sub===null){ i++; sub=group(); continue; }
+        break;
+      }
+      if(sup!==null && sub!==null) return base+`<span class="ss"><span>${sup}</span><span>${sub}</span></span>`;
+      if(sup!==null) return base+`<sup>${sup}</sup>`;
+      if(sub!==null) return base+`<sub>${sub}</sub>`;
+      return base;
+    }
+    function atom(){
+      // s[i] === "@"
+      i++;
+      if(s[i]==="["){ i++; return "<span class=\"bk\">[</span>"; }
+      if(s[i]==="]"){ i++; return scripts("<span class=\"bk\">]</span>"); }
+      let name=""; while(i<s.length && /[a-zA-Z]/.test(s[i])) name+=s[i++];
+      if(name==="frac"){ const a=group(), b=group(); return `<span class="fr"><span>${a}</span><span>${b}</span></span>`; }
+      if(name==="sqrt"){
+        let idx="";
+        if(s[i]==="["){ i++; idx=seq("]"); i++; }
+        const a=group();
+        return `<span class="rt">${idx?`<span class="ri">${idx}</span>`:""}<span class="rs">√</span><span class="ra">${a}</span></span>`;
+      }
+      if(name==="text"){ i++; let t=""; while(i<s.length && s[i]!=="}") t+=s[i++]; i++; return `<span class="tx">${t}</span>`; }
+      if(name==="lim"){
+        let sub=""; if(s[i]==="_"){ i++; sub=group(); }
+        return `<span class="lim"><span>lim</span><span class="lu">${sub}</span></span>`;
+      }
+      if(name==="int"){
+        let sup=null, sub=null;
+        for(;;){ if(s[i]==="^"&&sup===null){i++; sup=group(); continue;} if(s[i]==="_"&&sub===null){i++; sub=group(); continue;} break; }
+        const lim = (sup!==null||sub!==null) ? `<span class="il"><span>${sup||""}</span><span>${sub||""}</span></span>` : "";
+        return `<span class="ig">∫</span>${lim}`;
+      }
+      if(FN[name]) return scripts(`<span class="fn">${name}</span>`)+"<span class=\"sp\"> </span>";
+      if(SYM[name]) return scripts(SYM[name]);
+      return name; // unknown: print as is
+    }
+    function seq(end){
+      let out="";
+      while(i<s.length && s[i]!==end){
+        if(s[i]==="@"){ out+=scripts(atom()); continue; }
+        if(s[i]==="{"){ i++; out+=seq("}"); i++; continue; }
+        const c=s[i++];
+        out+=scripts(tok(c));
+      }
+      return out;
+    }
+    return seq(undefined);
+  }
+  function render(str){
+    if(str==null) return "";
+    str=String(str);
+    let out="", k=0;
+    while(k<str.length){
+      const a=str.indexOf("$",k);
+      if(a<0){ out+=str.slice(k); break; }
+      const b=str.indexOf("$",a+1);
+      if(b<0){ out+=str.slice(k); break; }
+      out+=str.slice(k,a)+`<span class="mx">${parse(str.slice(a+1,b))}</span>`;
+      k=b+1;
+    }
+    return out;
+  }
+  return {render, parse};
+})();
+
+
+
+/* ===== 生徒の入力（式）を読んで値を出す =====
+   使える文字：数字 . + − × ÷ / ^ ( ) √ π x C ² ³
+   √ は直後の数・かっこ・π・x にかかる（√2/2 = (√2)/2、√(3)x = √3·x）。
+   かけ算記号は省略してよい（2π、3x^2、2√3）。 */
+const EXPR = (() => {
+  function norm(s){
+    return String(s).replace(/\s+/g,"")
+      .replace(/[−ー－―‐]/g,"-").replace(/[＋]/g,"+").replace(/[×＊*]/g,"*").replace(/[÷／]/g,"/")
+      .replace(/[（]/g,"(").replace(/[）]/g,")").replace(/[ｘＸX]/g,"x").replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248))
+      .replace(/．/g,".").replace(/²/g,"^2").replace(/³/g,"^3").replace(/sqrt/g,"√").replace(/pi/g,"π");
+  }
+  function tokenize(s){
+    const t=[]; let i=0;
+    while(i<s.length){
+      const c=s[i];
+      if(/[0-9.]/.test(c)){ let n=""; while(i<s.length && /[0-9.]/.test(s[i])) n+=s[i++]; if((n.match(/\./g)||[]).length>1) throw 0; t.push({k:"n",v:parseFloat(n)}); continue; }
+      if("+-*/^()√πxC".includes(c)){ t.push({k:c}); i++; continue; }
+      throw 0;
+    }
+    return t;
+  }
+  function compile(src){
+    const t=tokenize(norm(src)); let p=0;
+    const peek=()=>t[p], take=()=>t[p++];
+    const startsPrimary=k=>k && (k.k==="n"||k.k==="("||k.k==="√"||k.k==="π"||k.k==="x"||k.k==="C");
+    function expr(){ let a=term(); while(peek()&&(peek().k==="+"||peek().k==="-")){ const op=take().k, b=term(), L=a; a = op==="+" ? (x=>L(x)+b(x)) : (x=>L(x)-b(x)); } return a; }
+    function term(){
+      let a=unary();
+      for(;;){
+        const k=peek();
+        if(k&&(k.k==="*"||k.k==="/")){ take(); const b=unary(), L=a; a = k.k==="*" ? (x=>L(x)*b(x)) : (x=>L(x)/b(x)); continue; }
+        if(startsPrimary(k)){ const b=power(), L=a; a=x=>L(x)*b(x); continue; }
+        return a;
+      }
+    }
+    function unary(){ if(peek()&&peek().k==="-"){ take(); const a=unary(); return x=>-a(x); } if(peek()&&peek().k==="+"){ take(); return unary(); } return power(); }
+    function power(){ const b=primary(); if(peek()&&peek().k==="^"){ take(); const e=unary(); return x=>Math.pow(b(x),e(x)); } return b; }
+    function primary(){
+      const k=take(); if(!k) throw 0;
+      if(k.k==="n"){ const v=k.v; return ()=>v; }
+      if(k.k==="π") return ()=>Math.PI;
+      if(k.k==="x") return x=>x;
+      if(k.k==="C") return ()=>0;
+      if(k.k==="("){ const a=expr(); if(!peek()||take().k!==")") throw 0; return a; }
+      if(k.k==="√"){ const a=power(); return x=>Math.sqrt(a(x)); }
+      throw 0;
+    }
+    const f=expr(); if(p!==t.length) throw 0; return f;
+  }
+  function value(src, x){ try{ const v=compile(src)(x===undefined?1.2345:x); return Number.isFinite(v)?v:NaN; }catch(e){ return NaN; } }
+  function close(a,b){ return Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<=1e-9*Math.max(1,Math.abs(b)); }
+  const XS=[-1.7, -0.6, 0.35, 1.3, 2.71];
+  /* 判定。opt.x=true なら x の式として比べる。opt.c=true なら「+C」が必要 */
+  function same(input, ans, opt){
+    opt=opt||{};
+    let s=norm(input); if(!s) return {ok:false, empty:true};
+    if(opt.c){
+      if(!/\+C$/.test(s)) return {ok:false, noC:/C/.test(s)?false:true, bad:false, needC:true, core:checkCore(s.replace(/C/g,""),ans,opt)};
+      s=s.replace(/\+C$/,"");
+    }
+    if(/C/.test(s)) return {ok:false};
+    return {ok:checkCore(s,norm(ans).replace(/\+C$/,""),opt)};
+  }
+  function checkCore(s, a, opt){
+    try{ compile(s); }catch(e){ return false; }
+    if(opt.x) return XS.every(x=>close(value(s,x), value(a,x)));
+    if(/x/.test(s)) return false;
+    return close(value(s), value(a));
+  }
+  function valid(input){ try{ compile(input); return true; }catch(e){ return false; } }
+  /* 入力の見た目（^ を上つきに） */
+  function pretty(input){
+    const s=String(input).replace(/\*/g,"×");
+    let out="", i=0;
+    const esc=c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]||c);
+    while(i<s.length){
+      const c=s[i];
+      if(c==="^"){
+        i++; let g="";
+        if(s[i]==="("){ let d=0; do{ if(s[i]==="(")d++; if(s[i]===")")d--; g+=s[i++]; }while(i<s.length&&d>0); }
+        else { if(s[i]==="-") g+=s[i++]; while(i<s.length&&/[0-9.xπ]/.test(s[i])) g+=s[i++]; }
+        out+=`<sup>${g.split("").map(esc).join("")||"□"}</sup>`; continue;
+      }
+      if(c==="x"||c==="C") { out+=`<i>${c}</i>`; i++; continue; }
+      if(c==="-") { out+="−"; i++; continue; }
+      out+=esc(c); i++;
+    }
+    return out;
+  }
+  return {value, same, valid, pretty, norm, compile};
+})();
+
+
+
+
+/* ===== 動く図（ウィジェット） =====
+   W.name(box) で box の中に図・スライダー・読み取り欄をつくる。
+   座標は数学の向き（y が上）。色は CSS 変数（--vx 頂点, --axc 軸, --mm 最大・最小, --ca a, --dm 定義域, --sol 共有点）。 */
+const W = (() => {
+  const R = s => TEX.render(s);
+  const fx = (v, d=3) => { if(!Number.isFinite(v)) return "—"; const r=Math.round(v*10**d)/10**d; return (Object.is(r,-0)?0:r).toLocaleString("ja-JP",{maximumFractionDigits:d}).replace("-","−"); };
+
+  function Plot(o){
+    const w=o.w||340, h=o.h||240, pad=o.pad==null?22:o.pad;
+    const {x0,x1,y0,y1}=o;
+    const sx=x=>pad+(x-x0)/(x1-x0)*(w-2*pad), sy=y=>h-pad-(y-y0)/(y1-y0)*(h-2*pad);
+    const P=[];
+    const api={
+      sx, sy, w, h,
+      grid(dx,dy){ for(let x=Math.ceil(x0/dx)*dx;x<=x1+1e-9;x+=dx) P.push(`<line x1="${sx(x)}" y1="${sy(y0)}" x2="${sx(x)}" y2="${sy(y1)}" style="stroke:var(--grid)" stroke-width="1"/>`);
+                   for(let y=Math.ceil(y0/dy)*dy;y<=y1+1e-9;y+=dy) P.push(`<line x1="${sx(x0)}" y1="${sy(y)}" x2="${sx(x1)}" y2="${sy(y)}" style="stroke:var(--grid)" stroke-width="1"/>`); return api; },
+      axes(xl="x", yl="y"){
+        if(y0<=0&&y1>=0) P.push(`<line x1="${sx(x0)}" y1="${sy(0)}" x2="${sx(x1)}" y2="${sy(0)}" style="stroke:var(--axis)" stroke-width="1.4"/>`, `<polygon points="${sx(x1)},${sy(0)} ${sx(x1)-7},${sy(0)-4} ${sx(x1)-7},${sy(0)+4}" style="fill:var(--axis)"/>`);
+        if(x0<=0&&x1>=0) P.push(`<line x1="${sx(0)}" y1="${sy(y0)}" x2="${sx(0)}" y2="${sy(y1)}" style="stroke:var(--axis)" stroke-width="1.4"/>`, `<polygon points="${sx(0)},${sy(y1)} ${sx(0)-4},${sy(y1)+7} ${sx(0)+4},${sy(y1)+7}" style="fill:var(--axis)"/>`);
+        if(xl&&y0<=0&&y1>=0) api.text(x1,0,xl,"var(--muted)",13,"end",-2,14,true);
+        if(yl&&x0<=0&&x1>=0) api.text(0,y1,yl,"var(--muted)",13,"start",6,10,true);
+        return api; },
+      xt(list){ list.forEach(([v,l])=>{ P.push(`<line x1="${sx(v)}" y1="${sy(0)-3}" x2="${sx(v)}" y2="${sy(0)+3}" style="stroke:var(--axis)"/>`); api.text(v,0,l,"var(--muted)",11,"middle",0,15); }); return api; },
+      yt(list){ list.forEach(([v,l])=>{ P.push(`<line x1="${sx(0)-3}" y1="${sy(v)}" x2="${sx(0)+3}" y2="${sy(v)}" style="stroke:var(--axis)"/>`); api.text(0,v,l,"var(--muted)",11,"end",-5,4); }); return api; },
+      curve(f,color,width=2.5,opt={}){
+        const a=opt.a==null?x0:opt.a, b=opt.b==null?x1:opt.b, n=opt.n||240; let d="", pen=false, prev=null;
+        const lim=(y1-y0)*3;
+        for(let k=0;k<=n;k++){ const x=a+(b-a)*k/n, y=f(x);
+          const okk=Number.isFinite(y)&&y>y0-lim&&y<y1+lim && !(prev!==null && Math.abs(y-prev)>(y1-y0)*1.5);
+          if(okk){ d+=(pen?"L":"M")+sx(x).toFixed(1)+" "+sy(y).toFixed(1)+" "; pen=true; } else pen=false;
+          prev=Number.isFinite(y)?y:null; }
+        P.push(`<path d="${d}" fill="none" style="stroke:${color}" stroke-width="${width}" stroke-linejoin="round" stroke-linecap="round" ${opt.dash?`stroke-dasharray="${opt.dash}"`:""}/>`); return api; },
+      seg(xa,ya,xb,yb,color,width=2,dash){ P.push(`<line x1="${sx(xa)}" y1="${sy(ya)}" x2="${sx(xb)}" y2="${sy(yb)}" style="stroke:${color}" stroke-width="${width}" stroke-linecap="round" ${dash?`stroke-dasharray="${dash}"`:""}/>`); return api; },
+      dot(x,y,color,r=5){ P.push(`<circle cx="${sx(x)}" cy="${sy(y)}" r="${r}" style="fill:${color}"/>`); return api; },
+      ring(x,y,color,r=5){ P.push(`<circle cx="${sx(x)}" cy="${sy(y)}" r="${r}" style="fill:var(--surface);stroke:${color}" stroke-width="2"/>`); return api; },
+      text(x,y,s,color,size=13,anchor="start",dx=0,dy=0,it){ P.push(`<text x="${sx(x)+dx}" y="${sy(y)+dy}" text-anchor="${anchor}" style="fill:${color};font-size:${size}px;font-family:var(--f-math);${it?"font-style:italic;":""}paint-order:stroke;stroke:var(--surface);stroke-width:3px">${s}</text>`); return api; },
+      poly(pts,color,op=.25){ P.push(`<polygon points="${pts.map(([x,y])=>sx(x)+","+sy(y)).join(" ")}" style="fill:${color};fill-opacity:${op}"/>`); return api; },
+      raw(s){ P.push(s); return api; },
+      circle(cx,cy,r,color,width=2,dash){ P.push(`<ellipse cx="${sx(cx)}" cy="${sy(cy)}" rx="${Math.abs(sx(cx+r)-sx(cx))}" ry="${Math.abs(sy(cy+r)-sy(cy))}" fill="none" style="stroke:${color}" stroke-width="${width}" ${dash?`stroke-dasharray="${dash}"`:""}/>`); return api; },
+      arc(cx,cy,r,t0,t1,color,width=2){ const n=Math.max(8,Math.ceil(Math.abs(t1-t0)/0.05)); let d=""; for(let k=0;k<=n;k++){ const t=t0+(t1-t0)*k/n; d+=(k?"L":"M")+sx(cx+r*Math.cos(t)).toFixed(1)+" "+sy(cy+r*Math.sin(t)).toFixed(1)+" "; } P.push(`<path d="${d}" fill="none" style="stroke:${color}" stroke-width="${width}" stroke-linecap="round"/>`); return api; },
+      svg(){ return `<svg viewBox="0 0 ${w} ${h}" role="img">${P.join("")}</svg>`; }
+    };
+    return api;
+  }
+
+  function frame(box, title){
+    const wg=el("div","wg"); wg.innerHTML=`<div class="wt">${title}</div>`;
+    const fig=el("div"), ctl=el("div"), ro=el("div","ro");
+    wg.append(fig, ctl, ro); box.appendChild(wg); return {wg, fig, ctl, ro};
+  }
+  function slider(label, min, max, step, val, fmt, on){
+    const d=el("div","sl"); const id="s"+Math.random().toString(36).slice(2,8);
+    d.innerHTML=`<label for="${id}">${label}</label><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${val}"><output></output>`;
+    const inp=d.querySelector("input"), out=d.querySelector("output");
+    out.innerHTML=fmt(parseFloat(val));
+    const upd=()=>{ const v=parseFloat(inp.value); out.innerHTML=fmt(v); on(v); };
+    inp.addEventListener("input",()=>{ upd(); if(typeof touch==="function") touch(); });
+    d.init=upd; return d;
+  }
+  function listSlider(label, vals, labs, idx, on){
+    return slider(label, 0, vals.length-1, 1, idx, i=>labs[i], i=>on(vals[i], i));
+  }
+  function buttons(defs){ const d=el("div","wbtns"); defs.forEach(([t,f])=>{ const b=el("button",null,t); b.type="button"; b.addEventListener("click",()=>{ f(b); if(typeof touch==="function") touch(); }); d.appendChild(b); }); return d; }
+
+  /* ---------- 2次関数の図で使う部品 ---------- */
+  const num = v => fx(v,2);                       // 表示用の数（−、小数2けたまで）
+  const tnum = v => { const s=fx(Math.abs(v),2); return s; };
+  /* 日本語のラベル（図の中） */
+  function jt(p,x,y,s,color,size=12,anchor="start",dx=0,dy=0){
+    p.raw(`<text x="${p.sx(x)+dx}" y="${p.sy(y)+dy}" text-anchor="${anchor}" style="fill:${color};font-size:${size}px;font-family:var(--f-body);font-weight:700;paint-order:stroke;stroke:var(--surface);stroke-width:3.5px">${s}</text>`);
+  }
+  /* 軸：青の破線＋「軸」の文字 */
+  function axisLine(p,x0,y0,y1,lab=true){ p.seg(x0,y0,x0,y1,"var(--axc)",2,"7 5"); if(lab) jt(p,x0,y1,"軸","var(--axt)",12,"start",5,12); }
+  /* 頂点：橙の点＋「頂点」の文字 */
+  function vertexDot(p,x,y,lab="頂点",below){ p.dot(x,y,"var(--vx)",6.5); if(lab) jt(p,x,y,lab,"var(--vxt)",12,"start",9,below?16:-8); }
+  /* 式の表示 y=a(x−p)^2+q（TeX 文字列） */
+  function coef(a){ return a===1?"":a===-1?"-":(Number.isInteger(a)?String(a):(a===0.5?"@frac12":a===-0.5?"-@frac12":num(a))); }
+  function vform(a,p,q){
+    const pa = p===0 ? "x" : p>0 ? `(x-${tnum(p)})` : `(x+${tnum(p)})`;
+    const sq = p===0 ? "x^2" : pa+"^2";
+    const qs = q===0 ? "" : q>0 ? `+${tnum(q)}` : `-${tnum(q)}`;
+    return `y=${coef(a)}${sq}${qs}`;
+  }
+  function sform(b,c){   // y=x^2+bx+c
+    const bs = b===0?"": (b>0?"+":"-")+(Math.abs(b)===1?"":tnum(b))+"x";
+    const cs = c===0?"": (c>0?"+":"-")+tnum(c);
+    return `y=x^2${bs}${cs}`;
+  }
+  function stdGrid(p,xs,ys){ p.grid(1,1).axes(); p.xt(xs.map(v=>[v,String(v).replace("-","−")])); p.yt(ys.map(v=>[v,String(v).replace("-","−")])); return p; }
+  const range=(a,b)=>{ const r=[]; for(let i=a;i<=b;i++) if(i!==0) r.push(i); return r; };
+
+  const lib = {};
+
+  /* 第0回 1次関数 y=ax+b（傾き・切片） */
+  lib.linear = box => {
+    const F=frame(box,"y = ax + b（a と b を動かそう）"); let a=2, b=3;
+    function draw(){
+      const p=Plot({w:340,h:260,x0:-5.5,x1:5.5,y0:-6.5,y1:9.5});
+      stdGrid(p,range(-5,5).filter(v=>v%2===0||Math.abs(v)===1),[-6,-4,-2,2,4,6,8]);
+      p.curve(x=>a*x+b,"var(--ink)",3);
+      // 傾きの三角形：右へ1（灰色の破線）、上へ a（紫）
+      p.seg(0,b,1,b,"var(--old)",2,"4 3"); p.seg(1,b,1,b+a,"var(--ca)",4);
+      jt(p,0.5,b,"右へ1","var(--muted)",11,"middle",0,a>=0?14:-6);
+      jt(p,1,b+a/2,a>=0?`上へ${num(a)}`:`下へ${num(-a)}`,"var(--cat)",12,"start",6,4);
+      p.dot(0,b,"var(--vx)",6.5); jt(p,0,b,"切片","var(--vxt)",12,"end",-8,-6);
+      F.fig.innerHTML=p.svg();
+      const bs=b===0?"":b>0?"+"+b:"−"+(-b);
+      F.ro.innerHTML=`${R(`$y=${a===1?"":a===-1?"-":num(a)}x$`)}${bs}　<b style="color:var(--cat)">傾き ${num(a)}</b>：x が 1 ふえると、y は ${a>=0?num(a)+" ふえる":num(-a)+" へる"}<br><b style="color:var(--vxt)">切片 ${num(b)}</b>：グラフは点 (0, ${num(b)}) で y 軸と交わる`;
+    }
+    F.ctl.append(slider("傾き a",-3,3,0.5,a,v=>num(v),v=>{a=v; draw();}), slider("切片 b",-4,6,1,b,v=>num(v),v=>{b=v; draw();}));
+    draw();
+  };
+
+  /* 第1回 y=ax²（a で形が決まる） */
+  lib.parab = box => {
+    const F=frame(box,"y = ax² のグラフ（a を動かそう）");
+    const AV=[-3,-2,-1,-0.5,0,0.5,1,2,3], AL=AV.map(v=>v===0.5?"1/2":v===-0.5?"−1/2":num(v)); let ai=6;
+    function draw(){
+      const a=AV[ai];
+      const p=Plot({w:340,h:270,x0:-3.4,x1:3.4,y0:-9.5,y1:9.5});
+      stdGrid(p,[-3,-2,-1,1,2,3],[-8,-4,4,8]);
+      p.curve(x=>x*x,"var(--old)",1.6,{dash:"5 4"});
+      axisLine(p,0,-9.3,9.3);
+      p.curve(x=>a*x*x,"var(--ink)",3);
+      [-2,-1,1,2].forEach(x=>p.dot(x,a*x*x,"var(--ink)",4));
+      vertexDot(p,0,0,"頂点",a<0);
+      if(a!==1) jt(p,-2.75,7.56,"灰色の破線：y=x²","var(--muted)",10,"start",4,-2);
+      F.fig.innerHTML=p.svg();
+      const t=[-2,-1,0,1,2].map(x=>`<td>${num(a*x*x)}</td>`).join("");
+      F.ro.innerHTML=`<table><tr><th>x</th><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td></tr><tr><th>y</th>${t}</tr></table>`+
+        (a===0?`a=0 だと y=0（x 軸そのもの）。2次関数ではない。`:`a=<b style="color:var(--cat)">${AL[ai]}</b>　→　<b>${a>0?"下に凸（谷の形）":"上に凸（山の形）"}</b>　${Math.abs(a)>1?"y=x² より細い":Math.abs(a)<1?"y=x² より太い（開いている）":"y=x² と同じ開き方"}`);
+    }
+    F.ctl.appendChild(listSlider("a =",AV,AL,ai,(v,i)=>{ai=i; draw();}));
+    draw();
+  };
+
+  /* 第2回 平行移動 y=a(x−p)²+q */
+  lib.shift = box => {
+    const F=frame(box,"y = a(x − p)² + q（p と q を動かそう）"); let a=1, p0=0, q0=0;
+    function draw(){
+      const p=Plot({w:340,h:280,x0:-6.4,x1:6.4,y0:-6.5,y1:8.5});
+      stdGrid(p,[-4,-2,2,4],[-6,-4,-2,2,4,6,8]);
+      p.curve(x=>a*x*x,"var(--old)",2,{dash:"6 4"});
+      jt(p,-1.6,a*2.56,"もとの","var(--muted)",11,"end",-4,0);
+      axisLine(p,p0,-6.3,8.3);
+      if(p0!==0||q0!==0){ p.seg(0,0,p0,q0,"var(--muted)",1.5,"2 3"); }
+      p.curve(x=>a*(x-p0)**2+q0,"var(--ink)",3);
+      vertexDot(p,p0,q0,`頂点 (${num(p0)}, ${num(q0)})`,a<0);
+      F.fig.innerHTML=p.svg();
+      F.ro.innerHTML=`${R("$"+vform(a,p0,q0)+"$")}<br>頂点 <b style="color:var(--vxt)">(${num(p0)}, ${num(q0)})</b>　軸 <b style="color:var(--axt)">直線 x = ${num(p0)}</b><br><small>もとの ${R("$y="+coef(a)+"x^2$")}（灰色の破線）を、右へ ${num(p0)}、上へ ${num(q0)} 動かした形${p0<0?"（右へ −"+num(-p0)+" ＝ 左へ "+num(-p0)+"）":""}${q0<0?"（上へ −"+num(-q0)+" ＝ 下へ "+num(-q0)+"）":""}</small>`;
+    }
+    const bs=buttons([["a = 1",b=>{a=1; mark(b); draw();}],["a = −1",b=>{a=-1; mark(b); draw();}],["a = 2",b=>{a=2; mark(b); draw();}]]);
+    function mark(b){ bs.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b)); }
+    bs.querySelector("button").classList.add("on");
+    F.ctl.append(bs, slider("p（左右）",-4,4,1,p0,v=>num(v),v=>{p0=v; draw();}), slider("q（上下）",-4,4,1,q0,v=>num(v),v=>{q0=v; draw();}));
+    draw();
+  };
+
+  /* 第3回 平方完成のタイル */
+  lib.tile = box => {
+    const F=frame(box,"x² + bx を正方形にする（b を動かそう）");
+    const BV=[2,4,6,8,10]; let bi=2;
+    function draw(){
+      const b=BV[bi], h=b/2, X=6;                 // x は 6 目もりの長さで描く
+      const u=230/(X+5), ox=40, oy=14;            // 1目もりの大きさ
+      const R0=(x,y,w,hh,fill,stroke,dash,lab,lc)=>`<rect x="${ox+x*u}" y="${oy+y*u}" width="${w*u}" height="${hh*u}" style="fill:${fill};stroke:${stroke}" stroke-width="2" ${dash?`stroke-dasharray="6 4"`:""}/>`+(lab?`<text x="${ox+(x+w/2)*u}" y="${oy+(y+hh/2)*u+5}" text-anchor="middle" style="fill:${lc||"var(--ink)"};font-size:15px;font-family:var(--f-math);font-weight:700">${lab}</text>`:"");
+      let s=`<svg viewBox="0 0 340 ${oy*2+(X+5)*u}" role="img">`;
+      s+=R0(0,0,X,X,"var(--grid)","var(--ink)",false,"x²");
+      s+=R0(X,0,h,X,"var(--teal-soft)","var(--teal)",false,`${h}x`,"var(--teal)");
+      s+=R0(0,X,X,h,"var(--teal-soft)","var(--teal)",false,`${h}x`,"var(--teal)");
+      s+=R0(X,X,h,h,"none","var(--ink)",true,`${h*h}`);
+      s+=`<text x="${ox+(X+h/2)*u}" y="${oy+(X+h)*u+16}" text-anchor="middle" style="fill:var(--ink);font-size:12px;font-family:var(--f-body);font-weight:700">足りない角</text>`;
+      s+=`<text x="${ox-6}" y="${oy+X*u/2}" text-anchor="end" style="fill:var(--muted);font-size:14px;font-family:var(--f-math);font-style:italic">x</text>`;
+      s+=`<text x="${ox-6}" y="${oy+(X+h/2)*u+5}" text-anchor="end" style="fill:var(--teal);font-size:14px;font-family:var(--f-math)">${h}</text>`;
+      s+=`<text x="${ox+X*u/2}" y="${oy-2}" text-anchor="middle" style="fill:var(--muted);font-size:14px;font-family:var(--f-math);font-style:italic">x</text>`;
+      s+=`<text x="${ox+(X+h/2)*u}" y="${oy-2}" text-anchor="middle" style="fill:var(--teal);font-size:14px;font-family:var(--f-math)">${h}</text>`;
+      s+="</svg>";
+      F.fig.innerHTML=s;
+      F.ro.innerHTML=`${R(`$x^2+${b}x$`)} は、たて・よこ ${R(`$x+${h}$`)} の正方形から、角の ${R(`$${h}^2=${h*h}$`)} が足りない形。<br><span class="big">${R(`$x^2+${b}x=(x+${h})^2-${h*h}$`)}</span><br><small>${b} の<b>半分</b>が ${h}、その<b>2乗</b>が ${h*h}</small>`;
+    }
+    F.ctl.appendChild(listSlider("b =",BV,BV.map(String),bi,(v,i)=>{bi=i; draw();}));
+    draw();
+  };
+
+  /* 第3回 ボス：4手でかく */
+  lib.draw4 = (box, arg) => {
+    const a=arg.a, b=arg.b, c=arg.c, P=-b/(2*a), Q=c-b*b/(4*a);
+    const F=frame(box,"4手でかく（ボタンで1手ずつ）"); let step=0;
+    const xs0=Math.min(-1,P-3), xs1=Math.max(5,P+3);
+    function draw(){
+      const Y0=Math.min(-1,Q-1.5), Y1=Math.max(c,Q)+3;
+      const p=Plot({w:340,h:270,x0:xs0-0.4,x1:xs1+0.4,y0:Y0,y1:Y1});
+      stdGrid(p,range(Math.ceil(xs0),Math.floor(xs1)),range(Math.ceil(Y0),Math.floor(Y1)).filter(v=>v%2===0));
+      if(step>=3) axisLine(p,P,Y0+0.1,Y1-0.1);
+      if(step>=4){ p.curve(x=>a*x*x+b*x+c,"var(--ink)",3); p.dot(0,c,"var(--ink)",5.5); p.ring(2*P,c,"var(--ink)",5.5); jt(p,0,c,`(0, ${num(c)})`,"var(--ink)",11,"end",-7,-6); jt(p,2*P,c,"折り返した点","var(--muted)",11,"start",8,-6); }
+      if(step>=2) vertexDot(p,P,Q,`頂点 (${num(P)}, ${num(Q)})`,a<0);
+      F.fig.innerHTML=p.svg();
+      const L=[`① 平方完成：${R("$"+vform(a,P,Q)+"$")}`,`② 頂点 <b style="color:var(--vxt)">(${num(P)}, ${num(Q)})</b> をとる`,`③ 軸 <b style="color:var(--axt)">直線 x = ${num(P)}</b> をひく`,`④ x=0 を代入して y 軸との交点 (0, ${num(c)})。軸で折り返した点 (${num(2*P)}, ${num(c)}) もとって、なめらかにつなぐ`];
+      F.ro.innerHTML = step===0 ? `${R("$y="+(a===1?"":a===-1?"-":a)+"x^2"+(b<0?"-"+(-b===1?"":-b):"+"+(b===1?"":b))+"x"+(c<0?"-"+(-c):"+"+c)+"$")}　を、4手でかこう。` : L.slice(0,step).join("<br>");
+    }
+    F.ctl.appendChild(buttons([["つぎの1手 ▶",()=>{ if(step<4){step++; draw();} }],["はじめから",()=>{step=0; draw();}]]));
+    draw();
+  };
+
+  /* 第4回 定義域の窓（最大・最小） */
+  lib.window = box => {
+    const f=x=>(x-1)**2+2;
+    const F=frame(box,"y = (x − 1)² + 2　x の範囲（定義域）を動かそう"); let on=true, L=0, Rr=3;
+    function draw(){
+      const p=Plot({w:340,h:290,x0:-2.6,x1:5.6,y0:-1.5,y1:14.5});
+      stdGrid(p,[-2,-1,1,2,3,4,5],[2,4,6,8,10,12,14]);
+      const ok = !on || L<Rr;
+      if(on && ok){
+        p.curve(f,"var(--old)",1.6);
+        p.curve(f,"var(--ink)",3.5,{a:L,b:Rr});
+        // 定義域（黄土）
+        p.seg(L,0,Rr,0,"var(--dm)",6); p.dot(L,0,"var(--dm)",5.5); p.dot(Rr,0,"var(--dm)",5.5);
+        jt(p,L,0,"左端","var(--dmt)",11,"middle",0,20); jt(p,Rr,0,"右端","var(--dmt)",11,"middle",0,20);
+      } else p.curve(f,"var(--ink)",3);
+      vertexDot(p,1,2,"頂点",false);
+      // 最大・最小
+      let mn, mx, xmn, xmx;
+      if(on && ok){
+        const cand=[[L,f(L)],[Rr,f(Rr)]]; if(L<=1&&1<=Rr) cand.push([1,2]);
+        const lo=cand.reduce((u,v)=>v[1]<u[1]?v:u), hi=cand.reduce((u,v)=>v[1]>u[1]?v:u);
+        mn=lo[1]; xmn=lo[0]; mx=hi[1]; xmx=hi[0];
+        p.seg(0,mn,0,mx,"var(--mm)",6);
+        p.seg(0,mx,xmx,mx,"var(--mm)",1.5,"4 3"); p.seg(0,mn,xmn,mn,"var(--mm)",1.5,"4 3");
+        p.dot(xmx,mx,"var(--mm)",6); p.dot(xmn,mn,"var(--mm)",6);
+        jt(p,xmx,mx,"最大","var(--mmt)",12,"start",9,4); jt(p,xmn,mn,"最小","var(--mmt)",12,"start",9,xmn===1?18:4);
+        jt(p,0,(mn+mx)/2,"値域","var(--mmt)",11,"end",-8,4);
+      }
+      F.fig.innerHTML=p.svg();
+      if(!on) F.ro.innerHTML=`定義域：<b>すべての実数</b>（範囲なし）<br>最小値 <b style="color:var(--mmt)">2</b>（x=1、頂点）　最大値 <b>なし</b>（両側でどこまでも大きくなる）`;
+      else if(!ok) F.ro.innerHTML=`左端を右端より小さくしよう。`;
+      else F.ro.innerHTML=`定義域 <b style="color:var(--dmt)">${num(L)} ≦ x ≦ ${num(Rr)}</b>　頂点（x=1）は ${L<=1&&1<=Rr?"<b>範囲の中</b>":"<b>範囲の外</b>"}<br>最大値 <b style="color:var(--mmt)">${num(mx)}</b>（x=${num(xmx)}）　最小値 <b style="color:var(--mmt)">${num(mn)}</b>（x=${num(xmn)}）`;
+    }
+    const bs=buttons([["範囲あり",b=>{on=true; mk(b); draw();}],["範囲なし",b=>{on=false; mk(b); draw();}]]);
+    function mk(b){ bs.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b)); }
+    bs.querySelector("button").classList.add("on");
+    F.ctl.append(bs, slider("左端",-2,4,0.5,L,v=>num(v),v=>{L=v; draw();}), slider("右端",-1,5,0.5,Rr,v=>num(v),v=>{Rr=v; draw();}));
+    draw();
+  };
+
+  /* 第4回 柵の囲い（壁を1辺に使う、柵 20 m） */
+  lib.fence = box => {
+    const F=frame(box,"柵 20 m で囲う（壁に垂直な辺 x を動かそう）"); let X=2;
+    function draw(){
+      const W=20-2*X, S=X*W, u=13, ox=170-W*u/2, oy=22;
+      let s=`<svg viewBox="0 0 340 160" role="img">`;
+      s+=`<line x1="20" y1="${oy}" x2="320" y2="${oy}" style="stroke:var(--muted)" stroke-width="6"/>`;
+      s+=`<text x="24" y="${oy-8}" style="fill:var(--muted);font-size:12px;font-family:var(--f-body);font-weight:700">壁</text>`;
+      s+=`<rect x="${ox}" y="${oy}" width="${W*u}" height="${X*u}" style="fill:var(--teal-soft);stroke:none"/>`;
+      s+=`<polyline points="${ox},${oy} ${ox},${oy+X*u} ${ox+W*u},${oy+X*u} ${ox+W*u},${oy}" fill="none" style="stroke:var(--ink)" stroke-width="3.5"/>`;
+      s+=`<text x="${ox-6}" y="${oy+X*u/2+5}" text-anchor="end" style="fill:var(--ink);font-size:14px;font-family:var(--f-math)">x</text>`;
+      s+=`<text x="${ox+W*u/2}" y="${oy+X*u+18}" text-anchor="middle" style="fill:var(--ink);font-size:14px;font-family:var(--f-math)">20 − 2x = ${num(W)}</text>`;
+      s+=`<text x="${ox+W*u/2}" y="${oy+X*u/2+5}" text-anchor="middle" style="fill:var(--teal);font-size:14px;font-family:var(--f-body);font-weight:700">${num(S)} m²</text>`;
+      s+=`</svg>`;
+      const p=Plot({w:340,h:190,x0:-0.8,x1:10.6,y0:-8,y1:60,pad:20});
+      p.grid(1,10).axes("x","S"); p.xt([[2,"2"],[4,"4"],[6,"6"],[8,"8"],[10,"10"]]); p.yt([[20,"20"],[40,"40"]]);
+      p.curve(x=>x*(20-2*x),"var(--ink)",2.5,{a:0,b:10});
+      p.dot(X,S,"var(--teal)",6);
+      F.fig.innerHTML=s+p.svg();
+      F.ro.innerHTML=`x = <b>${num(X)}</b> m のとき　壁に平行な辺 ${num(W)} m　面積 <span class="big">${num(S)}</span> m²`;
+    }
+    F.ctl.appendChild(slider("x =",0.5,9.5,0.5,X,v=>num(v)+" m",v=>{X=v; draw();}));
+    draw();
+  };
+
+  /* 第5回 何点あれば決まる？（2点 (0,1)・(2,1) を通る放物線） */
+  lib.through = box => {
+    const F=frame(box,"2点 (0, 1)、(2, 1) を通る放物線"); const AV=[-2,-1.5,-1,-0.5,0.5,1,1.5,2]; let ai=4, third=false;
+    function draw(){
+      const a=AV[ai], g=x=>a*x*(x-2)+1;
+      const p=Plot({w:340,h:270,x0:-1.6,x1:4.4,y0:-4.5,y1:8.5});
+      stdGrid(p,[-1,1,2,3,4],[-4,-2,2,4,6,8]);
+      [-1,1,2].filter(v=>v!==a).forEach(v=>p.curve(x=>v*x*(x-2)+1,"var(--old)",1.4,{dash:"5 4"}));
+      p.curve(g,"var(--ink)",3);
+      p.dot(0,1,"var(--ink)",6); p.dot(2,1,"var(--ink)",6);
+      jt(p,0,1,"(0, 1)","var(--ink)",11,"end",-7,-7); jt(p,2,1,"(2, 1)","var(--ink)",11,"start",8,-7);
+      if(third){ const hit=Math.abs(g(3)-4)<1e-9; p.ring(3,4,"var(--ink)",7); jt(p,3,4,hit?"(3, 4) を通る！":"(3, 4)","var(--ink)",12,"start",10,4); }
+      F.fig.innerHTML=p.svg();
+      F.ro.innerHTML=`a = <b style="color:var(--cat)">${num(a)}</b>　${R(`$y=${coef(a)}x(x-2)+1$`)}<br>a をかえても、2点 (0, 1)、(2, 1) は通ったまま（灰色の破線も、この2点を通る）。`+(third?`<br>x=3 のとき y = ${num(g(3))}　→　${Math.abs(g(3)-4)<1e-9?"<b>(3, 4) を通る</b>":"(3, 4) は通らない"}`:"");
+    }
+    F.ctl.append(listSlider("a =",AV,AV.map(v=>num(v)),ai,(v,i)=>{ai=i; draw();}), buttons([["3つめの点 (3, 4) を出す",b=>{third=!third; b.classList.toggle("on",third); draw();}]]));
+    draw();
+  };
+
+  /* 第6回・第7回 y = x² − 2x + c と x 軸 */
+  function rootsCommon(box, title, mode){
+    const F=frame(box,title); let c=mode==="disc"?-3:0;
+    function draw(){
+      const g=x=>x*x-2*x+c, D=4-4*c;
+      const p=Plot({w:340,h:270,x0:-2.6,x1:4.6,y0:-6.5,y1:8.5});
+      stdGrid(p,[-2,-1,1,2,3,4],[-6,-4,-2,2,4,6,8]);
+      p.curve(g,"var(--ink)",3);
+      vertexDot(p,1,c-1,"頂点",false);
+      let pts=[];
+      if(D>1e-9){ const r=Math.sqrt(D)/2; pts=[1-r,1+r]; } else if(Math.abs(D)<1e-9) pts=[1];
+      pts.forEach(x=>{ p.dot(x,0,"var(--sol)",7); p.raw(`<circle cx="${p.sx(x)}" cy="${p.sy(0)}" r="3" style="fill:var(--surface)"/>`); });
+      const xl=x=>Math.abs(x-Math.round(x))<1e-9?`x=${num(Math.round(x))}`:`x≒${num(x)}`;
+      pts.forEach((x,i)=>jt(p,x,0,xl(x),"var(--solt)",11,pts.length===2?(i?"start":"end"):"middle",pts.length===2?(i?6:-6):0,pts.length===1?20:18));
+      F.fig.innerHTML=p.svg();
+      const cs=c===0?"":c>0?"+"+num(c):"−"+num(-c);
+      if(mode==="roots") F.ro.innerHTML=`${R("$"+sform(-2,c)+"$")}<br>x 軸との共有点：<b style="color:var(--solt)">${pts.length} 個</b>${pts.length?"　x = "+pts.map(v=>Number.isInteger(Math.round(v*1e6)/1e6)?num(v):"約 "+num(v)).join("、"):""}<br>方程式 ${R("$x^2-2x$")}${cs}${R("$=0$")} の実数解と同じ`;
+      else F.ro.innerHTML=`${R("$"+sform(-2,c)+"$")}<br><b style="color:var(--solt)">判別式 D</b> = (−2)² − 4×1×(${num(c)}) = <b style="color:var(--solt)">${num(D)}</b>　${D>0?"＞ 0":D<0?"＜ 0":"＝ 0"}<br><b style="color:var(--vxt)">頂点の y 座標</b> = ${num(c-1)}　${c-1<0?"（x 軸より下）":c-1>0?"（x 軸より上）":"（x 軸の上にのっている）"}<br>x 軸との共有点 <span class="big">${pts.length}</span> 個${pts.length===1?"（接する）":""}`;
+    }
+    F.ctl.appendChild(slider("c =",mode==="disc"?-4:-4,mode==="disc"?4:3,mode==="disc"?1:0.5,c,v=>num(v),v=>{c=v; draw();}));
+    draw();
+  }
+  lib.roots = box => rootsCommon(box,"y = x² − 2x + c と x 軸（c を動かそう）","roots");
+  lib.disc  = box => rootsCommon(box,"上下に動かすと、x 軸と何回出会う？（c を動かそう）","disc");
+
+  /* 第8回 2次不等式：グラフが x 軸より上・下 */
+  lib.ineq = box => {
+    const F=frame(box,"グラフと x 軸から不等式の解を読む");
+    const SH=[["2点で交わる",x=>(x-1)*(x-3),[1,3],"x^2-4x+3"],["接する",x=>(x-2)**2,[2],"x^2-4x+4"],["はなれる",x=>(x-2)**2+1,[],"x^2-4x+5"]];
+    const SG=[["＞0",">"],["＜0","<"],["≧0","≧"],["≦0","≦"]];
+    let si=0, gi=0;
+    function sat(v,s){ return s===">"?v>1e-12: s==="<"?v<-1e-12: s==="≧"?v>-1e-12: v<1e-12; }
+    function draw(){
+      const [nm,f,rt,ex]=SH[si], s=SG[gi][1];
+      const p=Plot({w:340,h:250,x0:-0.8,x1:4.8,y0:-2.2,y1:5.5});
+      stdGrid(p,[1,2,3,4],[-2,-1,1,2,3,4,5]);
+      // 条件をみたす x を数直線（x 軸）に桃で
+      const N=560, segs=[]; let st=null;
+      for(let k=0;k<=N;k++){ const x=-0.8+5.6*k/N; const ok=sat(f(x),s); if(ok&&st===null) st=x; if((!ok||k===N)&&st!==null){ segs.push([st,ok?x:-0.8+5.6*(k-1)/N]); st=null; } }
+      p.curve(f,"var(--old)",1.6);
+      segs.forEach(([u,v])=>{ p.curve(f,"var(--ink)",3.5,{a:u,b:v}); p.seg(u,0,v,0,"var(--sol)",7); });
+      // 端の点：等号つきなら ●、なしなら ○
+      const eq = s==="≧"||s==="≦";
+      const marks = si===0 ? rt.map(r=>[r,eq]) : si===1 ? (s===">"?[[2,false]]: s==="≦"?[[2,true]]: s==="≧"?[[2,true]]:[]) : [];
+      marks.forEach(([r,fill])=>{ if(fill) p.dot(r,0,"var(--sol)",6.5); else p.ring(r,0,"var(--sol)",6.5); });
+      rt.forEach(r=>jt(p,r,0,num(r),"var(--solt)",12,"middle",0,22));
+      F.fig.innerHTML=p.svg();
+      let ans;
+      if(si===0) ans = s===">"?"x＜1, 3＜x": s==="<"?"1＜x＜3": s==="≧"?"x≦1, 3≦x":"1≦x≦3";
+      else if(si===1) ans = s===">"?"x=2 以外のすべての実数": s==="<"?"解なし": s==="≧"?"すべての実数":"x=2";
+      else ans = (s===">"||s==="≧")?"すべての実数":"解なし";
+      F.ro.innerHTML=`${R("$"+ex+"$")} ${s}0　（${nm}）<br>解：<b style="color:var(--solt)">${ans}</b><br><small>濃い線：条件をみたす部分のグラフ。x 軸の上の太い線：そのときの x の範囲（●はふくむ、○はふくまない）</small>`;
+    }
+    const b1=buttons(SH.map(([n],i)=>[n,b=>{si=i; on(b1,b); draw();}])), b2=buttons(SG.map(([n],i)=>[n,b=>{gi=i; on(b2,b); draw();}]));
+    function on(g,b){ g.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b)); }
+    b1.querySelector("button").classList.add("on"); b2.querySelector("button").classList.add("on");
+    F.ctl.append(b1,b2);
+    draw();
+  };
+
+  return lib;
+})();
+
+/* ===== なっとく 数Ⅰ 2次関数　全9回（第0回＋第1〜8回）の中身 =====
+   数式は $ ... $ の中に @記法（tex.js 参照）。$ の外に「<」を書かない（＜ を使う）。
+   FILL の ans は生徒の入力と同じ書き方（√ / − ( )）。chk は検算用（Python/sympy の式。x, a, k, t が使える）。
+   FILLS は □ がいくつかある問題：parts の中の B(ans, chk) が □。
+   CH の ov は選択肢の値（sympy の式）。MU の cond は「0 になれば正解」の式（t に選択肢の値を入れる）。
+   section の tag：ふり返り（前に習ったこと）／見る／手を動かす／考える／解く。
+   動画との対応は video.js（中身を作ったあとで入れた）。 */
+const NAZO = (html) => ({t:"info", k:"なぞ", cls:"nazo", html});
+const WORD = (html, k="ことば") => ({t:"info", k, cls:"word", html});
+const INFO = (k, html) => ({t:"info", k, html});
+const BOSS = (html, k="ボス問題") => ({t:"info", k, cls:"boss", html});
+const FIG = (name, arg) => ({t:"fig", name, arg});
+const CH = (q, opts, ans, o) => Object.assign({t:"choice", q, opts, ans}, o||{});
+const MU = (q, opts, ans, o) => Object.assign({t:"multi", q, opts, ans}, o||{});
+const FILL = (q, ans, o) => Object.assign({t:"fill", q, ans}, o||{});
+const FILLS = (q, parts, o) => Object.assign({t:"fills", q, parts}, o||{});
+const B = (ans, chk) => ({b:1, ans, chk: chk==null ? ans.replace(/−/g,"-") : chk});
+const CLS = (q, opts, rows, o) => Object.assign({t:"cls", q, opts, rows}, o||{});
+const FREE = (q) => ({t:"free", q});
+const S = (tag, title, items) => ({tag, title, items});
+
+const ZONES = [
+  {name:"ふり返り", sub:"中学の関数（ここが土台）", c:"--z0", t:"--z0t"},
+  {name:"グラフ", sub:"頂点を見つける", c:"--z1", t:"--z1t"},
+  {name:"最大・最小", sub:"いちばん高い・低い／式づくり", c:"--z2", t:"--z2t"},
+  {name:"x 軸との関係", sub:"方程式・判別式・不等式", c:"--z3", t:"--z3t"},
+];
+
+const LESSONS = [
+/* ================= ふり返り ================= */
+{id:"L0", no:0, zone:0, title:"中学の関数：座標・代入・1次関数", kp:"",
+ goal:"点の座標を読み、式に数を代入して y を出せる。1次関数 $y=ax+b$ を、傾きと切片で説明できる。",
+ secs:[
+  S("見る","水そうの水",[
+    NAZO("水そうに、はじめ 3 L の水が入っている。1分ごとに 2 L ずつ水を入れる。x 分後の水の量 y は、x を決めると1つに決まる。"),
+    FILL("5分後の水の量は何 L？","13",{chk:"3+2*5",hint:"はじめの 3 L に、2 L が5回ぶん"}),
+    CH("x 分後の水の量 y を表す式は？",["$y=3x+2$","$y=2x+3$","$y=5x$"],1,{why:"はじめの 3 L に、1分で 2 L ずつ、x 分ぶん足す。$y=2x+3$。"}),
+    FIG("linear"),
+    WORD("x を決めると y が1つに決まるとき、y は x の<b>関数</b>という。<br>$y=ax+b$ の形の関数を<b>1次関数</b>という。<br>a は<b>傾き</b>（x が 1 ふえると、y が a ふえる）、b は<b>切片</b>（グラフが y 軸と交わる点の y 座標）。"),
+  ]),
+  S("手を動かす","座標と代入",[
+    INFO("思い出そう","点 $(3, -2)$ は、原点から「右へ 3、下へ 2」の点。<b>x 座標が先</b>、y 座標があと。"),
+    CH("点 $(-2, 4)$ はどこ？",["右へ 2、上へ 4","左へ 2、上へ 4","左へ 4、上へ 2","右へ 4、下へ 2"],1),
+    FILL("$y=2x+3$ に $x=-4$ を代入すると、y = ?","-5",{chk:"2*(-4)+3",hint:"$2×(-4)=-8$。それに 3 を足す"}),
+    FILL("$(-3)^2$ = ?","9",{chk:"(-3)**2",hint:"$(-3)×(-3)$。マイナスどうしのかけ算はプラス",why:"$(-3)^2=(-3)×(-3)=9$。2次関数では、負の数の2乗がたくさん出てくる。"}),
+    FILL("$-3^2$ = ?","-9",{chk:"-3**2",why:"2乗するのは 3 だけ。$-3^2=-(3×3)=-9$。かっこがあるかないかで、答えが変わる。"}),
+    FILL("$y=2x^2$ に $x=-3$ を代入すると、y = ?","18",{chk:"2*(-3)**2",hint:"先に $(-3)^2=9$。それに 2 をかける"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$y=-2x+1$ のグラフは？",["右上がり","右下がり","水平"],1,{why:"傾き $-2$：x が 1 ふえると、y は 2 へる。だから右下がり。"}),
+    CH("$y=3x-2$ の切片は？",["3","−2","2","−3"],1,{ov:["3","-2","2","-3"],chk:"(3*x-2).subs(x,0)",why:"x=0 を代入すると $y=-2$。グラフは点 $(0, -2)$ で y 軸と交わる。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    FILL("$y=4x-5$ の傾き","4",{chk:"diff(4*x-5,x)"}),
+    FILL("$y=4x-5$ の切片","-5",{chk:"(4*x-5).subs(x,0)"}),
+    FILL("$y=-x+6$ で、$x=2$ のときの y","4",{chk:"(-x+6).subs(x,2)"}),
+    FILL("$y=3x+1$ で、$y=10$ になる x","3",{chk:"solve(3*x+1-10,x)[0]",hint:"$3x+1=10$ を解く"}),
+    FILL("$y=-x^2+5$ で、$x=2$ のときの y","1",{chk:"(-x**2+5).subs(x,2)",hint:"$-2^2=-4$。それに 5 を足す"}),
+  ]),
+ ]},
+
+/* ================= グラフ ================= */
+{id:"L1", no:1, zone:1, title:"放物線 $y=ax^2$", kp:"",
+ goal:"$y=ax^2$ のグラフ（放物線）の形を、a の符号と大きさで言える。$f(x)$ の書き方が使える。",
+ secs:[
+  S("ふり返り","中学3年の $y=ax^2$",[
+    INFO("思い出そう","中学3年で習った $y=ax^2$（y は x の2乗に比例する）。x と y の表をつくって点をとると、なめらかな曲線になる。"),
+    FILL("$y=x^2$ で、$x=3$ のときの y","9",{chk:"3**2"}),
+    FILL("$y=x^2$ で、$x=-3$ のときの y","9",{chk:"(-3)**2",hint:"$(-3)^2=(-3)×(-3)$"}),
+    CH("$y=x^2$ のグラフで、$x=3$ の点と $x=-3$ の点の関係は？",["y 軸について左右対称","x 軸について上下対称","同じ点"],0,{why:"どちらも y=9。高さが同じで、y 軸の右と左にある。"}),
+  ]),
+  S("見る","ボールの通り道",[
+    NAZO("ななめ上に投げたボールは、上がって、いちばん高い所で向きを変えて、落ちてくる。この通り道は、ある関数のグラフと同じ形。"),
+    FIG("parab"),
+    CH("図で $a=-1$ にしよう。グラフはどうなる？",["下に凸（谷の形）","上に凸（山の形）","直線"],1),
+    CH("$a=3$ と $a=@frac12$ では、どちらのグラフが細い？",["$a=3$","$a=@frac12$"],0,{why:"a が大きいと、x が少しふえただけで y が大きくなる。だから細くなる。"}),
+    WORD("$y=ax^2$ のグラフを<b>放物線</b>という。<br>左右対称の線を<b>軸</b>、軸とグラフの交わる点を<b>頂点</b>という。<br>$a>0$ なら<b>下に凸</b>（谷の形）、$a<0$ なら<b>上に凸</b>（山の形）。"),
+  ]),
+  S("手を動かす","f(x) という書き方",[
+    WORD("x を入れると決まる値を $f(x)$ と書く（エフ エックスと読む）。<br>$f(x)=x^2+1$ なら、$f(2)$ は「x に 2 を入れた値」で、$2^2+1=5$。","ことば（f(x)）"),
+    FILL("$f(x)=x^2+1$ のとき、$f(3)$ = ?","10",{chk:"(x**2+1).subs(x,3)"}),
+    FILL("$f(x)=x^2+1$ のとき、$f(-2)$ = ?","5",{chk:"(x**2+1).subs(x,-2)"}),
+    FILL("$f(x)=-2x^2$ のとき、$f(-1)$ = ?","-2",{chk:"(-2*x**2).subs(x,-1)",hint:"先に $(-1)^2=1$。それに $-2$ をかける"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$y=-x^2$ で、$x=-2$ のときの y は？",["4","−4"],1,{ov:["4","-4"],chk:"(-x**2).subs(x,-2)",why:"$-(-2)^2=-4$。先に2乗して、そのあとにマイナスをつける。"}),
+    CH("$y=2x^2$ の頂点は？",["$(0, 0)$","$(0, 2)$","$(2, 0)$"],0,{why:"$y=ax^2$ の頂点は、いつも原点 $(0, 0)$。a は向きと開き方を決めるだけ。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    CLS("グラフは下に凸？ 上に凸？",["下に凸","上に凸"],[["$y=3x^2$",0],["$y=-x^2$",1],["$y=-@frac12x^2$",1],["$y=@frac14x^2$",0]]),
+    FILL("$y=ax^2$ のグラフが点 $(2, 12)$ を通る。a = ?","3",{chk:"solve(a*2**2-12,a)[0]",hint:"$x=2$、$y=12$ を代入：$12=a×2^2$"}),
+  ]),
+ ]},
+
+{id:"L2", no:2, zone:1, title:"頂点を動かす $y=a(x-p)^2+q$", kp:"",
+ goal:"$y=a(x-p)^2+q$ は $y=ax^2$ を動かしたグラフ。式から頂点 $(p, q)$ と軸 $x=p$ を読める。",
+ secs:[
+  S("ふり返り","1次関数の切片",[
+    INFO("思い出そう","$y=2x$ と $y=2x+3$。同じ x で、y はいつも 3 大きい。だからグラフは<b>上へ 3</b> ずれる。"),
+    CH("$y=2x-1$ のグラフは、$y=2x$ のグラフをどう動かしたもの？",["上へ 1","下へ 1","右へ 1"],1),
+  ]),
+  S("見る","x−3 なのに右？",[
+    NAZO("$y=(x-3)^2$ のグラフは、$y=x^2$ を<b>左へ</b> 3 動かしたもの？ それとも<b>右へ</b> 3？ 式には「−3」とある。"),
+    FIG("shift"),
+    CH("図で p=3 にしよう。頂点はどちらへ動いた？",["左へ 3","右へ 3"],1,{why:"$y=(x-3)^2$ は、$x=3$ のとき $(3-3)^2=0$ で、いちばん低い。いちばん低い点（頂点）が x=3 に来る。だから右へ 3。"}),
+    CH("q=2 にすると？",["上へ 2","下へ 2","右へ 2"],0),
+    WORD("$y=a(x-p)^2+q$ のグラフは、$y=ax^2$ のグラフを<br>x 軸方向に p、y 軸方向に q だけ<b>平行移動</b>したもの。<br><b>頂点</b> $(p, q)$　　<b>軸</b> 直線 $x=p$"),
+  ]),
+  S("手を動かす","頂点を読む",[
+    FILLS("$y=(x-2)^2+5$ の頂点",["$($",B("2","vx((x-2)**2+5)"),"$,$",B("5","vy((x-2)**2+5)"),"$)$"]),
+    FILLS("$y=(x+1)^2-3$ の頂点",["$($",B("-1","vx((x+1)**2-3)"),"$,$",B("-3","vy((x+1)**2-3)"),"$)$"],{hint:"$x+1$ は $x-(-1)$ と見る",why:"$(x+1)$ は $(x-(-1))$。だから p=−1。頂点は $(-1, -3)$。"}),
+    FILL("$y=2(x-4)^2+1$ の軸は、直線 x = ?","4",{chk:"vx(2*(x-4)**2+1)"}),
+    CH("$y=-(x-1)^2+2$ のグラフは？",["頂点 $(1, 2)$ で下に凸","頂点 $(1, 2)$ で上に凸","頂点 $(-1, 2)$ で上に凸"],1,{why:"a=−1 で負なので上に凸。頂点は $(1, 2)$。"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$y=(x+3)^2$ の頂点は？",["$(3, 0)$","$(-3, 0)$","$(0, 3)$"],1,{why:"$x=-3$ のとき $(x+3)^2=0$。頂点は $(-3, 0)$。「＋3 だから右」ではない。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    FILLS("$y=3(x-1)^2-4$ の頂点",["$($",B("1","vx(3*(x-1)**2-4)"),"$,$",B("-4","vy(3*(x-1)**2-4)"),"$)$"]),
+    FILLS("$y=-2(x+2)^2+7$ の頂点",["$($",B("-2","vx(-2*(x+2)**2+7)"),"$,$",B("7","vy(-2*(x+2)**2+7)"),"$)$"]),
+    CH("$y=x^2$ を、x 軸方向に 3、y 軸方向に −1 だけ平行移動した放物線の式は？",["$y=(x-3)^2-1$","$y=(x+3)^2-1$","$y=(x-3)^2+1$"],0,{why:"頂点が $(0, 0)$ から $(3, -1)$ に動く。だから $y=(x-3)^2-1$。"}),
+    FILL("頂点が $(2, 3)$ で、$y=-x^2$ を平行移動した放物線。$x=0$ のときの y は？","-1",{chk:"(-(x-2)**2+3).subs(x,0)",hint:"式は $y=-(x-2)^2+3$"}),
+  ]),
+ ]},
+
+{id:"L3", no:3, zone:1, title:"平方完成で頂点を見つける（ボス回）", kp:"",
+ goal:"$y=ax^2+bx+c$ を平方完成して、頂点と軸を求め、グラフをかける。",
+ secs:[
+  S("ふり返り","展開",[
+    INFO("思い出そう","$(x+3)^2=(x+3)(x+3)=x^2+6x+9$。<br>まん中の項は 3 の<b>2倍</b>、最後の項は 3 の<b>2乗</b>。"),
+    FILL("$(x+4)^2=x^2+8x+□$","16",{chk:"expand((x+4)**2).coeff(x,0)"}),
+    FILL("$(x-5)^2=x^2-□x+25$","10",{chk:"-expand((x-5)**2).coeff(x,1)"}),
+  ]),
+  S("見る","正方形をつくる",[
+    NAZO("$x^2+6x$ を $(x+□)^2$ の形にしたい。でも $(x+3)^2=x^2+6x+9$ なので、9 だけ足りない。どうする？"),
+    FIG("tile"),
+    FILL("$x^2+6x=(x+3)^2-□$","9",{chk:"expand((x+3)**2-(x**2+6*x))"}),
+    WORD("$x^2+bx=(x+@frac{b}{2})^2-(@frac{b}{2})^2$<br>x の係数の<b>半分</b>でかっこをつくり、その<b>2乗</b>を引く。<br>$ax^2+bx+c$ を $a(x-p)^2+q$ の形にすることを<b>平方完成</b>という。","ことば（平方完成）"),
+  ]),
+  S("手を動かす","頂点が見える形にする",[
+    FILLS("$x^2-4x+7$ を平方完成",["$x^2-4x+7=(x-$",B("2","vx(x**2-4*x+7)"),"$)^2+$",B("3","vy(x**2-4*x+7)")],{hint:"−4 の半分は −2。$(x-2)^2=x^2-4x+4$",why:"$(x-2)^2-4+7=(x-2)^2+3$。"}),
+    FILLS("$x^2+2x-1$ を平方完成",["$x^2+2x-1=(x+$",B("1","-vx(x**2+2*x-1)"),"$)^2-$",B("2","-vy(x**2+2*x-1)")],{why:"$(x+1)^2-1-1=(x+1)^2-2$。"}),
+    WORD("$x^2$ の係数が 1 でないときは、まず $x^2$ と x の項を<b>その係数でくくる</b>。<br>$2x^2-8x+5=2(x^2-4x)+5$。かっこの中を平方完成して、最後にかっこをはずす。","ことば（係数が 1 でないとき）"),
+    FILLS("$2x^2-8x+5$ を平方完成",["$2x^2-8x+5=2(x-$",B("2","vx(2*x**2-8*x+5)"),"$)^2-$",B("3","-vy(2*x**2-8*x+5)")],{hint:"$2(x^2-4x)+5=2[(x-2)^2-4]+5$",why:"$2[(x-2)^2-4]+5=2(x-2)^2-8+5=2(x-2)^2-3$。"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$x^2-6x+1$ を平方完成すると？",["$(x-3)^2+1$","$(x-3)^2-8$","$(x-6)^2-35$"],1,{why:"$(x-3)^2=x^2-6x+9$ なので、9 を引く。$(x-3)^2-9+1=(x-3)^2-8$。"}),
+  ]),
+  S("解く","ボス：4手でかく",[
+    BOSS("$y=2x^2-8x+5$ のグラフを4手でかこう。<br>①平方完成 → ②頂点 → ③軸 → ④ y 軸との交点"),
+    FILLS("①・② 頂点（上で平方完成した式を使おう）",["$($",B("2","vx(2*x**2-8*x+5)"),"$,$",B("-3","vy(2*x**2-8*x+5)"),"$)$"]),
+    FILL("③ 軸は、直線 x = ?","2",{chk:"vx(2*x**2-8*x+5)"}),
+    FILL("④ y 軸との交点の y 座標（x=0 を代入）","5",{chk:"(2*x**2-8*x+5).subs(x,0)"}),
+    CH("グラフの形は？",["下に凸","上に凸"],0,{why:"$x^2$ の係数 2 が正なので、下に凸。"}),
+    INFO("確かめ","下の図のボタンで、1手ずつかいてみよう。"),
+    FIG("draw4",{a:2,b:-8,c:5}),
+    FILLS("$y=-x^2+6x-4$ の頂点",["$($",B("3","vx(-x**2+6*x-4)"),"$,$",B("5","vy(-x**2+6*x-4)"),"$)$"],{hint:"$-(x^2-6x)-4$ とくくる",why:"$-[(x-3)^2-9]-4=-(x-3)^2+5$。頂点は $(3, 5)$。"}),
+  ]),
+ ]},
+
+/* ================= いちばん高い・低い ================= */
+{id:"L4", no:4, zone:2, title:"いちばん高い・低い（最大・最小）", kp:"",
+ goal:"頂点と、x の範囲（定義域）の両端をくらべて、最大値・最小値を求められる。",
+ secs:[
+  S("ふり返り","範囲の読み方",[
+    INFO("思い出そう","$-1≦x≦2$ は「x は −1 以上、2 以下」。数直線では −1 と 2 を<b>●</b>（その数も入る）にして、間をぬる。「＜」のときは<b>○</b>（その数は入らない）。"),
+    CLS("$-1≦x≦2$ に入る？",["入る","入らない"],[["$x=-1$",0],["$x=0.5$",0],["$x=3$",1]]),
+  ]),
+  S("見る","いちばん高い所はある？",[
+    NAZO("$y=x^2-2x+3=(x-1)^2+2$ のグラフは谷の形。いちばん低い所はある。では、いちばん高い所は？"),
+    FIG("window"),
+    CH("図で「範囲なし」を押そう。いちばん大きい値は？",["ある","ない（どこまでも大きくなる）"],1),
+    FILL("範囲なしのとき、いちばん小さい値（最小値）","2",{chk:"((x-1)**2+2).subs(x,1)"}),
+    WORD("x の動ける範囲を<b>定義域</b>、そのとき y がとる値の範囲を<b>値域</b>という。<br><b>最大値・最小値</b>は、<b>頂点</b>と<b>定義域の両端</b>をくらべて決める。"),
+  ]),
+  S("手を動かす","範囲があるとき",[
+    INFO("やってみよう","図で「範囲あり」を押して、左端 0、右端 3 にしよう（$0≦x≦3$）。"),
+    FILL("$0≦x≦3$ のときの最大値","6",{chk:"max(((x-1)**2+2).subs(x,v) for v in [0,1,3])",hint:"両端 x=0、x=3 と頂点 x=1 の y をくらべる"}),
+    FILL("$0≦x≦3$ のときの最小値","2",{chk:"min(((x-1)**2+2).subs(x,v) for v in [0,1,3])"}),
+    INFO("つぎ","範囲を $2≦x≦4$ にずらそう。頂点（x=1）は範囲の<b>外</b>になる。"),
+    FILL("$2≦x≦4$ のときの最小値","3",{chk:"min(((x-1)**2+2).subs(x,v) for v in [2,4])"}),
+    FILL("$2≦x≦4$ のときの最大値","11",{chk:"max(((x-1)**2+2).subs(x,v) for v in [2,4])"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("「最小値は、いつも頂点の y 座標」。正しい？",["正しい","まちがい"],1,{why:"頂点が定義域の外にあると、最小値は端の値。$2≦x≦4$ のときは、x=2 で最小値 3。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    FILL("$y=x^2-4x+1$（$0≦x≦5$）の最大値","6",{chk:"max((x**2-4*x+1).subs(x,v) for v in [0,2,5])",hint:"$y=(x-2)^2-3$。両端と頂点の y をくらべる"}),
+    FILL("$y=x^2-4x+1$（$0≦x≦5$）の最小値","-3",{chk:"min((x**2-4*x+1).subs(x,v) for v in [0,2,5])"}),
+    FILL("$y=-x^2+2x+3$ の最大値（定義域はすべての実数）","4",{chk:"(-x**2+2*x+3).subs(x,1)",hint:"$y=-(x-1)^2+4$。上に凸なので頂点がいちばん高い"}),
+  ]),
+  S("解く","使ってみる：柵の囲い",[
+    INFO("問題","長さ 20 m の柵で、壁を1辺に使って長方形の囲いをつくる。壁に垂直な辺を x m とすると、壁に平行な辺は $(20-2x)$ m（$0＜x＜10$）。"),
+    FIG("fence"),
+    CH("囲いの面積 S を x で表すと？",["$S=x(20-2x)$","$S=x(20-x)$","$S=2x+20$"],0),
+    FILL("面積がいちばん大きくなるのは、x = ?","5",{chk:"solve(diff(x*(20-2*x),x),x)[0]",hint:"$S=-2x^2+20x=-2(x-5)^2+50$"}),
+    FILL("そのときの面積（m²）","50",{chk:"(x*(20-2*x)).subs(x,5)"}),
+  ]),
+ ]},
+
+{id:"L5", no:5, zone:2, title:"式を決める（ボス回）", kp:"",
+ goal:"頂点や、グラフが通る点から、2次関数の式を決められる。",
+ secs:[
+  S("ふり返り","中学2年の連立方程式",[
+    INFO("思い出そう","$a+b=5$、$a-b=1$。2つの式をたすと b が消えて $2a=6$、だから $a=3$。それを代入して $b=2$。"),
+    FILLS("$a+b=7$、$a-b=3$ を解く",["$a=$",B("5","solve([a+b-7,a-b-3],[a,b])[a]"),"$b=$",B("2","solve([a+b-7,a-b-3],[a,b])[b]")]),
+    FILLS("$2a+b=8$、$a+b=5$ を解く",["$a=$",B("3","solve([2*a+b-8,a+b-5],[a,b])[a]"),"$b=$",B("2","solve([2*a+b-8,a+b-5],[a,b])[b]")],{hint:"上の式から下の式を引くと、b が消える"}),
+  ]),
+  S("見る","何点あれば決まる？",[
+    NAZO("点 $(0, 1)$ と $(2, 1)$ を通る放物線は、何本ある？"),
+    FIG("through"),
+    CH("図で a を動かそう。2点を通る放物線は？",["1本だけ","何本もかける"],1),
+    FILL("3つめの点 $(3, 4)$ も通るのは、a = ?","1",{chk:"solve(a*3*(3-2)+1-4,a)[0]",hint:"図の「3つめの点」を押して、a を動かしてさがそう"}),
+    WORD("$y=ax^2+bx+c$ には、決めたい数が a, b, c の<b>3つ</b>ある。だから条件が<b>3つ</b>あれば、式が1つに決まる。<br>頂点がわかっていれば $y=a(x-p)^2+q$ とおく。決めるのは a だけになる。"),
+  ]),
+  S("手を動かす","頂点がわかっているとき",[
+    INFO("例","頂点が $(1, 2)$ で、点 $(3, 10)$ を通る。<br>→ $y=a(x-1)^2+2$ とおいて、$x=3$、$y=10$ を代入する。"),
+    FILL("$10=a(3-1)^2+2$ から、a = ?","2",{chk:"solve(a*(3-1)**2+2-10,a)[0]"}),
+    CH("だから式は？",["$y=2(x-1)^2+2$","$y=2(x+1)^2+2$","$y=(x-1)^2+2$"],0),
+  ]),
+  S("手を動かす","3点を通るとき",[
+    INFO("例","3点 $(0, 3)$、$(1, 2)$、$(2, 3)$ を通る。$y=ax^2+bx+c$ に代入すると<br>$x=0$：$c=3$（まず c がすぐ決まる）<br>$x=1$：$a+b+c=2$　　$x=2$：$4a+2b+c=3$"),
+    FILLS("c=3 を入れると $a+b=-1$、$4a+2b=0$。これを解く",["$a=$",B("1","solve([c-3,a+b+c-2,4*a+2*b+c-3],[a,b,c])[a]"),"$b=$",B("-2","solve([c-3,a+b+c-2,4*a+2*b+c-3],[a,b,c])[b]")],{hint:"下の式を 2 でわると $2a+b=0$。上の式を引くと b が消える",why:"$a=1$、$b=-2$、$c=3$。式は $y=x^2-2x+3$。"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("頂点が $(-2, 5)$ の放物線を $y=a(x-p)^2+q$ とおく。正しいのは？",["$y=a(x-2)^2+5$","$y=a(x+2)^2+5$","$y=a(x+2)^2-5$"],1,{why:"p=−2 なので $x-(-2)=x+2$。"}),
+  ]),
+  S("解く","ボス：ボールの最高点",[
+    BOSS("ボールを投げた。t 秒後の高さを h m とする。測ると<br>$t=0$ のとき 1 m、$t=1$ のとき 16 m、$t=3$ のとき 16 m だった。<br>h は t の2次関数。いちばん高いのは何 m？"),
+    CH("$t=1$ と $t=3$ で高さが同じ。軸（頂点の t）は？",["$t=1$","$t=2$","$t=3$"],1,{ov:["1","2","3"],chk:"Rational(1+3,2)",why:"放物線は軸について左右対称。高さが同じ2点の<b>まん中</b>が軸。"}),
+    INFO("考え方","頂点の t が 2 なので、$h=a(t-2)^2+q$ とおける。点 $(0, 1)$ と $(1, 16)$ を代入すると<br>$1=4a+q$、　$16=a+q$"),
+    FILLS("この連立方程式を解く",["$a=$",B("-5","solve([a*(0-2)**2+q-1,a*(1-2)**2+q-16],[a,q])[a]"),"$q=$",B("21","solve([a*(0-2)**2+q-1,a*(1-2)**2+q-16],[a,q])[q]")],{hint:"上の式から下の式を引くと、q が消える：$-15=3a$"}),
+    FILL("いちばん高いのは何 m？","21",{chk:"ballmax()",why:"$h=-5(t-2)^2+21$。上に凸なので、頂点 $t=2$ で最大 21 m。"}),
+  ]),
+ ]},
+
+/* ================= x 軸との関係 ================= */
+{id:"L6", no:6, zone:3, title:"2次方程式の解は、x 軸と出会う点", kp:"√(",
+ goal:"2次方程式を因数分解や解の公式で解ける。その解が、グラフと x 軸の共有点の x 座標になることを言える。",
+ secs:[
+  S("ふり返り","中学3年の2次方程式",[
+    INFO("思い出そう","$(x-2)(x-3)=0$ なら、$x-2=0$ または $x-3=0$。だから $x=2, 3$。<br>かけて 0 になるのは、どちらかが 0 のとき。"),
+    MU("$x^2-5x+6=0$ の解をすべて選べ",["1","2","3","6"],[1,2],{ov:["1","2","3","6"],cond:"t**2-5*t+6",hint:"たして −5、かけて 6 になる2つの数"}),
+    FILL("$x^2=5$ の正の解","√5",{chk:"sqrt(5)",hint:"2乗して 5 になる正の数"}),
+  ]),
+  S("見る","グラフで方程式が解ける？",[
+    NAZO("$y=x^2-2x-3$ のグラフが x 軸と交わる点。そこでは、y の値はいくつ？"),
+    FIG("roots"),
+    CH("x 軸の上にある点では、y はいつも？",["0","1","x と同じ"],0),
+    MU("図で c=−3 にしよう。$x^2-2x-3=0$ の解をすべて選べ",["−3","−1","1","3"],[1,3],{ov:["-3","-1","1","3"],cond:"t**2-2*t-3"}),
+    WORD("グラフ $y=ax^2+bx+c$ と x 軸の<b>共有点</b>の x 座標は、2次方程式 $ax^2+bx+c=0$ の<b>実数解</b>。"),
+  ]),
+  S("手を動かす","解の公式",[
+    WORD("$ax^2+bx+c=0$ の解は　$x=@frac{-b@pm@sqrt{b^2-4ac}}{2a}$","ことば（解の公式）"),
+    INFO("例","$x^2-2x-1=0$ は a=1, b=−2, c=−1。<br>$x=@frac{2@pm@sqrt{4+4}}{2}=@frac{2@pm2@sqrt2}{2}=1@pm@sqrt2$"),
+    FILL("$x^2+4x+1=0$ の √ の中（$b^2-4ac$）","12",{chk:"4**2-4*1*1"}),
+    FILL("$x^2+4x+1=0$ の大きいほうの解","-2+√3",{chk:"max(solve(x**2+4*x+1,x))",hint:"$@frac{-4@pm@sqrt{12}}{2}$。$@sqrt{12}=2@sqrt3$",why:"$x=@frac{-4@pm2@sqrt3}{2}=-2@pm@sqrt3$。大きいほうは $-2+@sqrt3$。"}),
+    FILL("$2x^2-3x-1=0$ の小さいほうの解（分数はかっこを使って入力。例：(1+√2)/3）","(3-√17)/4",{chk:"min(solve(2*x**2-3*x-1,x))",hint:"a=2, b=−3, c=−1。$@frac{3@pm@sqrt{9+8}}{4}$",why:"$x=@frac{3@pm@sqrt{17}}{4}$。小さいほうは $@frac{3-@sqrt{17}}{4}$。入力は (3−√17)/4。"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$x^2=4x$ を、両辺 x でわって $x=4$。解はこれで全部？",["全部","まだある"],1,{why:"$x^2-4x=0$、$x(x-4)=0$ で $x=0, 4$。x でわると、x=0 の解が消えてしまう。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    MU("$x^2+x-12=0$ の解をすべて選べ",["−4","−3","3","4"],[0,2],{ov:["-4","-3","3","4"],cond:"t**2+t-12"}),
+    FILL("$x^2-6x+7=0$ の小さいほうの解","3-√2",{chk:"min(solve(x**2-6*x+7,x))"}),
+    MU("$y=x^2-4x+3$ のグラフと x 軸の共有点の x 座標をすべて選べ",["1","2","3","4"],[0,2],{ov:["1","2","3","4"],cond:"t**2-4*t+3"}),
+  ]),
+ ]},
+
+{id:"L7", no:7, zone:3, title:"判別式：x 軸と何回出会う？", kp:"",
+ goal:"判別式 $D=b^2-4ac$ の符号や頂点の位置から、グラフと x 軸の共有点の個数がわかる。",
+ secs:[
+  S("ふり返り","平方根",[
+    INFO("思い出そう","2乗して 9 になる数は 3 と −3 の2つ。2乗して 0 になる数は 0 だけ。2乗して −4 になる数は、ふつうの数（<b>実数</b>）の中にはない。"),
+    CLS("2乗してその数になる実数は、何個ある？",["2個","1個","0個"],[["9",0],["0",1],["−4",2]]),
+  ]),
+  S("見る","上下に動かすと",[
+    NAZO("$y=x^2-2x+c$ のグラフを上下に動かす。x 軸と出会う点の数は、どう変わる？"),
+    FIG("disc"),
+    CLS("図で確かめよう。x 軸との共有点の数は？",["2個","1個","0個"],[["$c=-3$",0],["$c=1$",1],["$c=3$",2]]),
+    WORD("$D=b^2-4ac$ を<b>判別式</b>という（解の公式の √ の中）。<br>$D>0$ → 共有点 2個<br>$D=0$ → 1個（x 軸に<b>接する</b>。このときの解を<b>重解</b>という）<br>$D<0$ → 0個"),
+  ]),
+  S("手を動かす","D を計算する",[
+    FILL("$x^2-2x-3$ の D","16",{chk:"(-2)**2-4*1*(-3)"}),
+    FILL("$x^2+6x+9$ の D","0",{chk:"6**2-4*1*9"}),
+    FILL("$2x^2+x+3$ の D","-23",{chk:"1**2-4*2*3"}),
+    CLS("グラフと x 軸の共有点の個数は？",["2個","1個","0個"],[["$y=x^2+4x+1$",0],["$y=x^2-4x+4$",1],["$y=x^2+x+1$",2]],{why:"D は順に 12、0、−3。"}),
+  ]),
+  S("考える","頂点の高さでもわかる",[
+    INFO("考えよう","下に凸のグラフは、頂点が x 軸より<b>下</b>なら x 軸と2回出会う。頂点が x 軸より<b>上</b>なら出会わない。上に凸なら、上と下が逆になる。"),
+    CH("$y=(x-1)^2-4$ と x 軸の共有点は何個？（頂点 $(1, -4)$、下に凸）",["2個","1個","0個"],0),
+    CH("$y=-(x+2)^2-1$ と x 軸の共有点は何個？（頂点 $(-2, -1)$、上に凸）",["2個","1個","0個"],2,{why:"上に凸で、いちばん高い頂点が x 軸より下。だから x 軸にとどかない。"}),
+  ]),
+  S("解く","教科書・レポートの形で",[
+    FILL("$y=x^2+2x+k$ のグラフが x 軸に接するときの k","1",{chk:"solve(2**2-4*1*k,k)[0]",hint:"接する ⇔ $D=0$"}),
+    CH("$y=x^2-6x+k$ のグラフが x 軸と2点で交わる k の範囲は？",["$k<9$","$k>9$","$k=9$"],0,{why:"$D=36-4k>0$ から $k<9$。"}),
+  ]),
+ ]},
+
+{id:"L8", no:8, zone:3, title:"2次不等式（ラスボス）", kp:"",
+ goal:"グラフと x 軸の位置から、2次不等式の解を求められる。",
+ secs:[
+  S("ふり返り","1次不等式",[
+    INFO("思い出そう","$2x-6>0$ → $2x>6$ → $x>3$。<br>両辺に<b>負の数</b>をかけたり、負の数でわったりすると、<b>不等号の向きが変わる</b>：$-x>2$ → $x<-2$。"),
+    FILL("$3x+1>7$ の解は、$x>□$","2",{chk:"solve(3*x+1-7,x)[0]"}),
+    CH("$-2x>4$ の解は？",["$x>-2$","$x<-2$","$x<2$"],1,{why:"両辺を −2 でわる。負の数でわるので、向きが変わる。"}),
+  ]),
+  S("見る","グラフが x 軸より上の所",[
+    NAZO("$y=x^2-4x+3$ の値が正になるのは、x がどこにあるとき？ グラフで見ると、ひと目でわかる。"),
+    FIG("ineq"),
+    CH("$x^2-4x+3>0$ となる x は？（図で「＞0」を押そう）",["$1<x<3$","$x<1$, $3<x$"],1),
+    CH("$x^2-4x+3<0$ となる x は？",["$1<x<3$","$x<1$, $3<x$"],0),
+    WORD("$ax^2+bx+c=0$（$a>0$）の解が α、β（$α<β$）のとき<br>$ax^2+bx+c>0$ の解：$x<α$, $β<x$（<b>外側</b>）<br>$ax^2+bx+c<0$ の解：$α<x<β$（<b>内側</b>）"),
+  ]),
+  S("手を動かす","解を書く",[
+    FILLS("$x^2-x-6<0$ の解",[B("-2","min(solve(x**2-x-6,x))"),"$<x<$",B("3","max(solve(x**2-x-6,x))")],{hint:"$x^2-x-6=(x+2)(x-3)$。&lt;0 は内側"}),
+    FILLS("$x^2-9≧0$ の解",["$x≦$",B("-3","min(solve(x**2-9,x))"),"、",B("3","max(solve(x**2-9,x))"),"$≦x$"],{hint:"$x^2-9=(x+3)(x-3)$。≧0 は外側"}),
+    CH("$x^2-2x+1>0$ の解は？（$(x-1)^2>0$。グラフは x 軸に接する）",["$x=1$ 以外のすべての実数","すべての実数","解なし"],0,{why:"$(x-1)^2$ は x=1 のときだけ 0。それ以外はいつも正。図の「接する」で確かめよう。"}),
+    CH("$x^2+2x+3<0$ の解は？（D＜0。グラフは x 軸より上）",["すべての実数","解なし","$x<-1$"],1,{why:"グラフがいつも x 軸より上なので、負になる x はない。"}),
+  ]),
+  S("考える","よくあるまちがい",[
+    CH("$-x^2+5x-4>0$ を解く。はじめにすることは？",["両辺に −1 をかけて $x^2-5x+4<0$ にする","そのまま $x<1$, $4<x$ と答える"],0,{why:"$x^2$ の係数を正にしてから考える。−1 をかけると不等号の向きが変わる。答えは $1<x<4$。"}),
+  ]),
+  S("解く","ラスボス：囲いの面積",[
+    BOSS("第4回の囲い（柵 20 m、壁を1辺に使う、壁に垂直な辺 x m）。面積を <b>48 m² 以上</b>にしたい。x はどの範囲？"),
+    CH("面積の式から立てる不等式は？",["$x(20-2x)≧48$","$x(20-2x)≦48$","$20-2x≧48$"],0),
+    INFO("整理","$20x-2x^2≧48$ → $2x^2-20x+48≦0$ → $x^2-10x+24≦0$ → $(x-4)(x-6)≦0$"),
+    FILLS("この不等式の解",[B("4","min(solve(x*(20-2*x)-48,x))"),"$≦x≦$",B("6","max(solve(x*(20-2*x)-48,x))")]),
+    CH("x は辺の長さなので、$0<x<10$ も必要。2つを合わせた答えは？",["$4≦x≦6$","$0<x<10$","$0<x≦4$"],0,{why:"$4≦x≦6$ は $0<x<10$ の中に入っている。2つを同時にみたす範囲（<b>連立不等式</b>の解）は $4≦x≦6$。"}),
+  ]),
+ ]},
+];
+
+
+
+/* ===== 知っておこう：よくある「なんで？」（各回の最後に入れる。★には入れない） =====
+   q：問い　a：答え（数Ⅰの範囲で）　tr：ためしてみよう（任意）
+   「知っておくとよいこと」（対称移動、解の公式のなりたち など）もここに入れる。 */
+const WHYS = {
+  L0:[
+    {q:"なんで傾きは「x が 1 ふえたときの、y のふえ方」なの？",
+     a:"$y=ax+b$ で x を 1 ふやすと、y は $a(x+1)+b=ax+b+a$ になって、ちょうど a ふえる。どこから始めても同じ。だから a が、グラフのかたむき具合を表す。",
+     tr:"$y=3x+1$ で、x=2 と x=3 の y をくらべよう → 7 と 10。ふえたのは 3"},
+    {q:"なんで $(-3)^2$ と $-3^2$ はちがうの？",
+     a:"$(-3)^2$ は「−3 を2回かける」で 9。$-3^2$ は「3 を2回かけてから、マイナスをつける」で −9。2乗は、すぐ前の数（またはかっこ全体）だけにかかる。"},
+  ],
+  L1:[
+    {q:"なんで「放物線」という名前なの？",
+     a:"物を<b>放</b>（ほう）ったときの<b>線</b>だから。ななめ上に投げたボールの通り道は、空気の影響を考えなければ、この形になる。"},
+    {q:"なんで a が大きいと、グラフが細くなるの？",
+     a:"x=1 のとき、$y=3x^2$ は y=3、$y=x^2$ は y=1。同じ x でも y が3倍の高さになるので、グラフが上にのびて細く見える。a が 0 に近いと、y があまりふえないので、平らに開く。"},
+  ],
+  L2:[
+    {q:"なんで $x-3$ なのに、右へ動くの？",
+     a:"$y=x^2$ の頂点は、かっこの中（x）が 0 になる x=0。$y=(x-3)^2$ で、かっこの中 $x-3$ が 0 になるのは x=3。もとのグラフの x=0 の所が、新しいグラフでは x=3 の所に来る。だから右へ 3。",
+     tr:"$y=(x-3)^2$ で x=3、4、5 のときの y を出そう → 0、1、4（$y=x^2$ の x=0、1、2 と同じ）"},
+    {q:"グラフを x 軸について折り返すと、式はどうなる？",
+     a:"y の値の符号がぜんぶ逆になるので、$y=x^2$ は $y=-x^2$ になる。このように、直線や点について折り返して移すことを<b>対称移動</b>という。y 軸について折り返すと x の符号が逆になり、原点について移すと x も y も符号が逆になる。"},
+  ],
+  L3:[
+    {q:"なんで平方完成をするの？",
+     a:"$y=2x^2-8x+5$ のままでは、頂点がどこか見えない。$y=2(x-2)^2-3$ の形にすると、第2回で学んだように、頂点 $(2, -3)$ がそのまま読める。頂点がわかれば、グラフも、最大・最小もわかる。"},
+    {q:"なんで x の係数の「半分」なの？",
+     a:"$(x+m)^2=x^2+2mx+m^2$。まん中の項は m の<b>2倍</b>。だから x の係数が b なら $2m=b$ で、$m=@frac{b}{2}$。タイルの図では、bx の長方形を2つに分けて、正方形の2辺にくっつけている。"},
+  ],
+  L4:[
+    {q:"なんで頂点と両端だけを調べればいいの？",
+     a:"放物線は、軸の左と右で、それぞれ「ずっと下がる」か「ずっと上がる」かのどちらか。とちゅうで向きが変わるのは頂点だけ。だから、いちばん高い点・低い点は、頂点か、定義域の端のどれかになる。"},
+    {q:"「定義域」「値域」の「域」ってなに？",
+     a:"「域」は「範囲・エリア」という意味。定義域は「x が動いてよいエリア」、値域は「そのとき y がとるエリア」。図では、定義域が x 軸の上の黄土色の線、値域が y 軸の上の緑の線。"},
+  ],
+  L5:[
+    {q:"なんで3つの点で、式が1つに決まるの？",
+     a:"$y=ax^2+bx+c$ には、わからない数が a, b, c の3つある。1つの点を通ると、式が1本できる。わからない数が3つなら、式が3本あれば解ける（連立方程式）。2点だと式が2本で1本足りないので、図のように何本もかける。"},
+    {q:"なんで、高さが同じ2点のまん中が軸なの？",
+     a:"放物線は軸について左右対称。同じ高さの点は、軸から同じきょりだけ右と左にある。だから2点のちょうどまん中に軸がある。$t=1$ と $t=3$ なら、まん中の $t=2$。"},
+  ],
+  L6:[
+    {q:"なんで解の公式で解けるの？",
+     a:"$ax^2+bx+c=0$ を、第3回の平方完成で $a(x+@frac{b}{2a})^2-@frac{b^2-4ac}{4a}=0$ と変形して、x について解くと出てくる。解の公式は、平方完成をまとめて1回でやったもの。"},
+    {q:"なんで方程式の解が、グラフと x 軸の交点なの？",
+     a:"x 軸の上の点は、y 座標がどれも 0。グラフ $y=x^2-2x-3$ の上で y=0 になる点をさがすことは、$x^2-2x-3=0$ をみたす x をさがすことと同じ。"},
+  ],
+  L7:[
+    {q:"なんで D=0 のときの解を「重解」というの？",
+     a:"D が 0 に近づくと、2つの解がだんだん近づいて、D=0 で1つに重なる。2つの解が重なったもの、という意味で重解という。$x^2-2x+1=0$ は $(x-1)^2=0$ で、x=1 が2つ重なっている。"},
+    {q:"頂点の y 座標と D は、どうつながっているの？",
+     a:"$y=x^2+bx+c$ を平方完成すると、頂点の y 座標は $-@frac{b^2-4c}{4}=-@frac{D}{4}$ になる。だから D＞0 なら頂点は x 軸より下、D＜0 なら上。図の c を動かして、2つの値の符号がいつも逆になることを確かめよう。"},
+  ],
+  L8:[
+    {q:"「≧」のときは、なんで端の点も答えに入るの？",
+     a:"$x^2-9≧0$ は「0 より大きい、<b>または</b> 0 に等しい」。x=3 のとき $x^2-9=0$ なので、「等しい」ほうに入る。だから端も答えに入れて、数直線では ●（黒丸）にする。"},
+    {q:"なんで $x^2$ の係数を正にしてから考えるの？",
+     a:"$x^2$ の係数が正なら、グラフは下に凸（谷の形）で、「＞0 は外側、＜0 は内側」の決まりがそのまま使える。負のままだと山の形で、内と外が逆になり、まちがえやすい。だから −1 をかけて正にしてから考える（不等号の向きを変えるのを忘れずに）。"},
+  ],
+};
+
+
+/* ===== 基礎講座の動画（数Ⅰ 2次関数・全15章）と、アプリの回との対応 =====
+   分野ごとに、その分野の動画を置く。回の数と章の数は合わせない（基礎講座_販売方針）。
+   アプリの中身を作ったあとで、「わからなければ見る章」を当てはめた（MAP）。
+   id に YouTube の動画ID（限定公開）を入れると、小さい画面で再生できる。空のあいだは「準備中」。
+   2026-11-17：基礎講座（数Ⅰ2次関数）の15本の動画ID を入れた（「基礎講座_2次関数_構成」の一覧から）。
+   埋めこみが使えない画面（ほかのサイトの埋めこみを止めている所など）のために、「YouTube で開く」も出す。 */
+const VIDEO = (() => {
+  const SERIES = "基礎講座（数Ⅰ2次関数）";
+  const PLAYLIST = "https://www.youtube.com/playlist?list=PLURfKvgGpu5Q";   /* 限定公開の再生リスト（2026-11-16 公開） */
+  const CH = [
+    {no:1, t:"関数と定義域・値域", id:"A9nJx8LpR_s", len:"7:59"},
+    {no:2, t:"y=ax² のグラフ", id:"biHzhVDgMgc", len:"7:24"},
+    {no:3, t:"グラフの平行移動", id:"N8hQEg-dxFk", len:"7:03"},
+    {no:4, t:"平方完成", id:"OQveper1C7M", len:"8:45"},
+    {no:5, t:"y=ax²+bx+c のグラフ", id:"ZDBmE_OikuU", len:"9:13"},
+    {no:6, t:"最大・最小（1）", id:"x6ipvj8_U18", len:"6:48"},
+    {no:7, t:"最大・最小（2）", id:"9wyS7CLPIR4", len:"7:58"},
+    {no:8, t:"最大・最小の応用", id:"8lp8so_7CyY", len:"7:23"},
+    {no:9, t:"2次関数の決定", id:"x3snk4INIDE", len:"9:24"},
+    {no:10, t:"2次方程式と判別式", id:"HKHwmU4kEfs", len:"8:55"},
+    {no:11, t:"グラフと x 軸の共有点", id:"dcnTgU4etS0", len:"9:17"},
+    {no:12, t:"2次不等式（1）", id:"6A0X1fYYNvw", len:"8:22"},
+    {no:13, t:"2次不等式（2）・連立不等式", id:"bAIPujpJsM8", len:"9:09"},
+    {no:14, t:"まとめ", id:"JvYf6WeHZFM", len:"9:29"},
+    {no:15, t:"発展：文字を含む最大・最小", id:"xPyznmwdNQY", len:"5:46"},
+  ];
+  const ENTRY = [
+    {t:"① 使い方", s:"1〜2分", id:""},
+    {t:"② 学び方", s:"3〜5分", id:""},
+    {t:"③ なぜ今学ぶか", s:"見たい人だけ", id:""},
+  ];
+  /* アプリの回 → わからなければ見る章。top：回の上に出す章。sec：セクションごと（つまずいたときに出す章）。
+     ふり返りのセクションは、動画の「前提のふり返り」がある章を指す。l0：ふり返りの中身が第0回にもある回（「第0回へもどる」を出す）。 */
+  const MAP = {
+    L0:{top:[1], sec:[1,1,1,1]},
+    L1:{top:[2,1], sec:[2,2,1,2,2], l0:true},
+    L2:{top:[3], sec:[1,3,3,3,3], l0:true},
+    L3:{top:[4,5], sec:[4,4,4,4,5]},
+    L4:{top:[6,7,8], sec:[1,6,7,7,7,8]},
+    L5:{top:[9], sec:[9,9,9,9,9,9]},
+    L6:{top:[10,11], sec:[10,11,10,10,10]},
+    L7:{top:[11,10], sec:[10,11,10,11,11]},
+    L8:{top:[12,13], sec:[12,12,13,12,13]},
+  };
+  const ch = n => CH.find(c=>c.no===n);
+  const label = n => `第${n}章「${ch(n).t}」`;
+
+  function play(title, id, note){
+    const m=el("div","vmodal"); m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true");
+    m.innerHTML=`<div class="vbox"><div class="vh"><b>🎬 ${title}</b><button type="button">とじる ✕</button></div>
+      <div class="vframe">${id?`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&playsinline=1" title="${title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
+        :`<div class="vprep">この動画は準備中です。<br><small>できあがったら、ここで見られるようになります。</small></div>`}</div>
+      ${id?`<div class="vnote"><a href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}" target="_blank" rel="noopener">▶ YouTube で開く</a>（うまく再生されないとき）</div>`:""}
+      <div class="vnote">${note||"とじると、もとの問題にもどる。"}</div></div>`;
+    const close=()=>{ m.remove(); document.removeEventListener("keydown",esc); };
+    const esc=e=>{ if(e.key==="Escape") close(); };
+    m.querySelector(".vh button").addEventListener("click",close);
+    m.addEventListener("click",e=>{ if(e.target===m) close(); });
+    document.addEventListener("keydown",esc);
+    document.body.appendChild(m);
+    if(typeof touch==="function") touch();
+  }
+  function open(n){ play(`2次関数 ${label(n)}${ch(n).len?"（"+ch(n).len+"）":""}`, ch(n).id, `${SERIES}　章を丸ごと見よう。とじると、もとの問題にもどる。`); }
+  function entry(i){ const e=ENTRY[i]; play(e.t, e.id, "見なくても先へ進める。あとから、いつでも見られる。"); }
+
+  /* 回の上に出す「わからなければ」 */
+  function row(lesId){
+    const m=MAP[lesId]; if(!m) return null;
+    const d=el("div","vrow"); d.appendChild(el("span","vl","🎬 わからなければ動画："));
+    m.top.forEach(n=>{ const b=el("button","vbtn",`第${n}章 ${ch(n).t}`); b.type="button"; b.addEventListener("click",()=>open(n)); d.appendChild(b); });
+    return d;
+  }
+  /* つまずいたときの章（セクションの番号から） */
+  function forSec(lesId, si){ const m=MAP[lesId]; if(!m) return null; return (m.sec&&m.sec[si])||m.top[0]; }
+
+  /* もくじから開く「2次関数の動画」一覧（アプリの回との対応つき） */
+  function page(){
+    hideKP(); MEMO.leave(); cur=null;
+    const used={}; Object.entries(MAP).forEach(([lid,m])=>{ const no=LESSONS.find(l=>l.id===lid).no; new Set([...(m.top||[]),...(m.sec||[])]).forEach(n=>{ (used[n]=used[n]||new Set()).add(no); }); });
+    app.innerHTML=`<div class="bar"><button class="back" id="bk">← もくじ</button><span class="ttl">🎬 2次関数の動画</span><span class="sc">全${CH.length}章</span></div>
+      <p class="note" style="margin-top:0">${SERIES}。1つの章は 10 分くらいまで。アプリの回とは数が合っていない（それぞれ、わかりやすい長さで作ってある）。${PLAYLIST?`<br><a href="${PLAYLIST}" target="_blank" rel="noopener">▶ YouTube の再生リストで見る</a>`:""}</p><div class="vlist" id="vl"></div>`;
+    document.getElementById("bk").addEventListener("click",home);
+    const box=document.getElementById("vl");
+    CH.forEach(c=>{ const b=el("button",null,`<b>第${c.no}章</b><span>${c.t}${c.len?`<small class="lscope">　${c.len}</small>`:""}</span><span class="vu">${used[c.no]?"アプリの "+[...used[c.no]].sort((x,y)=>x-y).map(n=>"第"+n+"回").join("・")+" とつながる":"動画だけ（アプリにはない）"}</span>`); b.type="button"; b.addEventListener("click",()=>open(c.no)); box.appendChild(b); });
+    window.scrollTo(0,0);
+  }
+  const backToL0 = lesId => !!(MAP[lesId]&&MAP[lesId].l0);
+  return {CH, ENTRY, MAP, open, entry, row, forSec, label, page, backToL0};
+})();
+
+/* ===== 質問メモ：「次のスクーリングで聞くことリスト」（質問の設定が (b) のとき） =====
+   わからない問題や「なんで？」を、この端末の中のリストにためる。スクーリングの日に先生に見せる。
+   どこにも送らない。 */
+const KIKU = (() => {
+  function list(){ ST.kiku=ST.kiku||[]; return ST.kiku; }
+  function plain(html){ const d=document.createElement("div"); d.innerHTML=html; return d.textContent.replace(/\s+/g," ").trim(); }
+  function has(src){ return list().some(k=>k.src===src && !k.done); }
+  function add(o){ const L=list(); if(o.src && has(o.src)) return L.find(k=>k.src===o.src && !k.done); const k=Object.assign({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5), t:Date.now(), memo:"", done:false}, o); L.push(k); save(); if(typeof touch==="function") touch(); return k; }
+  function count(){ return list().filter(k=>!k.done).length; }
+  function daysTo(){ if(!ST.schoolDate) return null; const d=new Date(ST.schoolDate+"T00:00:00"), t=new Date(); t.setHours(0,0,0,0); return Math.round((d-t)/86400000); }
+  function banner(){
+    const n=count(), d=daysTo(); if(!n || d===null || d<0 || d>1) return "";
+    return `<div class="kiku-banner">🙋 ${d===0?"今日":"あした"}はスクーリング。聞くことが <b>${n}</b> 件あります（もくじの「スクーリングで聞くこと」）</div>`;
+  }
+  /* 問題カードの「🙋 あとで聞く」ボタン */
+  function button(card, info){
+    const k0=list().find(k=>k.src===info.src && !k.done);
+    const b=el("button","vbtn kiku"+(k0?" done":""), k0?"✓ 聞くことリストに入れた":"🙋 スクーリングで聞く"); b.type="button";
+    const memo=el("div","kmemo");
+    const showMemo=(k)=>{ memo.innerHTML=`<small class="lscope">どこがわからない？（一言。書かなくてもよい）</small>`; const ta=el("textarea"); ta.value=k.memo||""; ta.maxLength=200; ta.placeholder="例：なんで右に動くのかわからない"; ta.addEventListener("input",()=>{ k.memo=ta.value; save(); }); memo.appendChild(ta); };
+    if(k0) showMemo(k0);
+    b.addEventListener("click",()=>{ if(b.classList.contains("done")) return; const k=add(info); b.textContent="✓ 聞くことリストに入れた"; b.classList.add("done"); showMemo(k); toast("聞くことリストに入れた。もくじから見られる",2400); });
+    return [b, memo];
+  }
+  function page(){
+    hideKP(); MEMO.leave(); cur=null;
+    const L=list();
+    app.innerHTML=`<div class="bar"><button class="back" id="bk">← もくじ</button><span class="ttl">🙋 スクーリングで聞くこと</span><span class="sc">${count()} 件</span></div>
+      <div class="kdate"><label for="sd">次のスクーリングの日</label><input type="date" id="sd" value="${ST.schoolDate||""}"><small class="lscope">前の日から、もくじにお知らせが出る</small></div>
+      <p class="note" style="margin-top:10px">スクーリングの日に、この画面を先生に見せよう。聞けたら「聞けた ✓」を押す。どこにも送られない（このスマホの中だけ）。</p>
+      <div id="kl"></div>`;
+    document.getElementById("bk").addEventListener("click",home);
+    const sd=document.getElementById("sd"); sd.addEventListener("change",()=>{ ST.schoolDate=sd.value; save(); });
+    const box=document.getElementById("kl");
+    const rows=L.slice().sort((a,b)=>(a.done-b.done)||(a.no-b.no)||(a.t-b.t));
+    if(!rows.length) box.appendChild(el("p","note","まだない。問題で2回まちがえたときや、「なんで？」を書いたときに、「🙋 スクーリングで聞く」で入れられる。"));
+    rows.forEach(k=>{
+      const c=el("div","kcard"+(k.done?" done":""));
+      c.innerHTML=`<div class="km">第${k.no}回　${R(k.title||"")}${k.kind?"　・"+k.kind:""}</div><div class="kq">${R(k.q)}</div>${k.memo?`<div class="km">わたしのメモ：${esc(k.memo)}</div>`:""}`;
+      const r=el("div","krow");
+      const b1=el("button",null,k.done?"もどす":"聞けた ✓"); b1.type="button"; b1.addEventListener("click",()=>{ k.done=!k.done; save(); page(); });
+      const b2=el("button",null,"けす"); b2.type="button"; b2.addEventListener("click",()=>{ if(b2.dataset.arm){ ST.kiku=L.filter(x=>x!==k); save(); page(); } else { b2.dataset.arm=1; b2.textContent="本当にけす？"; } });
+      r.append(b1,b2); c.appendChild(r); box.appendChild(c);
+    });
+    window.scrollTo(0,0);
+  }
+  return {add, button, count, banner, page, plain};
+})();
+
+/* ===== 手書きの計算メモ =====
+   回の画面の右下に「✏️ メモ」。押すと画面の下半分に方眼の手書きスペースが出る（上半分の問題は見えたまま）。
+   線は回ごとにこの端末に保存（記録としては送らない）。キーパッドとは同時に出さない。 */
+const MEMO = (() => {
+  const KEYP = "nattoku1q.memo.";
+  let fab=null, panel=null, cv=null, ctx=null, lessonId=null, strokes=[], cur=null, mode="pen", big=false, clearArm=0;
+
+  function load(id){ try{ return JSON.parse(localStorage.getItem(KEYP+id)||"[]"); }catch(e){ return []; } }
+  function store(){ if(!lessonId) return; try{ localStorage.setItem(KEYP+lessonId, JSON.stringify(strokes)); }catch(e){} }
+
+  function build(){
+    fab=el("button","memofab","✏️ メモ"); fab.type="button"; fab.setAttribute("aria-label","計算メモをひらく");
+    fab.addEventListener("click",e=>{ e.stopPropagation(); show(); });
+    panel=el("div","memo");
+    panel.innerHTML=`<div class="mbar">
+      <button type="button" data-a="pen" class="on">✏️ ペン</button><button type="button" data-a="eraser">🧽 けす</button>
+      <button type="button" data-a="undo">↶ もどす</button><button type="button" data-a="clear">全部けす</button>
+      <button type="button" data-a="size" aria-label="大きさを変える">⇕</button><button type="button" data-a="close" class="mclose">とじる</button></div>
+      <div class="mcv"><canvas></canvas></div>`;
+    cv=panel.querySelector("canvas"); ctx=cv.getContext("2d");
+    panel.addEventListener("click",e=>e.stopPropagation());
+    panel.querySelectorAll(".mbar button").forEach(b=>b.addEventListener("click",()=>act(b.dataset.a,b)));
+    cv.addEventListener("pointerdown",down); cv.addEventListener("pointermove",move);
+    ["pointerup","pointercancel","pointerleave"].forEach(t=>cv.addEventListener(t,up));
+    document.body.append(fab, panel);
+    window.addEventListener("resize",()=>{ if(panel.classList.contains("on")) fit(); });
+  }
+  function act(a,b){
+    if(a==="pen"||a==="eraser"){ mode=a; panel.querySelectorAll('[data-a="pen"],[data-a="eraser"]').forEach(x=>x.classList.toggle("on",x===b)); }
+    else if(a==="undo"){ strokes.pop(); store(); redraw(); }
+    else if(a==="clear"){
+      if(Date.now()-clearArm<3000){ strokes=[]; store(); redraw(); clearArm=0; b.textContent="全部けす"; }
+      else { clearArm=Date.now(); b.textContent="もう一度"; setTimeout(()=>{ if(b.textContent!=="全部けす"&&Date.now()-clearArm>=2900) b.textContent="全部けす"; },3000); }
+    }
+    else if(a==="size"){ big=!big; panel.classList.toggle("big",big); fit(); }
+    else if(a==="close") hide();
+    if(typeof touch==="function") touch();
+  }
+  function fit(){
+    const box=panel.querySelector(".mcv"), r=box.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+    cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); cv.style.width=r.width+"px"; cv.style.height=r.height+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0); redraw();
+    const w=document.querySelector(".wrap"); if(w) w.style.paddingBottom=(panel.offsetHeight+24)+"px";
+  }
+  /* 点は「キャンバス幅を1」とした座標で保存（画面の向きが変わってもくずれない） */
+  function W(){ return cv.clientWidth||1; }
+  function line(s){
+    if(!s.p.length) return;
+    const k=W();
+    ctx.save();
+    ctx.globalCompositeOperation = s.m==="eraser" ? "destination-out" : "source-over";
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim()||"#222";
+    ctx.lineWidth = s.m==="eraser" ? 22 : 2.6; ctx.lineCap="round"; ctx.lineJoin="round";
+    ctx.beginPath(); ctx.moveTo(s.p[0][0]*k, s.p[0][1]*k);
+    if(s.p.length===1) ctx.lineTo(s.p[0][0]*k+0.1, s.p[0][1]*k);
+    for(let i=1;i<s.p.length;i++) ctx.lineTo(s.p[i][0]*k, s.p[i][1]*k);
+    ctx.stroke(); ctx.restore();
+  }
+  function redraw(){ ctx.clearRect(0,0,cv.width,cv.height); strokes.forEach(line); }
+  function pt(e){ const r=cv.getBoundingClientRect(), k=W(); return [Math.round((e.clientX-r.left)/k*1000)/1000, Math.round((e.clientY-r.top)/k*1000)/1000]; }
+  function down(e){ e.preventDefault(); cv.setPointerCapture&&cv.setPointerCapture(e.pointerId); cur={m:mode,p:[pt(e)]}; strokes.push(cur); line(cur); }
+  function move(e){
+    if(!cur) return; e.preventDefault();
+    const q=pt(e), last=cur.p[cur.p.length-1], k=W();
+    if(Math.hypot((q[0]-last[0])*k,(q[1]-last[1])*k)<1.5) return;
+    cur.p.push(q);
+    const k2=W(); ctx.save(); ctx.globalCompositeOperation= cur.m==="eraser"?"destination-out":"source-over";
+    ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue("--ink").trim()||"#222";
+    ctx.lineWidth= cur.m==="eraser"?22:2.6; ctx.lineCap="round"; ctx.lineJoin="round";
+    ctx.beginPath(); ctx.moveTo(last[0]*k2,last[1]*k2); ctx.lineTo(q[0]*k2,q[1]*k2); ctx.stroke(); ctx.restore();
+  }
+  function up(){ if(!cur) return; cur=null; store(); if(typeof touch==="function") touch(); }
+
+  function show(){
+    if(typeof hideKP==="function") hideKP();
+    panel.classList.add("on"); fab.classList.add("hid"); fit();
+  }
+  function hide(){
+    if(!panel) return;
+    panel.classList.remove("on"); if(lessonId) fab.classList.remove("hid");
+    const w=document.querySelector(".wrap"); if(w) w.style.paddingBottom="";
+  }
+  /* 回を開いたとき・もくじにもどったとき */
+  function enter(id){ if(!fab) build(); hide(); lessonId=id; strokes=load(id); fab.classList.remove("hid"); fab.style.display=""; }
+  function leave(){ if(!fab) return; hide(); lessonId=null; fab.style.display="none"; }
+  function isOpen(){ return !!panel && panel.classList.contains("on"); }
+  function setFab(visible){ if(fab && lessonId) fab.classList.toggle("hid", !visible || isOpen()); }
+  return {enter, leave, hide, show, isOpen, setFab};
+})();
+
+
+/* ===== 「なんで？」：問いを立てて、自分で調べる（＋設定によって先生へ） =====
+   質問の設定（app.js の QMODE）：
+   (a) 質問機能なし … 問いを書く → Google の AI モードで自分で調べる → わかったことを書きとめる（この端末の中だけ）
+   (b) 質問メモ     … (a) に加えて「🙋 スクーリングで聞く」で、聞くことリスト（kiku.js）に入れられる
+   (c) 先生が返事   … 問いが記録先（GAS）に届き、学校の先生の返事がアプリに出る（なっとく数Ⅱ の仕組み）
+   問いは回ごとに LS(id).qa に残す。 */
+const ASK = (() => {
+  const TEACHER = "学校の先生";
+  const TYPES = [["なぜ〜？","なんで"],["〜でないとどうなる？","もし〜でなかったら、どうなる？"],["〜と〜はどこがちがう？","〜と〜は、どこがちがう？"],["いつでも成り立つ？","これは、いつでも成り立つ？"]];
+  const remote = () => QMODE==="c" && !!SUBMIT_URL;
+  let lastPull = 0;
+
+  function bubble(item, noNext, les){
+    const b=el("div","qa");
+    b.innerHTML=`<div class="qq"><span>🤔</span>${esc(item.q)}</div>`;
+    if(remote() || item.id){
+      const a=el("div","qr");
+      if(item.pending){ a.innerHTML=`<span class="dots">考え中</span>`; }
+      else if(item.err){ a.innerHTML=`<p>${esc(item.err)}</p>`; }
+      else if(!item.answer){ a.innerHTML=`<p>📮 問いは${TEACHER}に届いたよ。返事を待つあいだに、自分で調べてみよう。</p>`; }
+      else a.innerHTML = (item.kind?`<div class="qk">${esc(item.kind)}</div>`:"") + `<p>${esc(item.answer||"")}</p>` + (item.check?`<div class="qc"><b>確かめてみよう</b>　${esc(item.check)}</div>`:"");
+      b.appendChild(a);
+    }
+    if(!item.pending && !item.err){
+      const g=el("a","gbtn",item.answer?"🔍 もっと調べる（Google の AI モード）":"🔍 Google の AI モードで調べる");
+      g.href=googleUrl(item.q, item.title||""); g.target="_blank"; g.rel="noopener";
+      g.addEventListener("click",()=>{ item.searched=true; save(); if(typeof touch==="function") touch(); });
+      b.appendChild(g);
+      if(!noNext){
+        const w=el("div","qnote");
+        w.innerHTML=`<small>調べてわかったことを一言（${item.id?TEACHER+"に届く":"自分のメモ。どこにも送られない"}）</small>`;
+        const t=el("textarea"); t.value=item.found||""; t.maxLength=300; t.rows=2; t.placeholder="例：頂点が x=3 に来るから右に動く";
+        const sb=el("button","go sub",item.id?"送る":"書きとめる"); sb.type="button"; const f=el("div","fb");
+        sb.addEventListener("click",async()=>{
+          const v=t.value.trim(); if(v.length<3){ fbSet(f,false,"一言でいいので書いてみよう"); return; }
+          if(!item.id){ item.found=v; save(); fbSet(f,true,"○ 書きとめた。問い→調べる→まとめる、ができた！"); if(typeof touch==="function") touch(); return; }
+          sb.disabled=true;
+          try{ const r=await fetch(SUBMIT_URL+"?mode=note&id="+encodeURIComponent(item.id)+"&dev="+encodeURIComponent(ST.dev)+"&text="+encodeURIComponent(v)); const d=await r.json();
+               if(d.ok){ item.found=v; save(); fbSet(f,true,"○ 送ったよ。問い→調べる→まとめる、ができた！"); } else fbSet(f,false,d.msg||"送れなかった"); }
+          catch(e){ fbSet(f,false,"つながらなかった。もう一度押してね"); }
+          sb.disabled=false; if(typeof touch==="function") touch();
+        });
+        w.append(t, sb, f); if(item.found) fbSet(f,true,(item.id?"送ったもの：":"書きとめたこと：") + esc(item.found));
+        b.appendChild(w);
+        if(QMODE==="b" && les){ const [kb, km]=KIKU.button(b,{src:"ask:"+les.id+":"+item.t, no:les.no, title:les.title, kind:"なんで？", q:item.q}); const r=el("div","helprow"); r.appendChild(kb); b.append(r, km); }
+      } else if(item.found){ b.appendChild(el("div","qt qf",`<b>調べてわかったこと</b>${esc(item.found)}`)); }
+    }
+    if(item.teacher){ b.appendChild(el("div","qt",`<b>${TEACHER}から</b>${esc(item.teacher)}`)); }
+    if(!noNext && item.next && item.next.length && !item.pending){
+      const n=el("div","qn",`<small>つぎの問いにしてみる？（タップすると下の欄に入る）</small>`);
+      item.next.forEach(t=>{ const c=el("button","chip",esc(t)); c.type="button"; c.addEventListener("click",()=>{ const ta=document.getElementById("askta"); if(ta){ ta.value=t; ta.focus(); ta.scrollIntoView({behavior:"smooth",block:"center"}); } }); n.appendChild(c); });
+      b.appendChild(n);
+    }
+    return b;
+  }
+
+  /* Google の AI モードを、問いと「答え方の注文」をつけて開く（udm=50 は AI モードを開く値。公式の仕様ではない） */
+  function googleUrl(q, title){
+    const pre = `高校数学Ⅰ「2次関数」${title?"の「"+title+"」":""}で出てきた疑問：${q}　高校生にわかるように、数学Ⅰの範囲で言える理由を先に、短く説明してください。最後に、自分で確かめられる小さな問題を1つ出してください。`;
+    return "https://www.google.com/search?udm=50&q=" + encodeURIComponent(pre);
+  }
+  const plainTitle = s => s.replace(/\$|@[a-z]+|[{}]/g,"");
+
+  /* 回の最後（今日のチェック）の中に置くカード */
+  function card(){
+    const les=cur, st=LS(les.id); st.qa=st.qa||[];
+    const c=el("div","card askcard");
+    c.innerHTML=`<div class="q">🤔 「なんで？」と思ったことを1文で</div>
+      <small class="asknote">モヤモヤを「問い」にしてみよう。${remote()?`問いは${TEACHER}に届く。`:""}Google の AI モードで、自分で調べられる。${QMODE==="b"?"スクーリングで先生に聞くこともできる。":""}名前や住所は書かないでね。</small>
+      <div class="qtypes"></div>`;
+    const ty=c.querySelector(".qtypes");
+    const ta=el("textarea"); ta.id="askta"; ta.maxLength=300; ta.placeholder="例：なんで x−3 なのに右に動くの？"; ta.value=st.texts.askdraft||"";
+    TYPES.forEach(([lab,stub])=>{ const b=el("button","chip",lab); b.type="button"; b.addEventListener("click",()=>{ ta.value = stub; ta.focus(); }); ty.appendChild(b); });
+    ta.addEventListener("input",()=>{ st.texts.askdraft=ta.value; if(typeof touch==="function") touch(); });
+    const go=el("button","go",remote()?"きいてみる":"書きとめる"); go.type="button";
+    const fb=el("div","fb");
+    const list=el("div","qalist");
+    const paint=()=>{ list.innerHTML=""; st.qa.slice().reverse().forEach(it=>list.appendChild(bubble(it,false,les))); };
+    go.addEventListener("click",async()=>{
+      const q=ta.value.trim();
+      if(q.length<4){ fbSet(fb,false,"もう少しくわしく書いてみよう（どこが、なんで？）"); return; }
+      fb.className="fb"; fb.textContent="";
+      if(!remote()){
+        st.qa.push({q, t:Date.now(), title:plainTitle(les.title)}); ta.value=""; st.texts.askdraft=""; save(); paint(); if(typeof touch==="function") touch(); return;
+      }
+      if(!ST.nick){ fbSet(fb,false,"もくじにもどって、ニックネームを入れてから聞こう。"); return; }
+      const item={q, pending:true, t:Date.now(), title:plainTitle(les.title)}; st.qa.push(item); save(); paint(); go.disabled=true;
+      try{
+        const url=SUBMIT_URL+"?"+Object.entries({mode:"ask", q, nick:ST.nick, dev:ST.dev, lesson:les.no, title:plainTitle(les.title), goal:plainTitle(les.goal)}).map(([k,v])=>k+"="+encodeURIComponent(String(v).slice(0,300))).join("&");
+        const r=await fetch(url,{method:"GET"}); const d=await r.json();
+        delete item.pending;
+        if(d.ok){ Object.assign(item,{id:d.id, kind:d.kind, answer:d.answer, check:d.check, next:d.next||[], human:!!d.human}); ta.value=""; st.texts.askdraft=""; }
+        else if(d.limit){ item.err=d.msg; }
+        else { st.qa.pop(); fbSet(fb,false,d.msg||"うまく送れなかった。もう一度ためしてね。"); }
+      }catch(e){ delete item.pending; st.qa.pop(); fbSet(fb,false,"つながらなかった。電波のいいところで、もう一度「きいてみる」を押してね。"); }
+      go.disabled=false; save(); paint(); if(typeof touch==="function") touch();
+    });
+    c.append(ta, go, fb, list); paint();
+    pull();
+    return c;
+  }
+
+  /* 先生の返事を取りに行く（(c) のときだけ。1分に1回まで） */
+  async function pull(force){
+    if(!remote() || !ST.dev) return;
+    const hasQ = Object.values(ST.lessons).some(l=>(l.qa||[]).some(x=>x.id));
+    if(!hasQ) return;
+    if(!force && Date.now()-lastPull<60000) return; lastPull=Date.now();
+    try{
+      const r=await fetch(SUBMIT_URL+"?mode=replies&dev="+encodeURIComponent(ST.dev)); const d=await r.json();
+      if(!d.ok) return; let changed=false;
+      (d.items||[]).forEach(x=>{ Object.values(ST.lessons).forEach(l=>(l.qa||[]).forEach(it=>{ if(it.id===x.id && it.teacher!==x.reply){ it.teacher=x.reply; it.unread=true; changed=true; } })); });
+      if(changed){ save(); if(cur){ const box=document.querySelector(".askcard"); if(box){ const nc=card(); box.replaceWith(nc); } } else if(document.getElementById("myq")) home(); toast(TEACHER+"から返事がきたよ", 3000); }
+    }catch(e){}
+  }
+
+  function count(){ let n=0, unread=0; Object.values(ST.lessons).forEach(l=>(l.qa||[]).forEach(x=>{ if(!x.err){ n++; if(x.unread) unread++; } })); return {n, unread}; }
+
+  /* もくじから開く「わたしの問い」 */
+  function page(){
+    hideKP(); MEMO.leave(); cur=null;
+    const rows=[]; LESSONS.forEach(les=>{ (LS(les.id).qa||[]).forEach(x=>{ if(!x.err) rows.push([les,x]); }); });
+    app.innerHTML=`<div class="bar"><button class="back" id="bk">← もくじ</button><span class="ttl">🤔 わたしの問い</span><span class="sc">${rows.length} こ</span></div>
+      <p class="note" style="margin-top:0">これまでに立てた問い。問いがふえるほど、数学が「自分のもの」になっていく。</p><div id="ql"></div>`;
+    document.getElementById("bk").addEventListener("click",home);
+    const box=document.getElementById("ql");
+    if(!rows.length) box.appendChild(el("p","note","まだない。各回の最後の「なんで？」で書いてみよう。"));
+    rows.reverse().forEach(([les,x])=>{ const h=el("div","qhead",`第${les.no}回　${R(les.title)}`); box.append(h, bubble(x, true)); x.unread=false; });
+    save(); window.scrollTo(0,0);
+  }
+  return {card, pull, count, page, remote};
+})();
+
+/* ===== 生徒への通知（学校の先生の返事）と、記録の引っ越し =====
+   もくじの「🔔 返事の通知」カード。
+   ・通知できる端末：「通知を受け取る」→ 許可 → 宛先を記録先に登録。「止める」でいつでも解除。
+   ・iPhone の Safari のタブ：通知はホーム画面に追加したアプリでしか使えないので、手順と「記録の引っ越し」を出す。 */
+const PUSH = (() => {
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const standalone = () => (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+  const can = () => "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+  const swUrl = () => "sw.js?dev=" + encodeURIComponent(ST.dev) + "&api=" + encodeURIComponent(SUBMIT_URL);
+  const b64ToU8 = s => { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+  async function post(o){ const r = await fetch(SUBMIT_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(o)}); return r.json(); }
+
+  async function currentSub(){
+    if (!can()) return null;
+    const reg = await navigator.serviceWorker.getRegistration();
+    return reg ? reg.pushManager.getSubscription() : null;
+  }
+  async function turnOn(){
+    const perm = await Notification.requestPermission();      // ボタンを押した中で呼ぶ（iPhone はこれが必要）
+    if (perm !== "granted") throw new Error(perm === "denied" ? "denied" : "dismissed");
+    const reg = await navigator.serviceWorker.register(swUrl());
+    await navigator.serviceWorker.ready;
+    const k = await (await fetch(SUBMIT_URL + "?mode=vapid")).json();
+    if (!k.ok) throw new Error("nokey");
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64ToU8(k.key)});
+    const d = await post({mode:"sub", dev:ST.dev, nick:ST.nick, sub:sub.toJSON()});
+    if (!d.ok) throw new Error("save");
+    ST.push = true; save();
+  }
+  async function turnOff(){
+    const sub = await currentSub();
+    if (sub){ try { await post({mode:"sub", off:true, dev:ST.dev, sub:sub.toJSON()}); } catch (e) {} await sub.unsubscribe(); }
+    ST.push = false; save();
+  }
+
+  /* 記録の引っ越し：メモ（手書き）以外の記録をコードにして6時間あずける */
+  async function moveOut(){
+    const d = await post({mode:"move_put", data:JSON.stringify({v:1, st:ST})});
+    if (!d.ok) throw new Error(d.msg || "move");
+    return d.code;
+  }
+  async function moveIn(code){
+    const r = await fetch(SUBMIT_URL + "?mode=move_get&code=" + encodeURIComponent(code)); const d = await r.json();
+    if (!d.ok) throw new Error(d.msg || "move");
+    const o = JSON.parse(d.data); if (!o || !o.st || !o.st.lessons) throw new Error("こわれたデータです");
+    const wasOn = !!(await currentSub());
+    ST = Object.assign({nick:"", school:"", dev:"", lessons:{}}, o.st); ST.push = false; save();
+    if (wasOn) { try { await turnOn(); } catch (e) {} }   // 端末IDが変わったので宛先を登録し直す
+  }
+
+  function card(){
+    if (!SUBMIT_URL) return null;
+    const c = el("div", "card pushcard");
+    const paint = async () => {
+      const on = !!(await currentSub().catch(() => null)) && Notification.permission === "granted";
+      let h = `<div class="q">🔔 学校の先生の返事を通知で受け取る</div>`;
+      if (can() && (!isIOS || standalone())) {
+        h += on ? `<p class="pnote">通知：<b class="okc">オン</b>　返事が来たら、このスマホに知らせます。</p><button type="button" class="go sub" id="poff">通知を止める</button>`
+                : (Notification.permission === "denied"
+                    ? `<p class="pnote">通知が「許可しない」になっています。スマホの設定で、このアプリ（またはブラウザ）の通知を許可してから、もう一度ためしてください。</p>`
+                    : `<p class="pnote">通知：オフ</p><button type="button" class="go" id="pon">通知を受け取る</button>`);
+      } else if (isIOS) {
+        h += `<p class="pnote">iPhone・iPad では、<b>ホーム画面に追加したアプリ</b>から通知を受け取れます。</p>
+          <ol class="psteps"><li>下の「記録の引っ越しコードを作る」を押して、コードをメモする</li><li>画面下の <b>共有ボタン（□↑）</b> →「<b>ホーム画面に追加</b>」</li><li>ホーム画面の「なっとく数Ⅱ」を開く → もくじのこの欄でコードを入れる → 「通知を受け取る」</li></ol>
+          <small class="pnote">ホーム画面のアプリと Safari では、記録が別々になる。だから先に引っ越しをする。</small>`;
+      } else {
+        h += `<p class="pnote">このブラウザは通知に対応していません。返事は、もくじの「🤔 わたしの問い」で見られます。</p>`;
+      }
+      const empty = !Object.values(ST.lessons).some(l => Object.keys(l.items || {}).length);
+      const openMove = (isIOS && !standalone()) || (standalone() && empty);
+      h += `<details class="move"${openMove ? " open" : ""}><summary>記録の引っ越し（別のアプリやブラウザに記録を移す）</summary>
+        <div class="mvrow"><button type="button" class="go sub" id="mvout">引っ越しコードを作る</button><span id="mvcode" class="mvcode"></span></div>
+        <div class="mvrow"><input id="mvin" maxlength="8" placeholder="コードを入れる" autocapitalize="characters"><button type="button" class="go sub" id="mvgo">受け取る</button></div>
+        <small class="pnote">コードは6時間で消えます。受け取ると、この画面の記録はコードの記録に置きかわります（手書きメモは移りません）。</small></details>
+        <div class="fb" id="pfb"></div>`;
+      c.innerHTML = h;
+      const fb = c.querySelector("#pfb");
+      const busy = (b, t) => { b.disabled = true; const o = b.textContent; b.textContent = t; return () => { b.disabled = false; b.textContent = o; }; };
+      const on1 = c.querySelector("#pon"); if (on1) on1.addEventListener("click", async () => { const done = busy(on1, "設定中…");
+        try { await turnOn(); fbSet(fb, true, "○ 通知がオンになった！"); await paint(); }
+        catch (e) { done(); fbSet(fb, false, e.message === "denied" ? "通知が許可されませんでした。" : e.message === "dismissed" ? "許可の画面が閉じられました。もう一度押してね。" : "うまくいきませんでした。電波のよいところで、もう一度押してね。"); } });
+      const off1 = c.querySelector("#poff"); if (off1) off1.addEventListener("click", async () => { const done = busy(off1, "止めています…");
+        try { await turnOff(); fbSet(fb, true, "通知を止めました。いつでもまたオンにできます。"); await paint(); } catch (e) { done(); fbSet(fb, false, "止められませんでした。もう一度押してね。"); } });
+      const mo = c.querySelector("#mvout"); mo.addEventListener("click", async () => { const done = busy(mo, "作成中…");
+        try { const code = await moveOut(); c.querySelector("#mvcode").textContent = code; done(); fbSet(fb, true, "このコードをメモしてね（6時間有効）"); } catch (e) { done(); fbSet(fb, false, "作れませんでした。もう一度押してね。"); } });
+      const mg = c.querySelector("#mvgo"); mg.addEventListener("click", async () => {
+        const code = c.querySelector("#mvin").value.trim(); if (code.length < 6) { fbSet(fb, false, "6文字のコードを入れてね"); return; }
+        if (!confirm("この画面の記録を、コードの記録に置きかえます。いい？")) return;
+        const done = busy(mg, "受け取り中…");
+        try { await moveIn(code); toast("記録を受け取ったよ", 2500); home(); } catch (e) { done(); fbSet(fb, false, e.message || "受け取れませんでした。"); } });
+    };
+    paint();
+    return c;
+  }
+  return {card, turnOn, turnOff, currentSub, can};
+})();
+
+
+/* ===== 設定（学校ごとに変える所） ===== */
+const APP_NAME = "なっとく 数Ⅰ 2次関数";
+const SUBMIT_URL = "";      /* 記録先（学校ごとの Apps Script の URL）。空なら送らない */
+const DEMO_SEND = true;     /* 見本：「記録を送る」ボタンは見せるが、送らない */
+const QMODE = "b";          /* 質問の設定 "a"：なし ／ "b"：質問メモ（スクーリングで聞くこと）／ "c"：先生が返事（SUBMIT_URL が要る） */
+const PDF_URL = "";         /* 基礎講座のスライドPDF（しおり付き）。空のあいだは「準備中」 */
+const CREDIT = "制作：至學舎";
+const APP_VER = "1";
+
+/* ---------- 保存（この端末の中だけ） ---------- */
+const KEY = "nattoku1q.v1";
+let ST = {nick:"", school:"", dev:"", lessons:{}, kiku:[], schoolDate:""};
+try{ const raw=localStorage.getItem(KEY); if(raw) ST=Object.assign(ST, JSON.parse(raw)); }catch(e){}
+if(!ST.dev){ ST.dev=Math.random().toString(36).slice(2,8); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} }
+function LS(id){ return ST.lessons[id] || (ST.lessons[id]={items:{}, texts:{}, rate:"", sentAt:"", active:0, last:0}); }
+/* 取り組み時間：操作と操作の間を最大2分まで足していく */
+function touch(){ if(!cur) return; const st=LS(cur.id), now=Date.now(); if(st.last) st.active=(st.active||0)+Math.min(now-st.last,120000); st.last=now; save(); }
+
+const R = s => TEX.render(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+
+/* セクションのタグの色（色だけでなく、タグの文字で区別する） */
+const TAGC = {"ふり返り":"--tg5","見る":"--tg1","手を動かす":"--tg2","考える":"--tg3","解く":"--tg4","知っておこう":"--tg0","今日のチェック":"--tg5"};
+
+/* よくある「なんで？」（知っておこう）を各回の最後に足す */
+LESSONS.forEach(les=>{ const w=(typeof WHYS!=="undefined"&&WHYS[les.id])||[]; if(w.length) les.secs.push({tag:"知っておこう", title:"よくある「なんで？」", items:w.map(x=>Object.assign({t:"why"},x))}); });
+
+/* 判定の単位を数える */
+LESSONS.forEach(les=>{ let k=0; les.secs.forEach((sec,si)=>sec.items.forEach(it=>{
+  it.id=les.id+"-"+(k++); it.si=si; it.furi = sec.tag==="ふり返り";
+  it.units = it.t==="cls" ? it.rows.length : ["choice","multi","fill","fills"].includes(it.t) ? 1 : 0;
+})); les.total=les.secs.reduce((a,s)=>a+s.items.reduce((b,i)=>b+i.units,0),0); });
+
+function unitKeys(it){ if(it.t==="cls") return it.rows.map((_,i)=>it.id+"."+i); return it.units?[it.id]:[]; }
+function stats(les){
+  const st=LS(les.id); let done=0, first=0, shown=0, tries=0;
+  les.secs.forEach(s=>s.items.forEach(it=>unitKeys(it).forEach(k=>{ const r=st.items[k]; if(r){ tries+=r.tries||0; if(r.ok){ done++; if(r.first) first++; if(r.shown) shown++; } } })));
+  return {done, first, shown, tries, total:les.total, minutes:Math.round((st.active||0)/60000)};
+}
+function needsSend(les){ if(!SUBMIT_URL) return false; const s=stats(les), st=LS(les.id); return s.done>0 && (!st.sentAt || s.done>(st.sentDone||0)); }
+function stars(s){ if(s.done<s.total) return 0; const f=s.first/s.total; if(s.shown===0 && f>=0.9) return 3; if(f>=0.7) return 2; return 1; }
+
+let cur=null, streak=0;
+function mark(key, ok, shown){
+  const st=LS(cur.id); const r=st.items[key] || (st.items[key]={ok:false, tries:0, first:false});
+  if(r.ok) return r;
+  if(shown){ r.ok=true; r.shown=true; streak=0; }
+  else { r.tries++; if(ok){ r.ok=true; r.first=r.tries===1; streak = r.first ? streak+1 : 0; if(r.first && (streak===5||streak===10||streak===15||streak===20)) toast(`${streak}問れんぞく 1回で正解！`); } else streak=0; }
+  touch(); const before=wasDone; updateScore(); if(!before && wasDone && SUBMIT_URL) setTimeout(()=>toast("クリア！ いちばん下の「記録を送る」を押してね", 4000), 600); return r;
+}
+let wasDone=false, warned=false;
+function goSend(){ const e=document.getElementById("sendbox"); if(e) e.scrollIntoView({behavior:"smooth", block:"center"}); }
+/* もくじ・つぎへ を押したとき、まだ送っていなければ1回だけ知らせて送信欄へ */
+function remindSend(){ if(!cur || warned || !needsSend(cur)) return false; warned=true; goSend(); toast("まだ記録を送っていないよ。「記録を送る」を押してから進もう（そのまま進むなら、もう一度押す）", 4500); return true; }
+function toast(msg, ms){ ms=ms||1800; let t=document.getElementById("toast"); if(!t){ t=el("div","toast"); t.id="toast"; document.body.appendChild(t); } t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),ms); }
+
+/* ---------- もくじ ---------- */
+const app=document.getElementById("app");
+function home(){
+  cur=null; hideKP(); MEMO.leave();
+  document.documentElement.style.removeProperty("--zc"); document.documentElement.style.removeProperty("--zct");
+  let allDone=0, allTotal=0; LESSONS.forEach(l=>{ const s=stats(l); allDone+=s.done; allTotal+=s.total; });
+  const kc = QMODE==="b" ? KIKU.count() : 0;
+  app.innerHTML=`
+  <div class="hero"><div class="eb">数学Ⅰ　自分で進めるワーク</div><h1>なっとく2次関数<small>数Ⅰ　2次関数　全9回（第0回〜第8回）</small></h1>
+  <p>動かして、ためして、「なるほど」をつかむ。答えるとすぐに ○ か × かがわかる。1回30分くらい。</p></div>
+  ${QMODE==="b"?KIKU.banner():""}
+  <div class="entry">${VIDEO.ENTRY.map((e,i)=>`<button type="button" data-entry="${i}">🎬 ${e.t}<small>${e.s}</small></button>`).join("")}</div>
+  <div class="howto"><div class="ht">使い方</div><ul>
+    <li>進め方は2通り（アプリ → わからなければ動画／動画 → アプリで確認）。<b>迷ったら、まずアプリから。</b></li>
+    <li><b>まちがえたら動画を見ればいい。</b>各回の「🎬 わからなければ動画」から開ける。</li>
+    <li>PDF では色付きタグが目印：公式は<span class="ptag g">ことば</span>（緑）、解き方は<span class="ptag o">例題</span>（橙）。</li>
+    <li>中学の内容があやしいときは、<b>第0回</b>から。</li></ul></div>
+  <div class="links">
+    ${PDF_URL?`<a href="${PDF_URL}" target="_blank" rel="noopener">📄 スライドPDF</a>`:`<a href="#" id="pdf" class="off">📄 スライドPDF（準備中）</a>`}
+    <a href="#" id="vlist">🎬 2次関数の動画（全${VIDEO.CH.length}章）</a>
+    ${QMODE==="b"?`<a href="#" id="kiku">🙋 スクーリングで聞くこと ${kc}件</a>`:""}
+    ${(()=>{ const c=ASK.count(); return `<a href="#" id="myq">🤔 わたしの問い ${c.n}こ${c.unread?` <span class="pill warn">返事 ${c.unread}</span>`:""}</a>`; })()}
+  </div>
+  <div class="who">
+    <div><label for="nk">ニックネーム（記録を送るときに使う）</label><input id="nk" maxlength="20" value="${esc(ST.nick)}" placeholder="例：にじかんた"></div>
+    <small class="whynote">本名でなくてよい。途中の記録はこのスマホの中に残る（同じブラウザで開けば続きから）。ぜんぶで ${allDone} / ${allTotal} 問</small>
+  </div>
+  ${ZONES.map((z,zi)=>{ const ls=LESSONS.filter(l=>l.zone===zi); let d=0,t=0; ls.forEach(l=>{const s=stats(l); d+=s.done; t+=s.total;});
+    return `<section class="zone"><div class="zh"><span class="zn" style="--zt:var(${z.t})">${z.name}</span><span class="zs">${z.sub}</span><span class="zst">${d} / ${t}</span></div>
+    <div class="lessons">${ls.map(les=>{ const s=stats(les), p=Math.round(100*s.done/s.total), sr=stars(s);
+      return `<button class="lcard" data-l="${les.id}"><span class="no" style="background:var(${z.c})"><span><small>第</small>${les.no}<small>回</small></span></span>
+      <span class="t">${R(les.title)}</span><span class="stars" aria-label="星${sr}">${[1,2,3].map(k=>`<span class="${k<=sr?"on":""}">★</span>`).join("")}</span>
+      <span class="meta"><span class="track"><span style="width:${p}%;background:var(${z.c})"></span></span>${s.done}/${s.total}${needsSend(les)?' <span class="pill warn">未送信</span>':LS(les.id).sentAt?' <span class="pill">送信済</span>':''}</span></button>`; }).join("")}</div></section>`; }).join("")}
+  ${SUBMIT_URL?`<p class="note">📮 各回の最後に、いちばん下の「記録を送る」を押そう。押さないと記録は届かない（途中で送ってもよい。何回でも送り直せる）。</p>`:""}
+  <p class="note">★1つ：全部とけた　★★：7割以上を1回目で正解　★★★：「答えを見る」なしで9割以上を1回目で正解</p>
+  <p class="credit">${CREDIT}</p>`;
+  if(QMODE==="c" && SUBMIT_URL){ const pc=PUSH.card(); if(pc) app.querySelector(".who").after(pc); }
+  const nk=document.getElementById("nk");
+  nk.addEventListener("input",()=>{ ST.nick=nk.value.trim(); save(); });
+  app.querySelectorAll("[data-l]").forEach(b=>b.addEventListener("click",()=>open(b.dataset.l)));
+  app.querySelectorAll("[data-entry]").forEach(b=>b.addEventListener("click",()=>VIDEO.entry(+b.dataset.entry)));
+  const on=(id,f)=>{ const e=document.getElementById(id); if(e) e.addEventListener("click",ev=>{ ev.preventDefault(); f(); }); };
+  on("pdf",()=>toast("スライドPDFは準備中。できたら、ここから開ける",2600));
+  on("vlist",()=>VIDEO.page()); on("kiku",()=>KIKU.page()); on("myq",()=>ASK.page());
+  ASK.pull();
+  window.scrollTo(0,0);
+}
+
+function updateScore(){
+  if(!cur) return;
+  const s=stats(cur); const sc=document.getElementById("sc"); if(sc) sc.textContent=s.done+" / "+s.total;
+  const sk=document.getElementById("sk"); if(sk) sk.textContent = streak>=3 ? `🔥${streak}` : "";
+  const sm=document.getElementById("sendsum"); if(sm) renderSendSum();
+  const cl=document.getElementById("clear"); if(cl) cl.classList.toggle("on", s.done===s.total);
+  wasDone = s.done===s.total;
+  const sb=document.getElementById("sendbox"); if(sb) sb.classList.toggle("need", needsSend(cur));
+}
+
+/* ---------- 1回分 ---------- */
+function open(id){
+  cur=LESSONS.find(l=>l.id===id); streak=0; { const s0=stats(cur); wasDone=s0.done===s0.total; }
+  const z=ZONES[cur.zone];
+  document.documentElement.style.setProperty("--zc",`var(${z.c})`); document.documentElement.style.setProperty("--zct",`var(${z.t})`);
+  app.innerHTML=`<div class="bar"><button class="back" id="bk">← もくじ</button><span class="ttl">第${cur.no}回　${R(cur.title)}</span><span class="streak" id="sk"></span><span class="sc" id="sc"></span></div>
+  <div class="goal"><b>今日のゴール</b>　${R(cur.goal)}</div><div id="vr"></div>
+  ${SUBMIT_URL?`<button type="button" class="sendnote" id="sn"><span class="tx">📮 最後まで解いたら、いちばん下の<b>「記録を送る」</b>を押してね</span><span class="ar">↓</span></button>`:""}<div id="secs"></div>`;
+  warned=false;
+  const vr=VIDEO.row(cur.id); if(vr) document.getElementById("vr").appendChild(vr);
+  document.getElementById("bk").addEventListener("click", ()=>{ if(remindSend()) return; home(); });
+  const sn=document.getElementById("sn"); if(sn) sn.addEventListener("click", goSend);
+  const box=document.getElementById("secs");
+  cur.secs.forEach(sec=>{
+    const d=el("section","sec");
+    d.innerHTML=`<div class="sh"><span class="tag" style="--tg:var(${TAGC[sec.tag]||"--tg5"})">${sec.tag}</span><h2>${R(sec.title)}</h2></div>`;
+    if(sec.tag==="ふり返り" && cur.no>0) d.appendChild(el("p","lscope", VIDEO.backToL0(cur.id) ? "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る「第0回へもどる」や動画で確かめよう。" : "前に習ったことの確かめ。あやしいときは、まちがえたあとに出る動画（はじめに、この内容のふり返りがある章）で確かめよう。"));
+    sec.items.forEach(it=>{ const n=renderItem(it); if(n) d.appendChild(n); });
+    box.appendChild(d);
+  });
+  box.appendChild(renderReflect());
+  MEMO.enter(cur.id);
+  updateScore(); window.scrollTo(0,0);
+}
+
+function fbSet(fb, ok, msg, hint){ fb.className="fb "+(ok?"ok":"ng"); fb.innerHTML=msg+(hint?`<span class="hint">ヒント：${R(hint)}</span>`:""); }
+function showWhy(card, it){ if(it.why && !card.querySelector(".why")) card.appendChild(el("div","why",R(it.why))); }
+const OK_MSG = "○ せいかい！", NG_MSG = "× ちがう。もう一度";
+/* 2回まちがえたら：「答えを見る」と、動画・第0回・聞くことリストへの道 */
+function revealBtn(card, it, onReveal){
+  if(card.querySelector(".reveal")) return;
+  const b=el("button","reveal","答えを見る"); b.type="button";
+  b.addEventListener("click",()=>{ b.remove(); onReveal(); });
+  card.appendChild(b);
+  helpRow(card, it);
+}
+function helpRow(card, it){
+  if(card.querySelector(".helprow")) return;
+  const r=el("div","helprow");
+  const n=VIDEO.forSec(cur.id, it.si);
+  if(n){ const v=el("button","vbtn",`🎬 動画 第${n}章で確かめる`); v.type="button"; v.addEventListener("click",()=>VIDEO.open(n)); r.appendChild(v); }
+  if(it.furi && cur.no>0 && VIDEO.backToL0(cur.id)){ const g=el("button","vbtn back","↩ 第0回へもどる"); g.type="button"; g.addEventListener("click",()=>{ if(remindSend()) return; open("L0"); }); r.appendChild(g); }
+  let km=null;
+  if(QMODE==="b"){ const [kb, m]=KIKU.button(card,{src:it.id, no:cur.no, title:cur.title, kind:"問題", q:it.q}); r.appendChild(kb); km=m; }
+  card.appendChild(r); if(km) card.appendChild(km);
+}
+
+function renderItem(it){
+  const st=LS(cur.id);
+  if(it.t==="info"){ const c=el("div","card info"+(it.cls?" "+it.cls:""),`<span class="k">${it.k}</span>${R(it.html)}`); return c; }
+  if(it.t==="why"){
+    const st0=LS(cur.id); st0.whyOpen=st0.whyOpen||{};
+    const c=el("div","card whycard"); c.dataset.id=it.id;
+    c.innerHTML=`<div class="wq">🤔 ${R(it.q)}</div>`;
+    const body=el("div","wa",`<p>${R(it.a)}</p>${it.tr?`<div class="qc"><b>ためしてみよう</b>　${R(it.tr)}</div>`:""}`);
+    const btn=el("button","go sub","30秒考えてから、開く"); btn.type="button";
+    const show=()=>{ body.style.display="block"; btn.remove(); };
+    btn.addEventListener("click",()=>{ show(); st0.whyOpen[it.id]=1; touch(); });
+    body.style.display="none"; c.append(btn, body);
+    if(st0.whyOpen[it.id]) show();
+    return c;
+  }
+  if(it.t==="fig"){ const box=el("div"); try{ W[it.name](box, it.arg||{}); }catch(e){ box.textContent="（図を表示できませんでした）"; console.error(e); } return box; }
+  const card=el("div","card"); card.dataset.id=it.id;
+  const r=st.items[it.id];
+
+  if(it.t==="choice"||it.t==="multi"){
+    card.appendChild(el("div","q",R(it.q)));
+    const ops=el("div","opts"), fb=el("div","fb"); const picked=new Set();
+    const isRight=i=> it.t==="multi" ? it.ans.includes(i) : i===it.ans;
+    const finish=(msg)=>{ ops.querySelectorAll(".opt").forEach((x,i)=>{ x.disabled=true; x.classList.remove("sel","wrong"); if(isRight(i)) x.classList.add("right"); }); const g=card.querySelector(".go"); if(g) g.remove(); fbSet(fb,true,msg); showWhy(card,it); };
+    it.opts.forEach((o,i)=>{
+      const b=el("button","opt",R(o)); b.type="button";
+      b.addEventListener("click",()=>{
+        if(it.t==="choice"){
+          const ok=i===it.ans; const rr=mark(it.id, ok);
+          ops.querySelectorAll(".opt").forEach(x=>x.classList.remove("wrong"));
+          if(ok) finish(OK_MSG);
+          else { b.classList.add("wrong"); fbSet(fb,false,NG_MSG, it.hint); if(rr.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); finish("答え"); }); }
+        } else { if(picked.has(i)){ picked.delete(i); b.classList.remove("sel"); } else { picked.add(i); b.classList.add("sel"); } }
+      });
+      ops.appendChild(b);
+    });
+    card.appendChild(ops);
+    if(it.t==="multi"){
+      const go=el("button","go","こたえる"); go.type="button";
+      go.addEventListener("click",()=>{
+        const ok=picked.size===it.ans.length && it.ans.every(a=>picked.has(a));
+        const rr=mark(it.id, ok);
+        if(ok) finish(OK_MSG);
+        else { fbSet(fb,false, picked.size<it.ans.length?"× ちがう。もう一度（まだ足りないかも）":NG_MSG, it.hint); if(rr.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); finish("答え"); }); }
+      });
+      card.appendChild(go);
+    }
+    card.appendChild(fb);
+    if(r&&r.ok) finish(r.shown?"答え":OK_MSG);
+    else if(r&&r.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); finish("答え"); });
+    return card;
+  }
+
+  if(it.t==="fill"){
+    card.appendChild(el("div","q",R(it.q)));
+    const row=el("div","fillrow"); const box=el("div","abox"); box.tabIndex=0; box.setAttribute("role","textbox");
+    const go=el("button","go","こたえる"); go.type="button"; go.style.marginTop="0";
+    const fb=el("div","fb");
+    let val = st.texts["in-"+it.id] || "";
+    const answerShow = ()=> it.show ? R(it.show) : EXPR.pretty(it.ans);
+    const paint=(active)=>{ box.innerHTML = (val? EXPR.pretty(val) : (active?"":`<span class="ph">タップして入力</span>`)) + (active?'<span class="cur"></span>':""); };
+    const done=(shown)=>{ box.classList.add("done"); box.classList.remove("act"); box.innerHTML = shown ? answerShow() : EXPR.pretty(val); go.remove(); fbSet(fb,true, shown?"答え":OK_MSG); showWhy(card,it); if(kpTarget&&kpTarget.it===it) hideKP(); };
+    const submit=()=>{
+      if(!val){ fbSet(fb,false,"入力してから「こたえる」"); return; }
+      if(!EXPR.valid(val)){ fbSet(fb,false,"式が読めない。かっこや記号を見直そう"); return; }
+      const res=EXPR.same(val, it.ans, {x:!!it.x});
+      const rr=mark(it.id, res.ok);
+      if(res.ok) done(false);
+      else { fbSet(fb,false,NG_MSG, it.hint); if(rr.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); done(true); }); }
+    };
+    const api={it, get:()=>val, set:v=>{ val=v; st.texts["in-"+it.id]=v; save(); paint(true); }, submit, box, card, paint, keys:(it.keys!=null?it.keys:(cur.kp||"")) + (it.x?"x":"")};
+    box.addEventListener("click",e=>{ e.stopPropagation(); if(!box.classList.contains("done")) showKP(api); });
+    box.addEventListener("keydown",e=>{ if(box.classList.contains("done")) return; if(e.key==="Enter"){ e.preventDefault(); submit(); } else if(e.key==="Backspace"){ e.preventDefault(); api.set(val.slice(0,-1)); } else if(e.key.length===1 && /[0-9.+\-*/^()x√]/.test(e.key)){ e.preventDefault(); api.set(val+e.key); } });
+    go.addEventListener("click",submit);
+    row.append(box, go); card.append(row, fb);
+    if(r&&r.ok) done(r.shown); else { paint(false); if(r&&r.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); done(true); }); }
+    return card;
+  }
+
+  /* □ がいくつかある問題（頂点 (□, □)、平方完成、不等式の解 など） */
+  if(it.t==="fills"){
+    card.appendChild(el("div","q",R(it.q)));
+    const row=el("div","fbox"); const fb=el("div","fb");
+    const go=el("button","go","こたえる"); go.type="button";
+    const blanks=[]; let finished=false;
+    const submit=()=>{
+      if(finished) return;
+      if(blanks.some(b=>!b.val)){ fbSet(fb,false,"□ をぜんぶうめてから「こたえる」"); return; }
+      if(blanks.some(b=>!EXPR.valid(b.val))){ fbSet(fb,false,"式が読めない □ がある。見直そう"); return; }
+      const res=blanks.map(b=>EXPR.same(b.val, b.p.ans, {}).ok);
+      const ok=res.every(x=>x);
+      blanks.forEach((b,i)=>b.box.classList.toggle("ngbox", !res[i]));
+      const rr=mark(it.id, ok);
+      if(ok) done(false);
+      else { const n=res.filter(x=>!x).length; fbSet(fb,false,`× ちがう。もう一度（赤い □ が ${n} つ）`, it.hint); if(rr.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); done(true); }); }
+    };
+    const done=(shown)=>{ finished=true; blanks.forEach(b=>{ b.box.classList.add("done"); b.box.classList.remove("act","ngbox"); b.box.innerHTML=EXPR.pretty(shown?b.p.ans:b.val); }); go.remove(); fbSet(fb,true, shown?"答え":OK_MSG); showWhy(card,it); if(kpTarget&&blanks.some(b=>b.api===kpTarget)) hideKP(); };
+    it.parts.forEach((p,pi)=>{
+      if(typeof p==="string"){ row.appendChild(el("span",null,R(p))); return; }
+      const bi=blanks.length, key="in-"+it.id+"."+bi;
+      const box=el("div","abox"); box.tabIndex=0; box.setAttribute("role","textbox"); box.setAttribute("aria-label",`□${bi+1}`);
+      const b={p, box, val: st.texts[key]||""};
+      const paint=(active)=>{ box.innerHTML=(b.val?EXPR.pretty(b.val):(active?"":`<span class="ph">□</span>`))+(active?'<span class="cur"></span>':""); };
+      b.api={it, box, card, paint, submit, get:()=>b.val, set:v=>{ b.val=v; st.texts[key]=v; save(); box.classList.remove("ngbox"); paint(true); }, keys:(it.keys!=null?it.keys:(cur.kp||""))};
+      box.addEventListener("click",e=>{ e.stopPropagation(); if(!finished) showKP(b.api); });
+      box.addEventListener("keydown",e=>{ if(finished) return; if(e.key==="Enter"){ e.preventDefault(); submit(); } else if(e.key==="Backspace"){ e.preventDefault(); b.api.set(b.val.slice(0,-1)); } else if(e.key.length===1 && /[0-9.+\-*/^()x√]/.test(e.key)){ e.preventDefault(); b.api.set(b.val+e.key); } });
+      paint(false); blanks.push(b); row.appendChild(box);
+    });
+    blanks.forEach((b,i)=>{ b.api.next = blanks[i+1] ? ()=>showKP(blanks[i+1].api) : null; });
+    go.addEventListener("click",submit);
+    card.append(row, go, fb);
+    if(r&&r.ok) done(r.shown); else if(r&&r.tries>=2) revealBtn(card,it,()=>{ mark(it.id,true,true); done(true); });
+    return card;
+  }
+
+  if(it.t==="cls"){
+    card.appendChild(el("div","q",R(it.q)));
+    const wrap=el("div","cls"); const fb=el("div","fb");
+    const check=()=>{ if(it.rows.every((_,i)=>{ const rr=st.items[it.id+"."+i]; return rr&&rr.ok; })){ fbSet(fb,true,"○ ぜんぶ せいかい！"); showWhy(card,it); } };
+    it.rows.forEach((rw,ri)=>{
+      const key=it.id+"."+ri, rr0=st.items[key];
+      const line=el("div","r"); const lab=el("div",null,R(rw[0])); const ops=el("div","opts");
+      const fin=()=>{ ops.querySelectorAll(".opt").forEach((x,oi)=>{ x.disabled=true; x.classList.remove("wrong"); if(oi===rw[1]) x.classList.add("right"); }); };
+      it.opts.forEach((o,oi)=>{ const b=el("button","opt",R(o)); b.type="button";
+        b.addEventListener("click",()=>{ const ok=oi===rw[1]; const rr=mark(key,ok);
+          ops.querySelectorAll(".opt").forEach(x=>x.classList.remove("wrong"));
+          if(ok){ fin(); check(); } else { b.classList.add("wrong"); if(rr.tries>=2){ mark(key,true,true); fin(); fbSet(fb,false,"× まちがえた行は、答えを表示した"); helpRow(card,it); check(); } else fbSet(fb,false,NG_MSG); }
+        }); ops.appendChild(b); });
+      line.append(lab, ops); wrap.appendChild(line);
+      if(rr0&&rr0.ok) fin();
+    });
+    card.append(wrap, fb); check(); return card;
+  }
+
+  if(it.t==="free"){
+    card.appendChild(el("div","q",R(it.q)));
+    const ta=el("textarea"); ta.value=st.texts[it.id]||""; ta.addEventListener("input",()=>{ st.texts[it.id]=ta.value; touch(); });
+    card.appendChild(ta); return card;
+  }
+  return null;
+}
+
+/* ---------- 入力用キーパッド ---------- */
+let kpEl=null, kpTarget=null;
+function showKP(api){
+  MEMO.hide(); MEMO.setFab(false);
+  if(kpTarget && kpTarget!==api){ kpTarget.box.classList.remove("act"); kpTarget.paint(false); }
+  kpTarget=api; api.box.classList.add("act"); api.paint(true);
+  if(!kpEl){ kpEl=el("div","kp"); document.body.appendChild(kpEl); }
+  const ex=api.keys;
+  const has=c=>ex.includes(c), xs=has("x"), pr=xs||has("(");
+  const K=[["7"],["8"],["9"],["/","op"],["^",xs?"op":"hide"],["⌫","fx cls2"],
+           ["4"],["5"],["6"],["+",pr?"op":"hide"],["(",pr?"op":"hide"],[")",pr?"op":"hide"],
+           ["1"],["2"],["3"],["−","op"],["x",xs?"op":"hide"],["√",has("√")?"op":"hide"],
+           ["0"],["."],[api.next?"次の□":"",api.next?"fx nx":"hide"],["",'hide'],["こたえる","ent fx"]];
+  kpEl.innerHTML=`<div class="in"><div class="kph"><span>${kpHelp(ex)}</span><button type="button" class="kpclose" data-k="close">とじる ✕</button></div><div class="keys">${K.map(k=>k[1]==="hide"?`<span class="kpgap"></span>`:`<button type="button" class="${k[1]||""}" data-k="${k[0]}">${k[0]==="x"?`<i>${k[0]}</i>`:k[0]}</button>`).join("")}</div></div>`;
+  kpEl.querySelectorAll("button").forEach(b=>b.addEventListener("click",e=>{ e.stopPropagation(); const k=b.dataset.k, v=kpTarget.get();
+    if(k==="⌫") kpTarget.set(v.slice(0,-1));
+    else if(k==="close") hideKP();
+    else if(k==="こたえる") kpTarget.submit();
+    else if(k==="次の□"){ if(kpTarget.next) kpTarget.next(); }
+    else kpTarget.set(v+(k==="−"?"-":k));
+  }));
+  kpEl.style.display="block";
+  requestAnimationFrame(()=>{ const kh=kpEl.offsetHeight, rc=api.card.getBoundingClientRect(); const over=rc.bottom-(window.innerHeight-kh-8); if(over>0) window.scrollBy({top:over, behavior:"smooth"}); else if(rc.top<60) window.scrollBy({top:rc.top-70, behavior:"smooth"}); });
+  document.querySelector(".wrap").style.paddingBottom="320px";
+}
+function kpHelp(ex){
+  const t=["分数は 3/4","マイナスは −"];
+  if(ex.includes("x")) t.push("x² は x ^ 2"); if(ex.includes("√")) t.push("2√3 は 2 √ 3");
+  return t.join("　");
+}
+function hideKP(){
+  if(kpTarget){ kpTarget.box.classList.remove("act"); if(!kpTarget.box.classList.contains("done")) kpTarget.paint(false); }
+  kpTarget=null; if(kpEl) kpEl.style.display="none"; MEMO.setFab(true);
+  const w=document.querySelector(".wrap"); if(w) w.style.paddingBottom="";
+}
+document.addEventListener("click",e=>{ if(!kpTarget) return; if(kpEl&&kpEl.contains(e.target)) return; if(kpTarget.card.contains(e.target)) return; hideKP(); });
+
+/* ---------- 今日のチェック・記録 ---------- */
+function renderSendSum(){
+  const s=stats(cur), st=LS(cur.id), e=document.getElementById("sendsum");
+  e.innerHTML=`解いた数 <b>${s.done}</b> / ${s.total}　1回目で正解 <b>${s.first}</b>　取り組み時間 <b>${s.minutes}</b>分`+(needsSend(cur)?`<br><span class="pill warn">${st.sentAt?"送ったあとに解いた分がまだ届いていない":"まだ送っていない"}</span>`:st.sentAt?`<br><span class="pill">送信済み ${st.sentAt}</span>（何回でも送り直せる）`:"");
+}
+function renderReflect(){
+  const st=LS(cur.id);
+  const d=el("section","sec");
+  d.innerHTML=`<div class="sh"><span class="tag" style="--tg:var(--tg5)">今日のチェック</span><h2>今日の自分をチェック</h2></div>`;
+  const c1=el("div","card"); c1.appendChild(el("div","q","今日のゴールは達成できた？"));
+  const rate=el("div","rate"); ["◎","○","△"].forEach(x=>{ const b=el("button","opt"+(st.rate===x?" sel":""),x); b.type="button";
+    b.addEventListener("click",()=>{ st.rate=x; touch(); rate.querySelectorAll(".opt").forEach(z=>z.classList.toggle("sel",z.textContent===x)); }); rate.appendChild(b); });
+  c1.appendChild(rate);
+  const mk=(key,q)=>{ const c=el("div","card"); c.appendChild(el("div","q",q)); const ta=el("textarea"); ta.value=st.texts[key]||""; ta.addEventListener("input",()=>{ st.texts[key]=ta.value; touch(); }); c.appendChild(ta); return c; };
+  d.append(c1, mk("learned","今日「なるほど」と思ったことを一言"), mk("unclear","まだモヤモヤしていること（なければ「なし」）"));
+  d.appendChild(ASK.card());
+  const cl=el("div","clear",`<span class="stamp">クリア</span>${SUBMIT_URL?`<p>最後に、下の「記録を送る」を押そう 📮</p>`:""}`); cl.id="clear"; d.appendChild(cl);
+  const sd=el("div","send"); sd.id="sendbox"; sd.innerHTML=`<div class="q">📮 記録を送る</div><div class="sum" id="sendsum"></div>`;
+  if(SUBMIT_URL){
+    const a=el("a","go","記録を送る"); a.target="_blank"; a.rel="noopener"; const warn=el("small");
+    const ready=()=>!!ST.nick;
+    const upd=()=>{ if(ready()){ a.href=buildUrl(); a.removeAttribute("aria-disabled"); a.style.opacity=""; warn.textContent="新しいタブで「送信しました」と出たら完了。タブを閉じてここにもどろう。"; }
+      else { a.removeAttribute("href"); a.setAttribute("aria-disabled","true"); a.style.opacity=".4"; warn.textContent="もくじにもどって、ニックネームを入れてから送ろう。"; } };
+    a.addEventListener("pointerdown",upd); a.addEventListener("focus",upd);
+    a.addEventListener("click",()=>{ upd(); if(!ready()) return; const t=new Date(); st.sentAt=(t.getMonth()+1)+"/"+t.getDate()+" "+t.getHours()+":"+String(t.getMinutes()).padStart(2,"0"); st.sentDone=stats(cur).done; save(); setTimeout(()=>{ renderSendSum(); updateScore(); },50); });
+    upd(); sd.append(a, warn);
+  } else if(DEMO_SEND){
+    const b=el("button","go","記録を送る"); b.type="button"; const note=el("small");
+    b.addEventListener("click",()=>{ note.textContent="これは見本なので、記録は送らない。学校で使うときは、ここから学校ごとの記録先に送られる（ニックネームと端末の番号だけ。本名は送らない）。"; touch(); });
+    sd.append(b, note);
+  } else sd.appendChild(el("small",null,"記録はこのスマホの中に残っている。"));
+  d.appendChild(sd);
+  const nx=LESSONS[LESSONS.indexOf(cur)+1];
+  if(nx){ const b=el("button","go sub",`つぎへ：第${nx.no}回 ${R(nx.title)}`); b.type="button"; b.style.marginTop="16px"; b.addEventListener("click",()=>{ if(remindSend()) return; open(nx.id); }); d.appendChild(b); }
+  setTimeout(renderSendSum,0);
+  return d;
+}
+function buildUrl(){
+  const st=LS(cur.id), s=stats(cur);
+  const texts=[]; cur.secs.forEach(sec=>sec.items.forEach(it=>{ if(it.t==="free"&&st.texts[it.id]) texts.push(st.texts[it.id]); }));
+  const p={lesson:cur.no, nick:ST.nick, dev:ST.dev, done:s.done, total:s.total, first:s.first, shown:s.shown, tries:s.tries, minutes:s.minutes,
+           rate:st.rate, learned:st.texts.learned||"", unclear:st.texts.unclear||"", texts:texts.join(" / "), ver:APP_VER, app:"nattoku1q"};
+  return SUBMIT_URL+"?"+Object.entries(p).map(([k,x])=>k+"="+encodeURIComponent(String(x).slice(0,500))).join("&");
+}
+
+try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ if(cur) open(cur.id); }); }catch(e){}
+save(); home();
+
+</script>
+</body></html>

@@ -1,0 +1,16 @@
+{
+  "name": "なっとく 数Ⅰ 2次関数",
+  "short_name": "なっとく2次関数",
+  "description": "2次関数を、動かしてなっとくする自学アプリ（制作：至學舎）",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f5f1",
+  "theme_color": "#0f6e78",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
